@@ -95,6 +95,19 @@ class FakeDS10:
         elif cmd == "AT+DEVINFO?":
             self._send("+DEVINFO:" + ",".join(self.devinfo))
             self._send("OK")
+        elif cmd == "AT+CFG_NEW":
+            self._send("+CFG_NEW")
+            self._send("+CFG_STATE:1,0")
+            self._send("OK")
+        elif cmd.startswith("AT+CFG_ROLE="):
+            self._send("+CFG_DRAFT:1")
+            self._send("OK")
+        elif cmd.startswith("AT+CFG_CH="):
+            self._send("+CFG_DRAFT:1")
+            self._send("OK")
+        elif cmd == "AT+CFG_SAVE":
+            self._send("+CFG_SAVE:REBOOTING")
+            self._send("OK")
         else:
             self._send("+DS10ERR:1,UNKNOWN_CMD")
             self._send("ERROR")

@@ -4,8 +4,15 @@
 进入 AT 会话,读取设备信息 (型号/SN/版本/最大从机数)。SN 供主机 --bind 使用。
 
 用法:
-  # 读取设备信息 (建议用 by-id 路径,避免 ttyUSB 序号漂移)
-  python3 ds10_config.py --port /dev/serial/by-id/usb-XXXX --info
+  # 读取设备信息
+  python3 ds10_config.py --port /dev/ttyUSB0 --info
+
+  # 设置主从角色 (走配置态并保存重启;保存后设备重启,AT 会话失效)
+  python3 ds10_config.py --port /dev/ttyUSB0 --role master
+  python3 ds10_config.py --port /dev/ttyUSB1 --role slave
+
+  # 主机把从机 SN 绑定到通道 (先 --info 读到从机 SN,再在主机上绑定)
+  python3 ds10_config.py --port /dev/ttyUSB0 --bind 3 DS1000000008
 
 退出码:
   0  成功
@@ -38,9 +45,13 @@ class DS10Error(Exception):
 def parse_args(argv=None):
     ap = argparse.ArgumentParser(description="DS10 星闪 DTU 配置工具")
     ap.add_argument("-p", "--port", default="/dev/ttyUSB0",
-                    help="串口设备,建议用 /dev/serial/by-id/ 路径 (默认 /dev/ttyUSB0)")
+                    help="串口设备 (默认 /dev/ttyUSB0,从机通常为 /dev/ttyUSB1)")
     ap.add_argument("-b", "--baud", type=int, default=115200, help="波特率 (默认 115200)")
     ap.add_argument("--info", action="store_true", help="读取并打印设备信息 (型号/SN/版本/最大从机数)")
+    ap.add_argument("--role", choices=["master", "slave"],
+                    help="设置主从角色并保存重启 (master=主机, slave=从机)")
+    ap.add_argument("--bind", nargs=2, metavar=("CHANNEL", "SN"),
+                    help="主机把从机 SN 绑定到指定通道并保存重启 (先启用通道再写设备 ID)")
     ap.add_argument("--timeout", type=float, default=2.0, help="单条命令等待响应的秒数 (默认 2.0)")
     return ap.parse_args(argv)
 
@@ -109,6 +120,32 @@ def read_devinfo(session):
     return {}
 
 
+ROLE_CODE = {"master": 0, "slave": 1}  # 文档: role 0 主机 / 1 从机
+
+
+def set_role(session, role):
+    """经配置态设置主从角色: 建草稿 -> 写角色 -> 保存重启。
+
+    CFG_SAVE 会让设备重启,此后 AT 会话即失效。
+    """
+    code = ROLE_CODE[role]
+    session.command("AT+CFG_NEW")
+    session.command("AT+CFG_ROLE=%d" % code)
+    session.command("AT+CFG_SAVE")
+
+
+def bind_slave(session, channel, sn):
+    """主机把从机 SN 绑定到通道: 建草稿 -> 启用通道 -> 写设备 ID -> 保存重启。
+
+    文档要求写入非空设备 ID 前通道须已启用,故先 ,0,1 启用再 ,1,"SN" 写入。
+    CFG_SAVE 会让设备重启,此后 AT 会话即失效。
+    """
+    session.command("AT+CFG_NEW")
+    session.command("AT+CFG_CH=%s,0,1" % channel)
+    session.command('AT+CFG_CH=%s,1,"%s"' % (channel, sn))
+    session.command("AT+CFG_SAVE")
+
+
 def main(argv=None):
     args = parse_args(argv)
     try:
@@ -127,6 +164,13 @@ def main(argv=None):
             print("设备信息:")
             for k, v in info.items():
                 print(f"  {k}: {v}")
+        if args.role:
+            set_role(session, args.role)
+            print(f"角色已设为 {args.role},设备正在保存并重启。")
+        if args.bind:
+            channel, sn = args.bind
+            bind_slave(session, channel, sn)
+            print(f"已将从机 {sn} 绑定到通道 {channel},设备正在保存并重启。")
     except DS10Error as e:
         print(f"设备返回错误: {e}", file=sys.stderr)
         return EXIT_DS10ERR

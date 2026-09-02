@@ -27,7 +27,14 @@ if(BUILD_TESTING)
   ament_lint_auto_find_test_dependencies()
 
   find_package(ament_cmake_gtest REQUIRED)
-  # Tests will be added in later tickets
+
+  # Unit test for protocol constants
+  ament_add_gtest(test_protocol_constants test/test_protocol_constants.cpp)
+  target_include_directories(test_protocol_constants PUBLIC
+    $<BUILD_INTERFACE:${CMAKE_CURRENT_SOURCE_DIR}/include>
+    $<INSTALL_INTERFACE:include>
+  )
+  target_link_libraries(test_protocol_constants ${PROJECT_NAME}_lib)
 endif()
 
 install(DIRECTORY include/

@@ -1,6 +1,0 @@
-setup.py
-ds10_interfaces/__init__.py
-ds10_interfaces.egg-info/PKG-INFO
-ds10_interfaces.egg-info/SOURCES.txt
-ds10_interfaces.egg-info/dependency_links.txt
-ds10_interfaces.egg-info/top_level.txt

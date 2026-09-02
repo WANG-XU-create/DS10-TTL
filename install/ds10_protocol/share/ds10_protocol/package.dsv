@@ -1,8 +1,0 @@
-source;share/ds10_protocol/hook/cmake_prefix_path.ps1
-source;share/ds10_protocol/hook/cmake_prefix_path.dsv
-source;share/ds10_protocol/hook/cmake_prefix_path.sh
-source;share/ds10_protocol/local_setup.bash
-source;share/ds10_protocol/local_setup.dsv
-source;share/ds10_protocol/local_setup.ps1
-source;share/ds10_protocol/local_setup.sh
-source;share/ds10_protocol/local_setup.zsh

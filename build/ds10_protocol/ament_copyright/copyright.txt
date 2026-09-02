@@ -1,9 +1,0 @@
--- run_test.py: invoking following command in '/home/nvidia/DS10_Modbus/src/ds10_protocol':
- - /opt/ros/humble/bin/ament_copyright --xunit-file /home/nvidia/DS10_Modbus/build/ds10_protocol/test_results/ds10_protocol/copyright.xunit.xml
-
-No repository roots and files found
-No problems found, checked 0 files
-
-
--- run_test.py: return code 0
--- run_test.py: verify result file '/home/nvidia/DS10_Modbus/build/ds10_protocol/test_results/ds10_protocol/copyright.xunit.xml'

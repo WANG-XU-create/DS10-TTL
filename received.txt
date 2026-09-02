@@ -1,0 +1,38 @@
+任务 2：延迟/冲突测试改用可读文本载荷
+修改了三个已有测试脚本，全部从 os.urandom() 改成循环填充 b"DS10Test_"：
+
+ds10_bidir_collision.py —— 双向冲突测试
+ds10_latency_oneway.py —— 单向延迟测试
+ds10_latency_probe.py —— RTT 延迟测试（探针端）
+改动逻辑：
+
+新增 build_text_payload(size, probe_id=None) 函数，生成可读文本（probe_id 保留在前 4 字节用于延迟测试的帧配对）
+原 os.urandom(size) 调用处全部替换成 build_text_payload(size, ...)
+性能数据完全不变（到达率、延迟、seq 对账逻辑不变），只是载荷变成可读了
+效果：
+
+如果你在接收端打印载荷（比如改脚本加 print(repr(payload))），会看到 b'DS10Test_DS10Test_DS10Test_...' 而不是乱码随机字节
+帧结构和 seq/CRC 校验完全不变，现有脚本的统计结果依然有效
+为什么这样改有价值？
+文件传输脚本 —— 这是最接近真实业务的测试：你将来可能传 JSON 配置、日志文件、传感器数据文件。用 diff 验证逐字节完整性是最严格的端到端可靠性测试（比统计到达率更强）。
+
+可读文本载荷 —— 在调试时，如果你怀疑"DS10 透传过程中某几个字节被改了/截断了"，用文本载荷可以直接目视或字符串比对看出问题。随机字节只能靠 CRC + seq 对账，看不出"中间某字节被翻转"这种静默损坏。
+
+下一步建议
+试跑文件传输：
+
+
+# 1. 准备一个测试文件（比如一段 JSON 或长文本）
+echo '{"sensor":"DS10","test":"透传完整性验证","data":[1,2,3,4,5]}' > test.json
+
+# 2. 发送（主机端）
+python3 DS10_Modbus/ds10_send_file.py --port /dev/ttyUSB0 --file test.json --station 1
+
+# 3. 接收（Windows 端或另一台 Jetson）
+python3 DS10_Modbus/ds10_recv_file.py --port <你的从机串口> --station 1 --out received.json
+
+# 4. 验证
+diff test.json received.json
+如果传大文件（比如几 KB 的日志），可以调 --chunk 和 --interval 控制每帧大小和发送速率。根据你之前的测试结论，间隔 ≥ 单帧传输时间的 3~5 倍 是安全的（200B 帧约 18ms → 间隔 ≥ 80~100ms）。
+
+要我现在把这两个新脚本的说明也写进技术文档吗？还是你先跑一轮文件传输测试，确认可用后再补文档？

@@ -1,0 +1,730 @@
+[0.000000] (-) TimerEvent: {}
+[0.000274] (ds10_interfaces) JobQueued: {'identifier': 'ds10_interfaces', 'dependencies': OrderedDict()}
+[0.000715] (ds10_driver) JobQueued: {'identifier': 'ds10_driver', 'dependencies': OrderedDict([('ds10_interfaces', '/home/nvidia/DS10_Modbus/install/ds10_interfaces')])}
+[0.000895] (ds10_interfaces) JobStarted: {'identifier': 'ds10_interfaces'}
+[0.013039] (ds10_interfaces) JobProgress: {'identifier': 'ds10_interfaces', 'progress': 'cmake'}
+[0.013872] (ds10_interfaces) Command: {'cmd': ['/usr/bin/cmake', '/home/nvidia/DS10_Modbus/src/ds10_interfaces', '-DCMAKE_INSTALL_PREFIX=/home/nvidia/DS10_Modbus/install/ds10_interfaces'], 'cwd': '/home/nvidia/DS10_Modbus/build/ds10_interfaces', 'env': OrderedDict([('LESSOPEN', '| /usr/bin/lesspipe %s'), ('VSCODE_CWD', '/home/nvidia'), ('VSCODE_ESM_ENTRYPOINT', 'vs/workbench/api/node/extensionHostProcess'), ('AI_AGENT', 'claude-code_2-1-215_agent'), ('LANGUAGE', 'zh_CN:zh'), ('CODEX_HOME', '/home/nvidia/.codex'), ('USER', 'nvidia'), ('SSH_CLIENT', '192.168.130.26 59645 22'), ('CLAUDE_CODE_ENTRYPOINT', 'claude-vscode'), ('VSCODE_NLS_CONFIG', '{"userLocale":"zh-cn","osLocale":"zh-cn","resolvedLanguage":"zh-cn","defaultMessagesFile":"/home/nvidia/.vscode-server/cli/servers/Stable-e4c7e7b1d6d060162f4aa7f8225271b67ce1df75/server/out/nls.messages.json","languagePack":{"translationsConfigFile":"/home/nvidia/.vscode-server/data/clp/4c1d03004af65f9b16ba94f4936a2bd5.zh-cn/tcf.json","messagesFile":"/home/nvidia/.vscode-server/data/clp/4c1d03004af65f9b16ba94f4936a2bd5.zh-cn/e4c7e7b1d6d060162f4aa7f8225271b67ce1df75/nls.messages.json","corruptMarkerFile":"/home/nvidia/.vscode-server/data/clp/4c1d03004af65f9b16ba94f4936a2bd5.zh-cn/corrupted.info"},"locale":"zh-cn","availableLanguages":{"*":"zh-cn"},"_languagePackId":"4c1d03004af65f9b16ba94f4936a2bd5.zh-cn","_languagePackSupport":true,"_translationsConfigFile":"/home/nvidia/.vscode-server/data/clp/4c1d03004af65f9b16ba94f4936a2bd5.zh-cn/tcf.json","_cacheRoot":"/home/nvidia/.vscode-server/data/clp/4c1d03004af65f9b16ba94f4936a2bd5.zh-cn","_resolvedLanguagePackCoreLocation":"/home/nvidia/.vscode-server/data/clp/4c1d03004af65f9b16ba94f4936a2bd5.zh-cn/e4c7e7b1d6d060162f4aa7f8225271b67ce1df75","_corruptedFile":"/home/nvidia/.vscode-server/data/clp/4c1d03004af65f9b16ba94f4936a2bd5.zh-cn/corrupted.info"}'), ('GIT_EDITOR', 'true'), ('VSCODE_HANDLES_UNCAUGHT_ERRORS', 'true'), ('XDG_SESSION_TYPE', 'tty'), ('CLAUDE_AGENT_SDK_VERSION', '0.3.215'), ('SHLVL', '0'), ('LD_LIBRARY_PATH', '/opt/ros/humble/opt/rviz_ogre_vendor/lib:/opt/ros/humble/lib/aarch64-linux-gnu:/opt/ros/humble/lib:/usr/local/lib:/usr/local/cuda-12.6/lib64:'), ('BROWSER', '/home/nvidia/.vscode-server/cli/servers/Stable-e4c7e7b1d6d060162f4aa7f8225271b67ce1df75/server/bin/helpers/browser.sh'), ('MOTD_SHOWN', 'pam'), ('HOME', '/home/nvidia'), ('VSCODE_RECONNECTION_GRACE_TIME', '10800000'), ('VSCODE_IPC_HOOK_CLI', '/run/user/1000/vscode-ipc-f7907052-7d99-418a-872f-23827cf78271.sock'), ('JETSON_L4T', '36.4.7'), ('ROS_PYTHON_VERSION', '3'), ('JETSON_MODEL', 'NVIDIA Jetson Orin Nano Engineering Reference Developer Kit Super'), ('CLAUDE_CODE_CHILD_SESSION', '1'), ('DBUS_SESSION_BUS_ADDRESS', 'unix:path=/run/user/1000/bus'), ('ROS_DISTRO', 'humble'), ('LOGNAME', 'nvidia'), ('JETSON_MODULE', 'NVIDIA Jetson Orin Nano (8GB ram)'), ('JETSON_SERIAL_NUMBER', '1421126024259'), ('VSCODE_HANDLES_SIGPIPE', 'true'), ('_', '/usr/bin/colcon'), ('ROS_VERSION', '2'), ('XDG_SESSION_CLASS', 'user'), ('ANTHROPIC_BASE_URL', 'http://192.168.50.76:3000'), ('XDG_SESSION_ID', '3'), ('VSCODE_CLI_REQUIRE_TOKEN', '12470a3d-3c04-4dae-84b1-ca96a54c3e7f'), ('ROS_LOCALHOST_ONLY', '0'), ('MCP_CONNECTION_NONBLOCKING', 'true'), ('PATH', '/home/nvidia/.local/bin:/home/nvidia/.cargo/bin:/home/nvidia/.npm-global/bin:/usr/local/cuda-12.6/bin:/home/nvidia/.vscode-server/cli/servers/Stable-e4c7e7b1d6d060162f4aa7f8225271b67ce1df75/server/bin/remote-cli:/home/nvidia/.local/bin:/home/nvidia/.cargo/bin:/home/nvidia/.cargo/bin:/home/nvidia/.npm-global/bin:/opt/ros/humble/bin:/usr/local/cuda-12.6/bin:/usr/local/sbin:/usr/local/bin:/usr/sbin:/usr/bin:/sbin:/bin:/usr/games:/usr/local/games:/snap/bin:/home/nvidia/.claude/plugins/cache/mattpocock/mattpocock-skills/1.2.3/bin'), ('VSCODE_AGENT_FOLDER', '/home/nvidia/.vscode-server'), ('COREPACK_ENABLE_AUTO_PIN', '0'), ('XDG_RUNTIME_DIR', '/run/user/1000'), ('CLAUDE_EFFORT', 'high'), ('CLAUDE_PID', '20391'), ('NoDefaultCurrentDirectoryInExePath', '1'), ('LANG', 'zh_CN.UTF-8'), ('LS_COLORS', ''), ('JETSON_SOC', 'tegra234'), ('AMENT_PREFIX_PATH', '/opt/ros/humble'), ('SHELL', '/bin/bash'), ('ANTHROPIC_AUTH_TOKEN', 'sk-KbQCT02wki7cd9dT5QZFvDBjR4eJM6qxv9W1Omqat9gyQEhR'), ('ELECTRON_RUN_AS_NODE', '1'), ('CLAUDE_CODE_ENABLE_SDK_FILE_CHECKPOINTING', 'true'), ('CLAUDE_CODE_SESSION_ID', '8d684188-04c1-44c0-9355-04c47b56605a'), ('LESSCLOSE', '/usr/bin/lesspipe %s %s'), ('CLAUDECODE', '1'), ('JETSON_CUDA_ARCH_BIN', '8.7'), ('PWD', '/home/nvidia/DS10_Modbus/build/ds10_interfaces'), ('CODEWHALE_TUI_BIN', '/home/nvidia/.npm-global/bin/codewhale-tui'), ('SSH_CONNECTION', '192.168.130.26 59645 192.168.130.180 22'), ('XDG_DATA_DIRS', '/usr/share/gnome:/usr/local/share:/usr/share:/var/lib/snapd/desktop'), ('CLAUDE_CODE_EXECPATH', '/home/nvidia/.vscode-server/extensions/anthropic.claude-code-2.1.215-linux-arm64/resources/native-binary/claude'), ('PYTHONPATH', '/opt/ros/humble/lib/python3.10/site-packages:/opt/ros/humble/local/lib/python3.10/dist-packages:/usr/local/lib/python3.10/site-packages/:'), ('CLAUDE_CODE_ENABLE_TASKS', '0'), ('COLCON', '1'), ('JETSON_JETPACK', ''), ('JETSON_P_NUMBER', 'p3767-0003'), ('CMAKE_PREFIX_PATH', '/opt/ros/humble')]), 'shell': False}
+[0.099411] (-) TimerEvent: {}
+[0.114853] (ds10_interfaces) StdoutLine: {'line': b'-- The C compiler identification is GNU 11.4.0\n'}
+[0.199586] (-) TimerEvent: {}
+[0.229123] (ds10_interfaces) StdoutLine: {'line': b'-- The CXX compiler identification is GNU 11.4.0\n'}
+[0.248313] (ds10_interfaces) StdoutLine: {'line': b'-- Detecting C compiler ABI info\n'}
+[0.299770] (-) TimerEvent: {}
+[0.391704] (ds10_interfaces) StdoutLine: {'line': b'-- Detecting C compiler ABI info - done\n'}
+[0.399866] (-) TimerEvent: {}
+[0.402321] (ds10_interfaces) StdoutLine: {'line': b'-- Check for working C compiler: /usr/bin/cc - skipped\n'}
+[0.402877] (ds10_interfaces) StdoutLine: {'line': b'-- Detecting C compile features\n'}
+[0.403327] (ds10_interfaces) StdoutLine: {'line': b'-- Detecting C compile features - done\n'}
+[0.408355] (ds10_interfaces) StdoutLine: {'line': b'-- Detecting CXX compiler ABI info\n'}
+[0.500057] (-) TimerEvent: {}
+[0.548154] (ds10_interfaces) StdoutLine: {'line': b'-- Detecting CXX compiler ABI info - done\n'}
+[0.573528] (ds10_interfaces) StdoutLine: {'line': b'-- Check for working CXX compiler: /usr/bin/c++ - skipped\n'}
+[0.574486] (ds10_interfaces) StdoutLine: {'line': b'-- Detecting CXX compile features\n'}
+[0.576233] (ds10_interfaces) StdoutLine: {'line': b'-- Detecting CXX compile features - done\n'}
+[0.584168] (ds10_interfaces) StdoutLine: {'line': b'-- Found ament_cmake: 1.3.14 (/opt/ros/humble/share/ament_cmake/cmake)\n'}
+[0.600118] (-) TimerEvent: {}
+[0.700336] (-) TimerEvent: {}
+[0.800650] (-) TimerEvent: {}
+[0.900971] (-) TimerEvent: {}
+[1.001309] (-) TimerEvent: {}
+[1.101643] (-) TimerEvent: {}
+[1.201945] (-) TimerEvent: {}
+[1.276589] (ds10_interfaces) StdoutLine: {'line': b'-- Found Python3: /usr/bin/python3 (found version "3.10.12") found components: Interpreter \n'}
+[1.302046] (-) TimerEvent: {}
+[1.402354] (-) TimerEvent: {}
+[1.472154] (ds10_interfaces) StdoutLine: {'line': b'-- Found rosidl_default_generators: 1.2.1 (/opt/ros/humble/share/rosidl_default_generators/cmake)\n'}
+[1.480032] (ds10_interfaces) StdoutLine: {'line': b'-- Using all available rosidl_typesupport_c: rosidl_typesupport_fastrtps_c;rosidl_typesupport_introspection_c\n'}
+[1.495753] (ds10_interfaces) StdoutLine: {'line': b'-- Found rosidl_adapter: 3.1.9 (/opt/ros/humble/share/rosidl_adapter/cmake)\n'}
+[1.502412] (-) TimerEvent: {}
+[1.566722] (ds10_interfaces) StdoutLine: {'line': b'-- Using all available rosidl_typesupport_cpp: rosidl_typesupport_fastrtps_cpp;rosidl_typesupport_introspection_cpp\n'}
+[1.602612] (-) TimerEvent: {}
+[1.623232] (ds10_interfaces) StdoutLine: {'line': b'-- Found std_msgs: 4.9.2 (/opt/ros/humble/share/std_msgs/cmake)\n'}
+[1.702746] (-) TimerEvent: {}
+[1.803077] (-) TimerEvent: {}
+[1.903472] (-) TimerEvent: {}
+[2.003875] (-) TimerEvent: {}
+[2.104272] (-) TimerEvent: {}
+[2.204875] (-) TimerEvent: {}
+[2.260014] (ds10_interfaces) StdoutLine: {'line': b'-- Found ament_cmake_ros: 0.10.0 (/opt/ros/humble/share/ament_cmake_ros/cmake)\n'}
+[2.305023] (-) TimerEvent: {}
+[2.405359] (-) TimerEvent: {}
+[2.505699] (-) TimerEvent: {}
+[2.606025] (-) TimerEvent: {}
+[2.706346] (-) TimerEvent: {}
+[2.790615] (ds10_interfaces) StdoutLine: {'line': b'-- Using all available rosidl_typesupport_c: rosidl_typesupport_fastrtps_c;rosidl_typesupport_introspection_c\n'}
+[2.806443] (-) TimerEvent: {}
+[2.906710] (-) TimerEvent: {}
+[3.007092] (-) TimerEvent: {}
+[3.107477] (-) TimerEvent: {}
+[3.207901] (-) TimerEvent: {}
+[3.308256] (-) TimerEvent: {}
+[3.408594] (-) TimerEvent: {}
+[3.492377] (ds10_interfaces) StdoutLine: {'line': b'-- Using all available rosidl_typesupport_cpp: rosidl_typesupport_fastrtps_cpp;rosidl_typesupport_introspection_cpp\n'}
+[3.508689] (-) TimerEvent: {}
+[3.546306] (ds10_interfaces) StdoutLine: {'line': b'-- Found PythonInterp: /usr/bin/python3 (found suitable version "3.10.12", minimum required is "3.6") \n'}
+[3.550838] (ds10_interfaces) StdoutLine: {'line': b'-- Found python_cmake_module: 0.10.0 (/opt/ros/humble/share/python_cmake_module/cmake)\n'}
+[3.608918] (-) TimerEvent: {}
+[3.615126] (ds10_interfaces) StdoutLine: {'line': b'-- Found PythonLibs: /usr/lib/aarch64-linux-gnu/libpython3.10.so (found suitable version "3.10.12", minimum required is "3.5") \n'}
+[3.615824] (ds10_interfaces) StdoutLine: {'line': b'-- Using PYTHON_EXECUTABLE: /usr/bin/python3\n'}
+[3.616087] (ds10_interfaces) StdoutLine: {'line': b'-- Using PYTHON_INCLUDE_DIRS: /usr/include/python3.10\n'}
+[3.616323] (ds10_interfaces) StdoutLine: {'line': b'-- Using PYTHON_LIBRARIES: /usr/lib/aarch64-linux-gnu/libpython3.10.so\n'}
+[3.665177] (ds10_interfaces) StdoutLine: {'line': b'-- Found PythonExtra: .so  \n'}
+[3.709019] (-) TimerEvent: {}
+[3.809326] (-) TimerEvent: {}
+[3.909656] (-) TimerEvent: {}
+[4.010018] (-) TimerEvent: {}
+[4.024601] (ds10_interfaces) StdoutLine: {'line': b'-- Using numpy include directory: /usr/local/lib/python3.10/dist-packages/numpy/core/include\n'}
+[4.110209] (-) TimerEvent: {}
+[4.210570] (-) TimerEvent: {}
+[4.250243] (ds10_interfaces) StdoutLine: {'line': b'-- Configuring done\n'}
+[4.310726] (-) TimerEvent: {}
+[4.330799] (ds10_interfaces) StdoutLine: {'line': b'-- Generating done\n'}
+[4.351398] (ds10_interfaces) StdoutLine: {'line': b'-- Build files have been written to: /home/nvidia/DS10_Modbus/build/ds10_interfaces\n'}
+[4.369553] (ds10_interfaces) CommandEnded: {'returncode': 0}
+[4.370662] (ds10_interfaces) JobProgress: {'identifier': 'ds10_interfaces', 'progress': 'build'}
+[4.371880] (ds10_interfaces) Command: {'cmd': ['/usr/bin/cmake', '--build', '/home/nvidia/DS10_Modbus/build/ds10_interfaces', '--', '-j6', '-l6'], 'cwd': '/home/nvidia/DS10_Modbus/build/ds10_interfaces', 'env': OrderedDict([('LESSOPEN', '| /usr/bin/lesspipe %s'), ('VSCODE_CWD', '/home/nvidia'), ('VSCODE_ESM_ENTRYPOINT', 'vs/workbench/api/node/extensionHostProcess'), ('AI_AGENT', 'claude-code_2-1-215_agent'), ('LANGUAGE', 'zh_CN:zh'), ('CODEX_HOME', '/home/nvidia/.codex'), ('USER', 'nvidia'), ('SSH_CLIENT', '192.168.130.26 59645 22'), ('CLAUDE_CODE_ENTRYPOINT', 'claude-vscode'), ('VSCODE_NLS_CONFIG', '{"userLocale":"zh-cn","osLocale":"zh-cn","resolvedLanguage":"zh-cn","defaultMessagesFile":"/home/nvidia/.vscode-server/cli/servers/Stable-e4c7e7b1d6d060162f4aa7f8225271b67ce1df75/server/out/nls.messages.json","languagePack":{"translationsConfigFile":"/home/nvidia/.vscode-server/data/clp/4c1d03004af65f9b16ba94f4936a2bd5.zh-cn/tcf.json","messagesFile":"/home/nvidia/.vscode-server/data/clp/4c1d03004af65f9b16ba94f4936a2bd5.zh-cn/e4c7e7b1d6d060162f4aa7f8225271b67ce1df75/nls.messages.json","corruptMarkerFile":"/home/nvidia/.vscode-server/data/clp/4c1d03004af65f9b16ba94f4936a2bd5.zh-cn/corrupted.info"},"locale":"zh-cn","availableLanguages":{"*":"zh-cn"},"_languagePackId":"4c1d03004af65f9b16ba94f4936a2bd5.zh-cn","_languagePackSupport":true,"_translationsConfigFile":"/home/nvidia/.vscode-server/data/clp/4c1d03004af65f9b16ba94f4936a2bd5.zh-cn/tcf.json","_cacheRoot":"/home/nvidia/.vscode-server/data/clp/4c1d03004af65f9b16ba94f4936a2bd5.zh-cn","_resolvedLanguagePackCoreLocation":"/home/nvidia/.vscode-server/data/clp/4c1d03004af65f9b16ba94f4936a2bd5.zh-cn/e4c7e7b1d6d060162f4aa7f8225271b67ce1df75","_corruptedFile":"/home/nvidia/.vscode-server/data/clp/4c1d03004af65f9b16ba94f4936a2bd5.zh-cn/corrupted.info"}'), ('GIT_EDITOR', 'true'), ('VSCODE_HANDLES_UNCAUGHT_ERRORS', 'true'), ('XDG_SESSION_TYPE', 'tty'), ('CLAUDE_AGENT_SDK_VERSION', '0.3.215'), ('SHLVL', '0'), ('LD_LIBRARY_PATH', '/opt/ros/humble/opt/rviz_ogre_vendor/lib:/opt/ros/humble/lib/aarch64-linux-gnu:/opt/ros/humble/lib:/usr/local/lib:/usr/local/cuda-12.6/lib64:'), ('BROWSER', '/home/nvidia/.vscode-server/cli/servers/Stable-e4c7e7b1d6d060162f4aa7f8225271b67ce1df75/server/bin/helpers/browser.sh'), ('MOTD_SHOWN', 'pam'), ('HOME', '/home/nvidia'), ('VSCODE_RECONNECTION_GRACE_TIME', '10800000'), ('VSCODE_IPC_HOOK_CLI', '/run/user/1000/vscode-ipc-f7907052-7d99-418a-872f-23827cf78271.sock'), ('JETSON_L4T', '36.4.7'), ('ROS_PYTHON_VERSION', '3'), ('JETSON_MODEL', 'NVIDIA Jetson Orin Nano Engineering Reference Developer Kit Super'), ('CLAUDE_CODE_CHILD_SESSION', '1'), ('DBUS_SESSION_BUS_ADDRESS', 'unix:path=/run/user/1000/bus'), ('ROS_DISTRO', 'humble'), ('LOGNAME', 'nvidia'), ('JETSON_MODULE', 'NVIDIA Jetson Orin Nano (8GB ram)'), ('JETSON_SERIAL_NUMBER', '1421126024259'), ('VSCODE_HANDLES_SIGPIPE', 'true'), ('_', '/usr/bin/colcon'), ('ROS_VERSION', '2'), ('XDG_SESSION_CLASS', 'user'), ('ANTHROPIC_BASE_URL', 'http://192.168.50.76:3000'), ('XDG_SESSION_ID', '3'), ('VSCODE_CLI_REQUIRE_TOKEN', '12470a3d-3c04-4dae-84b1-ca96a54c3e7f'), ('ROS_LOCALHOST_ONLY', '0'), ('MCP_CONNECTION_NONBLOCKING', 'true'), ('PATH', '/home/nvidia/.local/bin:/home/nvidia/.cargo/bin:/home/nvidia/.npm-global/bin:/usr/local/cuda-12.6/bin:/home/nvidia/.vscode-server/cli/servers/Stable-e4c7e7b1d6d060162f4aa7f8225271b67ce1df75/server/bin/remote-cli:/home/nvidia/.local/bin:/home/nvidia/.cargo/bin:/home/nvidia/.cargo/bin:/home/nvidia/.npm-global/bin:/opt/ros/humble/bin:/usr/local/cuda-12.6/bin:/usr/local/sbin:/usr/local/bin:/usr/sbin:/usr/bin:/sbin:/bin:/usr/games:/usr/local/games:/snap/bin:/home/nvidia/.claude/plugins/cache/mattpocock/mattpocock-skills/1.2.3/bin'), ('VSCODE_AGENT_FOLDER', '/home/nvidia/.vscode-server'), ('COREPACK_ENABLE_AUTO_PIN', '0'), ('XDG_RUNTIME_DIR', '/run/user/1000'), ('CLAUDE_EFFORT', 'high'), ('CLAUDE_PID', '20391'), ('NoDefaultCurrentDirectoryInExePath', '1'), ('LANG', 'zh_CN.UTF-8'), ('LS_COLORS', ''), ('JETSON_SOC', 'tegra234'), ('AMENT_PREFIX_PATH', '/opt/ros/humble'), ('SHELL', '/bin/bash'), ('ANTHROPIC_AUTH_TOKEN', 'sk-KbQCT02wki7cd9dT5QZFvDBjR4eJM6qxv9W1Omqat9gyQEhR'), ('ELECTRON_RUN_AS_NODE', '1'), ('CLAUDE_CODE_ENABLE_SDK_FILE_CHECKPOINTING', 'true'), ('CLAUDE_CODE_SESSION_ID', '8d684188-04c1-44c0-9355-04c47b56605a'), ('LESSCLOSE', '/usr/bin/lesspipe %s %s'), ('CLAUDECODE', '1'), ('JETSON_CUDA_ARCH_BIN', '8.7'), ('PWD', '/home/nvidia/DS10_Modbus/build/ds10_interfaces'), ('CODEWHALE_TUI_BIN', '/home/nvidia/.npm-global/bin/codewhale-tui'), ('SSH_CONNECTION', '192.168.130.26 59645 192.168.130.180 22'), ('XDG_DATA_DIRS', '/usr/share/gnome:/usr/local/share:/usr/share:/var/lib/snapd/desktop'), ('CLAUDE_CODE_EXECPATH', '/home/nvidia/.vscode-server/extensions/anthropic.claude-code-2.1.215-linux-arm64/resources/native-binary/claude'), ('PYTHONPATH', '/opt/ros/humble/lib/python3.10/site-packages:/opt/ros/humble/local/lib/python3.10/dist-packages:/usr/local/lib/python3.10/site-packages/:'), ('CLAUDE_CODE_ENABLE_TASKS', '0'), ('COLCON', '1'), ('JETSON_JETPACK', ''), ('JETSON_P_NUMBER', 'p3767-0003'), ('CMAKE_PREFIX_PATH', '/opt/ros/humble')]), 'shell': False}
+[4.410905] (-) TimerEvent: {}
+[4.456309] (ds10_interfaces) StdoutLine: {'line': b'[  3%] Generating C code for ROS interfaces\n'}
+[4.473668] (ds10_interfaces) StdoutLine: {'line': b'[  6%] Generating Rust code for ROS interfaces\n'}
+[4.474496] (ds10_interfaces) StdoutLine: {'line': b'[  9%] Generating C++ code for ROS interfaces\n'}
+[4.491475] (ds10_interfaces) StdoutLine: {'line': b'[  9%] Built target ament_cmake_python_copy_ds10_interfaces\n'}
+[4.511046] (-) TimerEvent: {}
+[4.611377] (-) TimerEvent: {}
+[4.711710] (-) TimerEvent: {}
+[4.812035] (-) TimerEvent: {}
+[4.871977] (ds10_interfaces) StdoutLine: {'line': b'running egg_info\n'}
+[4.874519] (ds10_interfaces) StdoutLine: {'line': b'creating ds10_interfaces.egg-info\n'}
+[4.905816] (ds10_interfaces) StdoutLine: {'line': b'writing ds10_interfaces.egg-info/PKG-INFO\n'}
+[4.906555] (ds10_interfaces) StdoutLine: {'line': b'writing dependency_links to ds10_interfaces.egg-info/dependency_links.txt\n'}
+[4.907626] (ds10_interfaces) StdoutLine: {'line': b'writing top-level names to ds10_interfaces.egg-info/top_level.txt\n'}
+[4.907862] (ds10_interfaces) StdoutLine: {'line': b"writing manifest file 'ds10_interfaces.egg-info/SOURCES.txt'\n"}
+[4.912150] (-) TimerEvent: {}
+[5.002067] (ds10_interfaces) StdoutLine: {'line': b"reading manifest file 'ds10_interfaces.egg-info/SOURCES.txt'\n"}
+[5.004348] (ds10_interfaces) StdoutLine: {'line': b"writing manifest file 'ds10_interfaces.egg-info/SOURCES.txt'\n"}
+[5.012345] (-) TimerEvent: {}
+[5.076699] (ds10_interfaces) StdoutLine: {'line': b'[  9%] Built target ament_cmake_python_build_ds10_interfaces_egg\n'}
+[5.082372] (ds10_interfaces) StdoutLine: {'line': b'[  9%] Built target ds10_interfaces__rs\n'}
+[5.112526] (-) TimerEvent: {}
+[5.118255] (ds10_interfaces) StdoutLine: {'line': b'[  9%] Built target ds10_interfaces__cpp\n'}
+[5.132408] (ds10_interfaces) StdoutLine: {'line': b'[ 12%] Building C object CMakeFiles/ds10_interfaces__rosidl_generator_c.dir/rosidl_generator_c/ds10_interfaces/msg/detail/frame__functions.c.o\n'}
+[5.136187] (ds10_interfaces) StdoutLine: {'line': b'[ 18%] Generating C++ introspection for ROS interfaces\n'}
+[5.136475] (ds10_interfaces) StdoutLine: {'line': b'[ 18%] Generating C++ type support for eProsima Fast-RTPS\n'}
+[5.136594] (ds10_interfaces) StdoutLine: {'line': b'[ 21%] Generating C++ type support dispatch for ROS interfaces\n'}
+[5.212670] (-) TimerEvent: {}
+[5.228621] (ds10_interfaces) StdoutLine: {'line': b'[ 25%] Linking C shared library libds10_interfaces__rosidl_generator_c.so\n'}
+[5.299120] (ds10_interfaces) StdoutLine: {'line': b'[ 25%] Built target ds10_interfaces__rosidl_generator_c\n'}
+[5.312847] (-) TimerEvent: {}
+[5.318795] (ds10_interfaces) StdoutLine: {'line': b'[ 31%] Generating C type support for eProsima Fast-RTPS\n'}
+[5.319176] (ds10_interfaces) StdoutLine: {'line': b'[ 31%] Generating C type support dispatch for ROS interfaces\n'}
+[5.345670] (ds10_interfaces) StdoutLine: {'line': b'[ 34%] Generating C introspection for ROS interfaces\n'}
+[5.413017] (-) TimerEvent: {}
+[5.513360] (-) TimerEvent: {}
+[5.613724] (-) TimerEvent: {}
+[5.714057] (-) TimerEvent: {}
+[5.814442] (-) TimerEvent: {}
+[5.818119] (ds10_interfaces) StdoutLine: {'line': b'[ 37%] Building CXX object CMakeFiles/ds10_interfaces__rosidl_typesupport_introspection_cpp.dir/rosidl_typesupport_introspection_cpp/ds10_interfaces/msg/detail/frame__type_support.cpp.o\n'}
+[5.836047] (ds10_interfaces) StdoutLine: {'line': b'[ 40%] Building CXX object CMakeFiles/ds10_interfaces__rosidl_typesupport_fastrtps_cpp.dir/rosidl_typesupport_fastrtps_cpp/ds10_interfaces/msg/detail/dds_fastrtps/frame__type_support.cpp.o\n'}
+[5.873881] (ds10_interfaces) StdoutLine: {'line': b'[ 43%] Building CXX object CMakeFiles/ds10_interfaces__rosidl_typesupport_cpp.dir/rosidl_typesupport_cpp/ds10_interfaces/msg/frame__type_support.cpp.o\n'}
+[5.913678] (ds10_interfaces) StdoutLine: {'line': b'[ 46%] Building CXX object CMakeFiles/ds10_interfaces__rosidl_typesupport_c.dir/rosidl_typesupport_c/ds10_interfaces/msg/frame__type_support.cpp.o\n'}
+[5.914525] (-) TimerEvent: {}
+[6.002843] (ds10_interfaces) StdoutLine: {'line': b'[ 50%] Linking CXX shared library libds10_interfaces__rosidl_typesupport_c.so\n'}
+[6.014774] (-) TimerEvent: {}
+[6.074381] (ds10_interfaces) StdoutLine: {'line': b'[ 53%] Building CXX object CMakeFiles/ds10_interfaces__rosidl_typesupport_fastrtps_c.dir/rosidl_typesupport_fastrtps_c/ds10_interfaces/msg/detail/frame__type_support_c.cpp.o\n'}
+[6.093590] (ds10_interfaces) StdoutLine: {'line': b'[ 53%] Built target ds10_interfaces__rosidl_typesupport_c\n'}
+[6.115997] (-) TimerEvent: {}
+[6.144451] (ds10_interfaces) StdoutLine: {'line': b'[ 56%] Building C object CMakeFiles/ds10_interfaces__rosidl_typesupport_introspection_c.dir/rosidl_typesupport_introspection_c/ds10_interfaces/msg/detail/frame__type_support.c.o\n'}
+[6.216176] (-) TimerEvent: {}
+[6.226959] (ds10_interfaces) StdoutLine: {'line': b'[ 59%] Linking C shared library libds10_interfaces__rosidl_typesupport_introspection_c.so\n'}
+[6.290880] (ds10_interfaces) StdoutLine: {'line': b'[ 59%] Built target ds10_interfaces__rosidl_typesupport_introspection_c\n'}
+[6.316362] (-) TimerEvent: {}
+[6.416764] (-) TimerEvent: {}
+[6.442334] (ds10_interfaces) StdoutLine: {'line': b'[ 62%] Linking CXX shared library libds10_interfaces__rosidl_typesupport_cpp.so\n'}
+[6.516966] (-) TimerEvent: {}
+[6.519966] (ds10_interfaces) StdoutLine: {'line': b'[ 62%] Built target ds10_interfaces__rosidl_typesupport_cpp\n'}
+[6.617145] (-) TimerEvent: {}
+[6.701004] (ds10_interfaces) StdoutLine: {'line': b'[ 65%] Linking CXX shared library libds10_interfaces__rosidl_typesupport_introspection_cpp.so\n'}
+[6.717323] (-) TimerEvent: {}
+[6.741199] (ds10_interfaces) StdoutLine: {'line': b'[ 68%] Linking CXX shared library libds10_interfaces__rosidl_typesupport_fastrtps_cpp.so\n'}
+[6.761666] (ds10_interfaces) StdoutLine: {'line': b'[ 71%] Linking CXX shared library libds10_interfaces__rosidl_typesupport_fastrtps_c.so\n'}
+[6.817540] (-) TimerEvent: {}
+[6.855122] (ds10_interfaces) StdoutLine: {'line': b'[ 71%] Built target ds10_interfaces__rosidl_typesupport_introspection_cpp\n'}
+[6.895879] (ds10_interfaces) StdoutLine: {'line': b'[ 71%] Built target ds10_interfaces__rosidl_typesupport_fastrtps_cpp\n'}
+[6.917719] (-) TimerEvent: {}
+[6.929247] (ds10_interfaces) StdoutLine: {'line': b'[ 71%] Built target ds10_interfaces__rosidl_typesupport_fastrtps_c\n'}
+[6.964700] (ds10_interfaces) StdoutLine: {'line': b'[ 71%] Built target ds10_interfaces\n'}
+[7.001767] (ds10_interfaces) StdoutLine: {'line': b'[ 75%] Generating Python code for ROS interfaces\n'}
+[7.017830] (-) TimerEvent: {}
+[7.118161] (-) TimerEvent: {}
+[7.218567] (-) TimerEvent: {}
+[7.318930] (-) TimerEvent: {}
+[7.419292] (-) TimerEvent: {}
+[7.519664] (-) TimerEvent: {}
+[7.619991] (-) TimerEvent: {}
+[7.720365] (-) TimerEvent: {}
+[7.795760] (ds10_interfaces) StdoutLine: {'line': b'[ 75%] Built target ds10_interfaces__py\n'}
+[7.820537] (-) TimerEvent: {}
+[7.833213] (ds10_interfaces) StdoutLine: {'line': b'[ 78%] Building C object CMakeFiles/ds10_interfaces__rosidl_generator_py.dir/rosidl_generator_py/ds10_interfaces/msg/_frame_s.c.o\n'}
+[7.920759] (-) TimerEvent: {}
+[8.021227] (-) TimerEvent: {}
+[8.033474] (ds10_interfaces) StdoutLine: {'line': b'[ 81%] Linking C shared library rosidl_generator_py/ds10_interfaces/libds10_interfaces__rosidl_generator_py.so\n'}
+[8.114031] (ds10_interfaces) StdoutLine: {'line': b'[ 81%] Built target ds10_interfaces__rosidl_generator_py\n'}
+[8.121376] (-) TimerEvent: {}
+[8.151529] (ds10_interfaces) StdoutLine: {'line': b'[ 87%] Building C object CMakeFiles/ds10_interfaces__rosidl_typesupport_c__pyext.dir/rosidl_generator_py/ds10_interfaces/_ds10_interfaces_s.ep.rosidl_typesupport_c.c.o\n'}
+[8.152229] (ds10_interfaces) StdoutLine: {'line': b'[ 87%] Building C object CMakeFiles/ds10_interfaces__rosidl_typesupport_fastrtps_c__pyext.dir/rosidl_generator_py/ds10_interfaces/_ds10_interfaces_s.ep.rosidl_typesupport_fastrtps_c.c.o\n'}
+[8.156205] (ds10_interfaces) StdoutLine: {'line': b'[ 90%] Building C object CMakeFiles/ds10_interfaces__rosidl_typesupport_introspection_c__pyext.dir/rosidl_generator_py/ds10_interfaces/_ds10_interfaces_s.ep.rosidl_typesupport_introspection_c.c.o\n'}
+[8.221572] (-) TimerEvent: {}
+[8.322001] (-) TimerEvent: {}
+[8.330638] (ds10_interfaces) StdoutLine: {'line': b'[ 96%] Linking C shared library rosidl_generator_py/ds10_interfaces/ds10_interfaces_s__rosidl_typesupport_c.cpython-310-aarch64-linux-gnu.so\n'}
+[8.331192] (ds10_interfaces) StdoutLine: {'line': b'[ 96%] Linking C shared library rosidl_generator_py/ds10_interfaces/ds10_interfaces_s__rosidl_typesupport_fastrtps_c.cpython-310-aarch64-linux-gnu.so\n'}
+[8.345548] (ds10_interfaces) StdoutLine: {'line': b'[100%] Linking C shared library rosidl_generator_py/ds10_interfaces/ds10_interfaces_s__rosidl_typesupport_introspection_c.cpython-310-aarch64-linux-gnu.so\n'}
+[8.400531] (ds10_interfaces) StdoutLine: {'line': b'[100%] Built target ds10_interfaces__rosidl_typesupport_fastrtps_c__pyext\n'}
+[8.400933] (ds10_interfaces) StdoutLine: {'line': b'[100%] Built target ds10_interfaces__rosidl_typesupport_c__pyext\n'}
+[8.419037] (ds10_interfaces) StdoutLine: {'line': b'[100%] Built target ds10_interfaces__rosidl_typesupport_introspection_c__pyext\n'}
+[8.422052] (-) TimerEvent: {}
+[8.441021] (ds10_interfaces) CommandEnded: {'returncode': 0}
+[8.442389] (ds10_interfaces) JobProgress: {'identifier': 'ds10_interfaces', 'progress': 'install'}
+[8.458275] (ds10_interfaces) Command: {'cmd': ['/usr/bin/cmake', '--install', '/home/nvidia/DS10_Modbus/build/ds10_interfaces'], 'cwd': '/home/nvidia/DS10_Modbus/build/ds10_interfaces', 'env': OrderedDict([('LESSOPEN', '| /usr/bin/lesspipe %s'), ('VSCODE_CWD', '/home/nvidia'), ('VSCODE_ESM_ENTRYPOINT', 'vs/workbench/api/node/extensionHostProcess'), ('AI_AGENT', 'claude-code_2-1-215_agent'), ('LANGUAGE', 'zh_CN:zh'), ('CODEX_HOME', '/home/nvidia/.codex'), ('USER', 'nvidia'), ('SSH_CLIENT', '192.168.130.26 59645 22'), ('CLAUDE_CODE_ENTRYPOINT', 'claude-vscode'), ('VSCODE_NLS_CONFIG', '{"userLocale":"zh-cn","osLocale":"zh-cn","resolvedLanguage":"zh-cn","defaultMessagesFile":"/home/nvidia/.vscode-server/cli/servers/Stable-e4c7e7b1d6d060162f4aa7f8225271b67ce1df75/server/out/nls.messages.json","languagePack":{"translationsConfigFile":"/home/nvidia/.vscode-server/data/clp/4c1d03004af65f9b16ba94f4936a2bd5.zh-cn/tcf.json","messagesFile":"/home/nvidia/.vscode-server/data/clp/4c1d03004af65f9b16ba94f4936a2bd5.zh-cn/e4c7e7b1d6d060162f4aa7f8225271b67ce1df75/nls.messages.json","corruptMarkerFile":"/home/nvidia/.vscode-server/data/clp/4c1d03004af65f9b16ba94f4936a2bd5.zh-cn/corrupted.info"},"locale":"zh-cn","availableLanguages":{"*":"zh-cn"},"_languagePackId":"4c1d03004af65f9b16ba94f4936a2bd5.zh-cn","_languagePackSupport":true,"_translationsConfigFile":"/home/nvidia/.vscode-server/data/clp/4c1d03004af65f9b16ba94f4936a2bd5.zh-cn/tcf.json","_cacheRoot":"/home/nvidia/.vscode-server/data/clp/4c1d03004af65f9b16ba94f4936a2bd5.zh-cn","_resolvedLanguagePackCoreLocation":"/home/nvidia/.vscode-server/data/clp/4c1d03004af65f9b16ba94f4936a2bd5.zh-cn/e4c7e7b1d6d060162f4aa7f8225271b67ce1df75","_corruptedFile":"/home/nvidia/.vscode-server/data/clp/4c1d03004af65f9b16ba94f4936a2bd5.zh-cn/corrupted.info"}'), ('GIT_EDITOR', 'true'), ('VSCODE_HANDLES_UNCAUGHT_ERRORS', 'true'), ('XDG_SESSION_TYPE', 'tty'), ('CLAUDE_AGENT_SDK_VERSION', '0.3.215'), ('SHLVL', '0'), ('LD_LIBRARY_PATH', '/opt/ros/humble/opt/rviz_ogre_vendor/lib:/opt/ros/humble/lib/aarch64-linux-gnu:/opt/ros/humble/lib:/usr/local/lib:/usr/local/cuda-12.6/lib64:'), ('BROWSER', '/home/nvidia/.vscode-server/cli/servers/Stable-e4c7e7b1d6d060162f4aa7f8225271b67ce1df75/server/bin/helpers/browser.sh'), ('MOTD_SHOWN', 'pam'), ('HOME', '/home/nvidia'), ('VSCODE_RECONNECTION_GRACE_TIME', '10800000'), ('VSCODE_IPC_HOOK_CLI', '/run/user/1000/vscode-ipc-f7907052-7d99-418a-872f-23827cf78271.sock'), ('JETSON_L4T', '36.4.7'), ('ROS_PYTHON_VERSION', '3'), ('JETSON_MODEL', 'NVIDIA Jetson Orin Nano Engineering Reference Developer Kit Super'), ('CLAUDE_CODE_CHILD_SESSION', '1'), ('DBUS_SESSION_BUS_ADDRESS', 'unix:path=/run/user/1000/bus'), ('ROS_DISTRO', 'humble'), ('LOGNAME', 'nvidia'), ('JETSON_MODULE', 'NVIDIA Jetson Orin Nano (8GB ram)'), ('JETSON_SERIAL_NUMBER', '1421126024259'), ('VSCODE_HANDLES_SIGPIPE', 'true'), ('_', '/usr/bin/colcon'), ('ROS_VERSION', '2'), ('XDG_SESSION_CLASS', 'user'), ('ANTHROPIC_BASE_URL', 'http://192.168.50.76:3000'), ('XDG_SESSION_ID', '3'), ('VSCODE_CLI_REQUIRE_TOKEN', '12470a3d-3c04-4dae-84b1-ca96a54c3e7f'), ('ROS_LOCALHOST_ONLY', '0'), ('MCP_CONNECTION_NONBLOCKING', 'true'), ('PATH', '/home/nvidia/.local/bin:/home/nvidia/.cargo/bin:/home/nvidia/.npm-global/bin:/usr/local/cuda-12.6/bin:/home/nvidia/.vscode-server/cli/servers/Stable-e4c7e7b1d6d060162f4aa7f8225271b67ce1df75/server/bin/remote-cli:/home/nvidia/.local/bin:/home/nvidia/.cargo/bin:/home/nvidia/.cargo/bin:/home/nvidia/.npm-global/bin:/opt/ros/humble/bin:/usr/local/cuda-12.6/bin:/usr/local/sbin:/usr/local/bin:/usr/sbin:/usr/bin:/sbin:/bin:/usr/games:/usr/local/games:/snap/bin:/home/nvidia/.claude/plugins/cache/mattpocock/mattpocock-skills/1.2.3/bin'), ('VSCODE_AGENT_FOLDER', '/home/nvidia/.vscode-server'), ('COREPACK_ENABLE_AUTO_PIN', '0'), ('XDG_RUNTIME_DIR', '/run/user/1000'), ('CLAUDE_EFFORT', 'high'), ('CLAUDE_PID', '20391'), ('NoDefaultCurrentDirectoryInExePath', '1'), ('LANG', 'zh_CN.UTF-8'), ('LS_COLORS', ''), ('JETSON_SOC', 'tegra234'), ('AMENT_PREFIX_PATH', '/opt/ros/humble'), ('SHELL', '/bin/bash'), ('ANTHROPIC_AUTH_TOKEN', 'sk-KbQCT02wki7cd9dT5QZFvDBjR4eJM6qxv9W1Omqat9gyQEhR'), ('ELECTRON_RUN_AS_NODE', '1'), ('CLAUDE_CODE_ENABLE_SDK_FILE_CHECKPOINTING', 'true'), ('CLAUDE_CODE_SESSION_ID', '8d684188-04c1-44c0-9355-04c47b56605a'), ('LESSCLOSE', '/usr/bin/lesspipe %s %s'), ('CLAUDECODE', '1'), ('JETSON_CUDA_ARCH_BIN', '8.7'), ('PWD', '/home/nvidia/DS10_Modbus/build/ds10_interfaces'), ('CODEWHALE_TUI_BIN', '/home/nvidia/.npm-global/bin/codewhale-tui'), ('SSH_CONNECTION', '192.168.130.26 59645 192.168.130.180 22'), ('XDG_DATA_DIRS', '/usr/share/gnome:/usr/local/share:/usr/share:/var/lib/snapd/desktop'), ('CLAUDE_CODE_EXECPATH', '/home/nvidia/.vscode-server/extensions/anthropic.claude-code-2.1.215-linux-arm64/resources/native-binary/claude'), ('PYTHONPATH', '/opt/ros/humble/lib/python3.10/site-packages:/opt/ros/humble/local/lib/python3.10/dist-packages:/usr/local/lib/python3.10/site-packages/:'), ('CLAUDE_CODE_ENABLE_TASKS', '0'), ('COLCON', '1'), ('JETSON_JETPACK', ''), ('JETSON_P_NUMBER', 'p3767-0003'), ('CMAKE_PREFIX_PATH', '/opt/ros/humble')]), 'shell': False}
+[8.474109] (ds10_interfaces) StdoutLine: {'line': b'-- Install configuration: ""\n'}
+[8.474633] (ds10_interfaces) StdoutLine: {'line': b'-- Installing: /home/nvidia/DS10_Modbus/install/ds10_interfaces/share/ament_index/resource_index/rosidl_interfaces/ds10_interfaces\n'}
+[8.474846] (ds10_interfaces) StdoutLine: {'line': b'-- Installing: /home/nvidia/DS10_Modbus/install/ds10_interfaces/include/ds10_interfaces/ds10_interfaces\n'}
+[8.475036] (ds10_interfaces) StdoutLine: {'line': b'-- Installing: /home/nvidia/DS10_Modbus/install/ds10_interfaces/include/ds10_interfaces/ds10_interfaces/msg\n'}
+[8.475273] (ds10_interfaces) StdoutLine: {'line': b'-- Installing: /home/nvidia/DS10_Modbus/install/ds10_interfaces/include/ds10_interfaces/ds10_interfaces/msg/frame.h\n'}
+[8.475444] (ds10_interfaces) StdoutLine: {'line': b'-- Installing: /home/nvidia/DS10_Modbus/install/ds10_interfaces/include/ds10_interfaces/ds10_interfaces/msg/detail\n'}
+[8.475627] (ds10_interfaces) StdoutLine: {'line': b'-- Installing: /home/nvidia/DS10_Modbus/install/ds10_interfaces/include/ds10_interfaces/ds10_interfaces/msg/detail/frame__type_support.h\n'}
+[8.475743] (ds10_interfaces) StdoutLine: {'line': b'-- Installing: /home/nvidia/DS10_Modbus/install/ds10_interfaces/include/ds10_interfaces/ds10_interfaces/msg/detail/frame__functions.c\n'}
+[8.475841] (ds10_interfaces) StdoutLine: {'line': b'-- Installing: /home/nvidia/DS10_Modbus/install/ds10_interfaces/include/ds10_interfaces/ds10_interfaces/msg/detail/frame__functions.h\n'}
+[8.476258] (ds10_interfaces) StdoutLine: {'line': b'-- Installing: /home/nvidia/DS10_Modbus/install/ds10_interfaces/include/ds10_interfaces/ds10_interfaces/msg/detail/frame__struct.h\n'}
+[8.476458] (ds10_interfaces) StdoutLine: {'line': b'-- Installing: /home/nvidia/DS10_Modbus/install/ds10_interfaces/include/ds10_interfaces/ds10_interfaces/msg/rosidl_generator_c__visibility_control.h\n'}
+[8.476733] (ds10_interfaces) StdoutLine: {'line': b'-- Installing: /home/nvidia/DS10_Modbus/install/ds10_interfaces/share/ds10_interfaces/environment/library_path.sh\n'}
+[8.476947] (ds10_interfaces) StdoutLine: {'line': b'-- Installing: /home/nvidia/DS10_Modbus/install/ds10_interfaces/share/ds10_interfaces/environment/library_path.dsv\n'}
+[8.477251] (ds10_interfaces) StdoutLine: {'line': b'-- Installing: /home/nvidia/DS10_Modbus/install/ds10_interfaces/lib/libds10_interfaces__rosidl_generator_c.so\n'}
+[8.477740] (ds10_interfaces) StdoutLine: {'line': b'-- Set runtime path of "/home/nvidia/DS10_Modbus/install/ds10_interfaces/lib/libds10_interfaces__rosidl_generator_c.so" to ""\n'}
+[8.478061] (ds10_interfaces) StdoutLine: {'line': b'-- Up-to-date: /home/nvidia/DS10_Modbus/install/ds10_interfaces/include/ds10_interfaces/ds10_interfaces\n'}
+[8.478160] (ds10_interfaces) StdoutLine: {'line': b'-- Up-to-date: /home/nvidia/DS10_Modbus/install/ds10_interfaces/include/ds10_interfaces/ds10_interfaces/msg\n'}
+[8.478325] (ds10_interfaces) StdoutLine: {'line': b'-- Up-to-date: /home/nvidia/DS10_Modbus/install/ds10_interfaces/include/ds10_interfaces/ds10_interfaces/msg/detail\n'}
+[8.478486] (ds10_interfaces) StdoutLine: {'line': b'-- Installing: /home/nvidia/DS10_Modbus/install/ds10_interfaces/include/ds10_interfaces/ds10_interfaces/msg/detail/frame__rosidl_typesupport_fastrtps_c.h\n'}
+[8.478583] (ds10_interfaces) StdoutLine: {'line': b'-- Installing: /home/nvidia/DS10_Modbus/install/ds10_interfaces/include/ds10_interfaces/ds10_interfaces/msg/rosidl_typesupport_fastrtps_c__visibility_control.h\n'}
+[8.478675] (ds10_interfaces) StdoutLine: {'line': b'-- Installing: /home/nvidia/DS10_Modbus/install/ds10_interfaces/lib/libds10_interfaces__rosidl_typesupport_fastrtps_c.so\n'}
+[8.478924] (ds10_interfaces) StdoutLine: {'line': b'-- Set runtime path of "/home/nvidia/DS10_Modbus/install/ds10_interfaces/lib/libds10_interfaces__rosidl_typesupport_fastrtps_c.so" to ""\n'}
+[8.479199] (ds10_interfaces) StdoutLine: {'line': b'-- Up-to-date: /home/nvidia/DS10_Modbus/install/ds10_interfaces/include/ds10_interfaces/ds10_interfaces\n'}
+[8.479413] (ds10_interfaces) StdoutLine: {'line': b'-- Up-to-date: /home/nvidia/DS10_Modbus/install/ds10_interfaces/include/ds10_interfaces/ds10_interfaces/msg\n'}
+[8.479572] (ds10_interfaces) StdoutLine: {'line': b'-- Installing: /home/nvidia/DS10_Modbus/install/ds10_interfaces/include/ds10_interfaces/ds10_interfaces/msg/rosidl_typesupport_introspection_c__visibility_control.h\n'}
+[8.479698] (ds10_interfaces) StdoutLine: {'line': b'-- Up-to-date: /home/nvidia/DS10_Modbus/install/ds10_interfaces/include/ds10_interfaces/ds10_interfaces/msg/detail\n'}
+[8.479807] (ds10_interfaces) StdoutLine: {'line': b'-- Installing: /home/nvidia/DS10_Modbus/install/ds10_interfaces/include/ds10_interfaces/ds10_interfaces/msg/detail/frame__rosidl_typesupport_introspection_c.h\n'}
+[8.479902] (ds10_interfaces) StdoutLine: {'line': b'-- Installing: /home/nvidia/DS10_Modbus/install/ds10_interfaces/include/ds10_interfaces/ds10_interfaces/msg/detail/frame__type_support.c\n'}
+[8.480073] (ds10_interfaces) StdoutLine: {'line': b'-- Installing: /home/nvidia/DS10_Modbus/install/ds10_interfaces/lib/libds10_interfaces__rosidl_typesupport_introspection_c.so\n'}
+[8.480440] (ds10_interfaces) StdoutLine: {'line': b'-- Set runtime path of "/home/nvidia/DS10_Modbus/install/ds10_interfaces/lib/libds10_interfaces__rosidl_typesupport_introspection_c.so" to ""\n'}
+[8.480614] (ds10_interfaces) StdoutLine: {'line': b'-- Installing: /home/nvidia/DS10_Modbus/install/ds10_interfaces/lib/libds10_interfaces__rosidl_typesupport_c.so\n'}
+[8.480956] (ds10_interfaces) StdoutLine: {'line': b'-- Set runtime path of "/home/nvidia/DS10_Modbus/install/ds10_interfaces/lib/libds10_interfaces__rosidl_typesupport_c.so" to ""\n'}
+[8.481269] (ds10_interfaces) StdoutLine: {'line': b'-- Up-to-date: /home/nvidia/DS10_Modbus/install/ds10_interfaces/include/ds10_interfaces/ds10_interfaces\n'}
+[8.481445] (ds10_interfaces) StdoutLine: {'line': b'-- Up-to-date: /home/nvidia/DS10_Modbus/install/ds10_interfaces/include/ds10_interfaces/ds10_interfaces/msg\n'}
+[8.481547] (ds10_interfaces) StdoutLine: {'line': b'-- Up-to-date: /home/nvidia/DS10_Modbus/install/ds10_interfaces/include/ds10_interfaces/ds10_interfaces/msg/detail\n'}
+[8.481708] (ds10_interfaces) StdoutLine: {'line': b'-- Installing: /home/nvidia/DS10_Modbus/install/ds10_interfaces/include/ds10_interfaces/ds10_interfaces/msg/detail/frame__traits.hpp\n'}
+[8.481874] (ds10_interfaces) StdoutLine: {'line': b'-- Installing: /home/nvidia/DS10_Modbus/install/ds10_interfaces/include/ds10_interfaces/ds10_interfaces/msg/detail/frame__type_support.hpp\n'}
+[8.482040] (ds10_interfaces) StdoutLine: {'line': b'-- Installing: /home/nvidia/DS10_Modbus/install/ds10_interfaces/include/ds10_interfaces/ds10_interfaces/msg/detail/frame__struct.hpp\n'}
+[8.482203] (ds10_interfaces) StdoutLine: {'line': b'-- Installing: /home/nvidia/DS10_Modbus/install/ds10_interfaces/include/ds10_interfaces/ds10_interfaces/msg/detail/frame__builder.hpp\n'}
+[8.482452] (ds10_interfaces) StdoutLine: {'line': b'-- Installing: /home/nvidia/DS10_Modbus/install/ds10_interfaces/include/ds10_interfaces/ds10_interfaces/msg/frame.hpp\n'}
+[8.482614] (ds10_interfaces) StdoutLine: {'line': b'-- Installing: /home/nvidia/DS10_Modbus/install/ds10_interfaces/include/ds10_interfaces/ds10_interfaces/msg/rosidl_generator_cpp__visibility_control.hpp\n'}
+[8.482833] (ds10_interfaces) StdoutLine: {'line': b'-- Up-to-date: /home/nvidia/DS10_Modbus/install/ds10_interfaces/include/ds10_interfaces/ds10_interfaces\n'}
+[8.482958] (ds10_interfaces) StdoutLine: {'line': b'-- Up-to-date: /home/nvidia/DS10_Modbus/install/ds10_interfaces/include/ds10_interfaces/ds10_interfaces/msg\n'}
+[8.483123] (ds10_interfaces) StdoutLine: {'line': b'-- Up-to-date: /home/nvidia/DS10_Modbus/install/ds10_interfaces/include/ds10_interfaces/ds10_interfaces/msg/detail\n'}
+[8.483220] (ds10_interfaces) StdoutLine: {'line': b'-- Installing: /home/nvidia/DS10_Modbus/install/ds10_interfaces/include/ds10_interfaces/ds10_interfaces/msg/detail/frame__rosidl_typesupport_fastrtps_cpp.hpp\n'}
+[8.483313] (ds10_interfaces) StdoutLine: {'line': b'-- Installing: /home/nvidia/DS10_Modbus/install/ds10_interfaces/include/ds10_interfaces/ds10_interfaces/msg/detail/dds_fastrtps\n'}
+[8.483403] (ds10_interfaces) StdoutLine: {'line': b'-- Installing: /home/nvidia/DS10_Modbus/install/ds10_interfaces/include/ds10_interfaces/ds10_interfaces/msg/rosidl_typesupport_fastrtps_cpp__visibility_control.h\n'}
+[8.483493] (ds10_interfaces) StdoutLine: {'line': b'-- Installing: /home/nvidia/DS10_Modbus/install/ds10_interfaces/lib/libds10_interfaces__rosidl_typesupport_fastrtps_cpp.so\n'}
+[8.483879] (ds10_interfaces) StdoutLine: {'line': b'-- Set runtime path of "/home/nvidia/DS10_Modbus/install/ds10_interfaces/lib/libds10_interfaces__rosidl_typesupport_fastrtps_cpp.so" to ""\n'}
+[8.483980] (ds10_interfaces) StdoutLine: {'line': b'-- Up-to-date: /home/nvidia/DS10_Modbus/install/ds10_interfaces/include/ds10_interfaces/ds10_interfaces\n'}
+[8.484142] (ds10_interfaces) StdoutLine: {'line': b'-- Up-to-date: /home/nvidia/DS10_Modbus/install/ds10_interfaces/include/ds10_interfaces/ds10_interfaces/msg\n'}
+[8.484237] (ds10_interfaces) StdoutLine: {'line': b'-- Up-to-date: /home/nvidia/DS10_Modbus/install/ds10_interfaces/include/ds10_interfaces/ds10_interfaces/msg/detail\n'}
+[8.484431] (ds10_interfaces) StdoutLine: {'line': b'-- Installing: /home/nvidia/DS10_Modbus/install/ds10_interfaces/include/ds10_interfaces/ds10_interfaces/msg/detail/frame__type_support.cpp\n'}
+[8.484526] (ds10_interfaces) StdoutLine: {'line': b'-- Installing: /home/nvidia/DS10_Modbus/install/ds10_interfaces/include/ds10_interfaces/ds10_interfaces/msg/detail/frame__rosidl_typesupport_introspection_cpp.hpp\n'}
+[8.484617] (ds10_interfaces) StdoutLine: {'line': b'-- Installing: /home/nvidia/DS10_Modbus/install/ds10_interfaces/lib/libds10_interfaces__rosidl_typesupport_introspection_cpp.so\n'}
+[8.484858] (ds10_interfaces) StdoutLine: {'line': b'-- Set runtime path of "/home/nvidia/DS10_Modbus/install/ds10_interfaces/lib/libds10_interfaces__rosidl_typesupport_introspection_cpp.so" to ""\n'}
+[8.485039] (ds10_interfaces) StdoutLine: {'line': b'-- Installing: /home/nvidia/DS10_Modbus/install/ds10_interfaces/lib/libds10_interfaces__rosidl_typesupport_cpp.so\n'}
+[8.485368] (ds10_interfaces) StdoutLine: {'line': b'-- Set runtime path of "/home/nvidia/DS10_Modbus/install/ds10_interfaces/lib/libds10_interfaces__rosidl_typesupport_cpp.so" to ""\n'}
+[8.485544] (ds10_interfaces) StdoutLine: {'line': b'-- Installing: /home/nvidia/DS10_Modbus/install/ds10_interfaces/share/ds10_interfaces/environment/pythonpath.sh\n'}
+[8.485707] (ds10_interfaces) StdoutLine: {'line': b'-- Installing: /home/nvidia/DS10_Modbus/install/ds10_interfaces/share/ds10_interfaces/environment/pythonpath.dsv\n'}
+[8.485887] (ds10_interfaces) StdoutLine: {'line': b'-- Installing: /home/nvidia/DS10_Modbus/install/ds10_interfaces/local/lib/python3.10/dist-packages/ds10_interfaces-0.1.0-py3.10.egg-info\n'}
+[8.486141] (ds10_interfaces) StdoutLine: {'line': b'-- Installing: /home/nvidia/DS10_Modbus/install/ds10_interfaces/local/lib/python3.10/dist-packages/ds10_interfaces-0.1.0-py3.10.egg-info/dependency_links.txt\n'}
+[8.486319] (ds10_interfaces) StdoutLine: {'line': b'-- Installing: /home/nvidia/DS10_Modbus/install/ds10_interfaces/local/lib/python3.10/dist-packages/ds10_interfaces-0.1.0-py3.10.egg-info/PKG-INFO\n'}
+[8.486494] (ds10_interfaces) StdoutLine: {'line': b'-- Installing: /home/nvidia/DS10_Modbus/install/ds10_interfaces/local/lib/python3.10/dist-packages/ds10_interfaces-0.1.0-py3.10.egg-info/top_level.txt\n'}
+[8.486671] (ds10_interfaces) StdoutLine: {'line': b'-- Installing: /home/nvidia/DS10_Modbus/install/ds10_interfaces/local/lib/python3.10/dist-packages/ds10_interfaces-0.1.0-py3.10.egg-info/SOURCES.txt\n'}
+[8.486872] (ds10_interfaces) StdoutLine: {'line': b'-- Installing: /home/nvidia/DS10_Modbus/install/ds10_interfaces/local/lib/python3.10/dist-packages/ds10_interfaces\n'}
+[8.487038] (ds10_interfaces) StdoutLine: {'line': b'-- Installing: /home/nvidia/DS10_Modbus/install/ds10_interfaces/local/lib/python3.10/dist-packages/ds10_interfaces/_ds10_interfaces_s.ep.rosidl_typesupport_introspection_c.c\n'}
+[8.487206] (ds10_interfaces) StdoutLine: {'line': b'-- Installing: /home/nvidia/DS10_Modbus/install/ds10_interfaces/local/lib/python3.10/dist-packages/ds10_interfaces/_ds10_interfaces_s.ep.rosidl_typesupport_c.c\n'}
+[8.487394] (ds10_interfaces) StdoutLine: {'line': b'-- Installing: /home/nvidia/DS10_Modbus/install/ds10_interfaces/local/lib/python3.10/dist-packages/ds10_interfaces/__init__.py\n'}
+[8.487567] (ds10_interfaces) StdoutLine: {'line': b'-- Installing: /home/nvidia/DS10_Modbus/install/ds10_interfaces/local/lib/python3.10/dist-packages/ds10_interfaces/libds10_interfaces__rosidl_generator_py.so\n'}
+[8.487796] (ds10_interfaces) StdoutLine: {'line': b'-- Installing: /home/nvidia/DS10_Modbus/install/ds10_interfaces/local/lib/python3.10/dist-packages/ds10_interfaces/ds10_interfaces_s__rosidl_typesupport_c.cpython-310-aarch64-linux-gnu.so\n'}
+[8.487996] (ds10_interfaces) StdoutLine: {'line': b'-- Installing: /home/nvidia/DS10_Modbus/install/ds10_interfaces/local/lib/python3.10/dist-packages/ds10_interfaces/ds10_interfaces_s__rosidl_typesupport_fastrtps_c.cpython-310-aarch64-linux-gnu.so\n'}
+[8.488199] (ds10_interfaces) StdoutLine: {'line': b'-- Installing: /home/nvidia/DS10_Modbus/install/ds10_interfaces/local/lib/python3.10/dist-packages/ds10_interfaces/ds10_interfaces_s__rosidl_typesupport_introspection_c.cpython-310-aarch64-linux-gnu.so\n'}
+[8.488394] (ds10_interfaces) StdoutLine: {'line': b'-- Installing: /home/nvidia/DS10_Modbus/install/ds10_interfaces/local/lib/python3.10/dist-packages/ds10_interfaces/msg\n'}
+[8.488562] (ds10_interfaces) StdoutLine: {'line': b'-- Installing: /home/nvidia/DS10_Modbus/install/ds10_interfaces/local/lib/python3.10/dist-packages/ds10_interfaces/msg/_frame_s.c\n'}
+[8.488729] (ds10_interfaces) StdoutLine: {'line': b'-- Installing: /home/nvidia/DS10_Modbus/install/ds10_interfaces/local/lib/python3.10/dist-packages/ds10_interfaces/msg/__init__.py\n'}
+[8.488912] (ds10_interfaces) StdoutLine: {'line': b'-- Installing: /home/nvidia/DS10_Modbus/install/ds10_interfaces/local/lib/python3.10/dist-packages/ds10_interfaces/msg/_frame.py\n'}
+[8.489100] (ds10_interfaces) StdoutLine: {'line': b'-- Installing: /home/nvidia/DS10_Modbus/install/ds10_interfaces/local/lib/python3.10/dist-packages/ds10_interfaces/_ds10_interfaces_s.ep.rosidl_typesupport_fastrtps_c.c\n'}
+[8.522189] (-) TimerEvent: {}
+[8.553965] (ds10_interfaces) StdoutLine: {'line': b"Listing '/home/nvidia/DS10_Modbus/install/ds10_interfaces/local/lib/python3.10/dist-packages/ds10_interfaces'...\n"}
+[8.554296] (ds10_interfaces) StdoutLine: {'line': b"Compiling '/home/nvidia/DS10_Modbus/install/ds10_interfaces/local/lib/python3.10/dist-packages/ds10_interfaces/__init__.py'...\n"}
+[8.554409] (ds10_interfaces) StdoutLine: {'line': b"Listing '/home/nvidia/DS10_Modbus/install/ds10_interfaces/local/lib/python3.10/dist-packages/ds10_interfaces/msg'...\n"}
+[8.554506] (ds10_interfaces) StdoutLine: {'line': b"Compiling '/home/nvidia/DS10_Modbus/install/ds10_interfaces/local/lib/python3.10/dist-packages/ds10_interfaces/msg/__init__.py'...\n"}
+[8.554642] (ds10_interfaces) StdoutLine: {'line': b"Compiling '/home/nvidia/DS10_Modbus/install/ds10_interfaces/local/lib/python3.10/dist-packages/ds10_interfaces/msg/_frame.py'...\n"}
+[8.565931] (ds10_interfaces) StdoutLine: {'line': b'-- Installing: /home/nvidia/DS10_Modbus/install/ds10_interfaces/local/lib/python3.10/dist-packages/ds10_interfaces/ds10_interfaces_s__rosidl_typesupport_fastrtps_c.cpython-310-aarch64-linux-gnu.so\n'}
+[8.566400] (ds10_interfaces) StdoutLine: {'line': b'-- Set runtime path of "/home/nvidia/DS10_Modbus/install/ds10_interfaces/local/lib/python3.10/dist-packages/ds10_interfaces/ds10_interfaces_s__rosidl_typesupport_fastrtps_c.cpython-310-aarch64-linux-gnu.so" to ""\n'}
+[8.566705] (ds10_interfaces) StdoutLine: {'line': b'-- Installing: /home/nvidia/DS10_Modbus/install/ds10_interfaces/local/lib/python3.10/dist-packages/ds10_interfaces/ds10_interfaces_s__rosidl_typesupport_introspection_c.cpython-310-aarch64-linux-gnu.so\n'}
+[8.567191] (ds10_interfaces) StdoutLine: {'line': b'-- Set runtime path of "/home/nvidia/DS10_Modbus/install/ds10_interfaces/local/lib/python3.10/dist-packages/ds10_interfaces/ds10_interfaces_s__rosidl_typesupport_introspection_c.cpython-310-aarch64-linux-gnu.so" to ""\n'}
+[8.567473] (ds10_interfaces) StdoutLine: {'line': b'-- Installing: /home/nvidia/DS10_Modbus/install/ds10_interfaces/local/lib/python3.10/dist-packages/ds10_interfaces/ds10_interfaces_s__rosidl_typesupport_c.cpython-310-aarch64-linux-gnu.so\n'}
+[8.568224] (ds10_interfaces) StdoutLine: {'line': b'-- Set runtime path of "/home/nvidia/DS10_Modbus/install/ds10_interfaces/local/lib/python3.10/dist-packages/ds10_interfaces/ds10_interfaces_s__rosidl_typesupport_c.cpython-310-aarch64-linux-gnu.so" to ""\n'}
+[8.568401] (ds10_interfaces) StdoutLine: {'line': b'-- Installing: /home/nvidia/DS10_Modbus/install/ds10_interfaces/lib/libds10_interfaces__rosidl_generator_py.so\n'}
+[8.568909] (ds10_interfaces) StdoutLine: {'line': b'-- Set runtime path of "/home/nvidia/DS10_Modbus/install/ds10_interfaces/lib/libds10_interfaces__rosidl_generator_py.so" to ""\n'}
+[8.569150] (ds10_interfaces) StdoutLine: {'line': b'-- Installing: /home/nvidia/DS10_Modbus/install/ds10_interfaces/share/ament_index/resource_index/rust_packages/ds10_interfaces\n'}
+[8.569383] (ds10_interfaces) StdoutLine: {'line': b'-- Installing: /home/nvidia/DS10_Modbus/install/ds10_interfaces/share/ds10_interfaces/rust\n'}
+[8.569558] (ds10_interfaces) StdoutLine: {'line': b'-- Installing: /home/nvidia/DS10_Modbus/install/ds10_interfaces/share/ds10_interfaces/rust/Cargo.toml\n'}
+[8.569821] (ds10_interfaces) StdoutLine: {'line': b'-- Installing: /home/nvidia/DS10_Modbus/install/ds10_interfaces/share/ds10_interfaces/rust/src\n'}
+[8.570102] (ds10_interfaces) StdoutLine: {'line': b'-- Installing: /home/nvidia/DS10_Modbus/install/ds10_interfaces/share/ds10_interfaces/rust/src/msg.rs\n'}
+[8.570359] (ds10_interfaces) StdoutLine: {'line': b'-- Installing: /home/nvidia/DS10_Modbus/install/ds10_interfaces/share/ds10_interfaces/rust/src/lib.rs\n'}
+[8.570459] (ds10_interfaces) StdoutLine: {'line': b'-- Installing: /home/nvidia/DS10_Modbus/install/ds10_interfaces/share/ds10_interfaces/rust/src/msg\n'}
+[8.570630] (ds10_interfaces) StdoutLine: {'line': b'-- Installing: /home/nvidia/DS10_Modbus/install/ds10_interfaces/share/ds10_interfaces/rust/src/msg/rmw.rs\n'}
+[8.570729] (ds10_interfaces) StdoutLine: {'line': b'-- Installing: /home/nvidia/DS10_Modbus/install/ds10_interfaces/share/ds10_interfaces/rust/build.rs\n'}
+[8.570890] (ds10_interfaces) StdoutLine: {'line': b'-- Installing: /home/nvidia/DS10_Modbus/install/ds10_interfaces/share/ds10_interfaces/msg/Frame.idl\n'}
+[8.571064] (ds10_interfaces) StdoutLine: {'line': b'-- Installing: /home/nvidia/DS10_Modbus/install/ds10_interfaces/share/ds10_interfaces/msg/Frame.msg\n'}
+[8.571348] (ds10_interfaces) StdoutLine: {'line': b'-- Installing: /home/nvidia/DS10_Modbus/install/ds10_interfaces/share/ament_index/resource_index/package_run_dependencies/ds10_interfaces\n'}
+[8.571667] (ds10_interfaces) StdoutLine: {'line': b'-- Installing: /home/nvidia/DS10_Modbus/install/ds10_interfaces/share/ament_index/resource_index/parent_prefix_path/ds10_interfaces\n'}
+[8.571966] (ds10_interfaces) StdoutLine: {'line': b'-- Installing: /home/nvidia/DS10_Modbus/install/ds10_interfaces/share/ds10_interfaces/environment/ament_prefix_path.sh\n'}
+[8.572206] (ds10_interfaces) StdoutLine: {'line': b'-- Installing: /home/nvidia/DS10_Modbus/install/ds10_interfaces/share/ds10_interfaces/environment/ament_prefix_path.dsv\n'}
+[8.572440] (ds10_interfaces) StdoutLine: {'line': b'-- Installing: /home/nvidia/DS10_Modbus/install/ds10_interfaces/share/ds10_interfaces/environment/path.sh\n'}
+[8.572673] (ds10_interfaces) StdoutLine: {'line': b'-- Installing: /home/nvidia/DS10_Modbus/install/ds10_interfaces/share/ds10_interfaces/environment/path.dsv\n'}
+[8.572897] (ds10_interfaces) StdoutLine: {'line': b'-- Installing: /home/nvidia/DS10_Modbus/install/ds10_interfaces/share/ds10_interfaces/local_setup.bash\n'}
+[8.573124] (ds10_interfaces) StdoutLine: {'line': b'-- Installing: /home/nvidia/DS10_Modbus/install/ds10_interfaces/share/ds10_interfaces/local_setup.sh\n'}
+[8.573361] (ds10_interfaces) StdoutLine: {'line': b'-- Installing: /home/nvidia/DS10_Modbus/install/ds10_interfaces/share/ds10_interfaces/local_setup.zsh\n'}
+[8.573580] (ds10_interfaces) StdoutLine: {'line': b'-- Installing: /home/nvidia/DS10_Modbus/install/ds10_interfaces/share/ds10_interfaces/local_setup.dsv\n'}
+[8.573796] (ds10_interfaces) StdoutLine: {'line': b'-- Installing: /home/nvidia/DS10_Modbus/install/ds10_interfaces/share/ds10_interfaces/package.dsv\n'}
+[8.574095] (ds10_interfaces) StdoutLine: {'line': b'-- Installing: /home/nvidia/DS10_Modbus/install/ds10_interfaces/share/ament_index/resource_index/packages/ds10_interfaces\n'}
+[8.574407] (ds10_interfaces) StdoutLine: {'line': b'-- Installing: /home/nvidia/DS10_Modbus/install/ds10_interfaces/share/ds10_interfaces/cmake/export_ds10_interfaces__rosidl_generator_cExport.cmake\n'}
+[8.574655] (ds10_interfaces) StdoutLine: {'line': b'-- Installing: /home/nvidia/DS10_Modbus/install/ds10_interfaces/share/ds10_interfaces/cmake/export_ds10_interfaces__rosidl_generator_cExport-noconfig.cmake\n'}
+[8.574919] (ds10_interfaces) StdoutLine: {'line': b'-- Installing: /home/nvidia/DS10_Modbus/install/ds10_interfaces/share/ds10_interfaces/cmake/export_ds10_interfaces__rosidl_typesupport_fastrtps_cExport.cmake\n'}
+[8.575183] (ds10_interfaces) StdoutLine: {'line': b'-- Installing: /home/nvidia/DS10_Modbus/install/ds10_interfaces/share/ds10_interfaces/cmake/export_ds10_interfaces__rosidl_typesupport_fastrtps_cExport-noconfig.cmake\n'}
+[8.575440] (ds10_interfaces) StdoutLine: {'line': b'-- Installing: /home/nvidia/DS10_Modbus/install/ds10_interfaces/share/ds10_interfaces/cmake/ds10_interfaces__rosidl_typesupport_introspection_cExport.cmake\n'}
+[8.575725] (ds10_interfaces) StdoutLine: {'line': b'-- Installing: /home/nvidia/DS10_Modbus/install/ds10_interfaces/share/ds10_interfaces/cmake/ds10_interfaces__rosidl_typesupport_introspection_cExport-noconfig.cmake\n'}
+[8.575988] (ds10_interfaces) StdoutLine: {'line': b'-- Installing: /home/nvidia/DS10_Modbus/install/ds10_interfaces/share/ds10_interfaces/cmake/ds10_interfaces__rosidl_typesupport_cExport.cmake\n'}
+[8.576237] (ds10_interfaces) StdoutLine: {'line': b'-- Installing: /home/nvidia/DS10_Modbus/install/ds10_interfaces/share/ds10_interfaces/cmake/ds10_interfaces__rosidl_typesupport_cExport-noconfig.cmake\n'}
+[8.576501] (ds10_interfaces) StdoutLine: {'line': b'-- Installing: /home/nvidia/DS10_Modbus/install/ds10_interfaces/share/ds10_interfaces/cmake/export_ds10_interfaces__rosidl_generator_cppExport.cmake\n'}
+[8.576758] (ds10_interfaces) StdoutLine: {'line': b'-- Installing: /home/nvidia/DS10_Modbus/install/ds10_interfaces/share/ds10_interfaces/cmake/export_ds10_interfaces__rosidl_typesupport_fastrtps_cppExport.cmake\n'}
+[8.577007] (ds10_interfaces) StdoutLine: {'line': b'-- Installing: /home/nvidia/DS10_Modbus/install/ds10_interfaces/share/ds10_interfaces/cmake/export_ds10_interfaces__rosidl_typesupport_fastrtps_cppExport-noconfig.cmake\n'}
+[8.577264] (ds10_interfaces) StdoutLine: {'line': b'-- Installing: /home/nvidia/DS10_Modbus/install/ds10_interfaces/share/ds10_interfaces/cmake/ds10_interfaces__rosidl_typesupport_introspection_cppExport.cmake\n'}
+[8.577515] (ds10_interfaces) StdoutLine: {'line': b'-- Installing: /home/nvidia/DS10_Modbus/install/ds10_interfaces/share/ds10_interfaces/cmake/ds10_interfaces__rosidl_typesupport_introspection_cppExport-noconfig.cmake\n'}
+[8.577776] (ds10_interfaces) StdoutLine: {'line': b'-- Installing: /home/nvidia/DS10_Modbus/install/ds10_interfaces/share/ds10_interfaces/cmake/ds10_interfaces__rosidl_typesupport_cppExport.cmake\n'}
+[8.578028] (ds10_interfaces) StdoutLine: {'line': b'-- Installing: /home/nvidia/DS10_Modbus/install/ds10_interfaces/share/ds10_interfaces/cmake/ds10_interfaces__rosidl_typesupport_cppExport-noconfig.cmake\n'}
+[8.578290] (ds10_interfaces) StdoutLine: {'line': b'-- Installing: /home/nvidia/DS10_Modbus/install/ds10_interfaces/share/ds10_interfaces/cmake/export_ds10_interfaces__rosidl_generator_pyExport.cmake\n'}
+[8.578548] (ds10_interfaces) StdoutLine: {'line': b'-- Installing: /home/nvidia/DS10_Modbus/install/ds10_interfaces/share/ds10_interfaces/cmake/export_ds10_interfaces__rosidl_generator_pyExport-noconfig.cmake\n'}
+[8.578804] (ds10_interfaces) StdoutLine: {'line': b'-- Installing: /home/nvidia/DS10_Modbus/install/ds10_interfaces/share/ds10_interfaces/cmake/rosidl_cmake-extras.cmake\n'}
+[8.579028] (ds10_interfaces) StdoutLine: {'line': b'-- Installing: /home/nvidia/DS10_Modbus/install/ds10_interfaces/share/ds10_interfaces/cmake/ament_cmake_export_dependencies-extras.cmake\n'}
+[8.579267] (ds10_interfaces) StdoutLine: {'line': b'-- Installing: /home/nvidia/DS10_Modbus/install/ds10_interfaces/share/ds10_interfaces/cmake/ament_cmake_export_include_directories-extras.cmake\n'}
+[8.579495] (ds10_interfaces) StdoutLine: {'line': b'-- Installing: /home/nvidia/DS10_Modbus/install/ds10_interfaces/share/ds10_interfaces/cmake/ament_cmake_export_libraries-extras.cmake\n'}
+[8.579841] (ds10_interfaces) StdoutLine: {'line': b'-- Installing: /home/nvidia/DS10_Modbus/install/ds10_interfaces/share/ds10_interfaces/cmake/ament_cmake_export_targets-extras.cmake\n'}
+[8.580070] (ds10_interfaces) StdoutLine: {'line': b'-- Installing: /home/nvidia/DS10_Modbus/install/ds10_interfaces/share/ds10_interfaces/cmake/rosidl_cmake_export_typesupport_targets-extras.cmake\n'}
+[8.580299] (ds10_interfaces) StdoutLine: {'line': b'-- Installing: /home/nvidia/DS10_Modbus/install/ds10_interfaces/share/ds10_interfaces/cmake/rosidl_cmake_export_typesupport_libraries-extras.cmake\n'}
+[8.580522] (ds10_interfaces) StdoutLine: {'line': b'-- Installing: /home/nvidia/DS10_Modbus/install/ds10_interfaces/share/ds10_interfaces/cmake/rosidl_cmake_aggregate_target-extras.cmake\n'}
+[8.580745] (ds10_interfaces) StdoutLine: {'line': b'-- Installing: /home/nvidia/DS10_Modbus/install/ds10_interfaces/share/ds10_interfaces/cmake/ds10_interfacesConfig.cmake\n'}
+[8.580935] (ds10_interfaces) StdoutLine: {'line': b'-- Installing: /home/nvidia/DS10_Modbus/install/ds10_interfaces/share/ds10_interfaces/cmake/ds10_interfacesConfig-version.cmake\n'}
+[8.581150] (ds10_interfaces) StdoutLine: {'line': b'-- Installing: /home/nvidia/DS10_Modbus/install/ds10_interfaces/share/ds10_interfaces/package.xml\n'}
+[8.585745] (ds10_interfaces) CommandEnded: {'returncode': 0}
+[8.622003] (ds10_interfaces) JobEnded: {'identifier': 'ds10_interfaces', 'rc': 0}
+[8.623703] (-) TimerEvent: {}
+[8.623758] (ds10_driver) JobStarted: {'identifier': 'ds10_driver'}
+[8.633838] (ds10_driver) JobProgress: {'identifier': 'ds10_driver', 'progress': 'cmake'}
+[8.634631] (ds10_driver) Command: {'cmd': ['/usr/bin/cmake', '/home/nvidia/DS10_Modbus/src/ds10_driver', '-DCMAKE_INSTALL_PREFIX=/home/nvidia/DS10_Modbus/install/ds10_driver'], 'cwd': '/home/nvidia/DS10_Modbus/build/ds10_driver', 'env': OrderedDict([('LESSOPEN', '| /usr/bin/lesspipe %s'), ('VSCODE_CWD', '/home/nvidia'), ('VSCODE_ESM_ENTRYPOINT', 'vs/workbench/api/node/extensionHostProcess'), ('AI_AGENT', 'claude-code_2-1-215_agent'), ('LANGUAGE', 'zh_CN:zh'), ('CODEX_HOME', '/home/nvidia/.codex'), ('USER', 'nvidia'), ('SSH_CLIENT', '192.168.130.26 59645 22'), ('CLAUDE_CODE_ENTRYPOINT', 'claude-vscode'), ('VSCODE_NLS_CONFIG', '{"userLocale":"zh-cn","osLocale":"zh-cn","resolvedLanguage":"zh-cn","defaultMessagesFile":"/home/nvidia/.vscode-server/cli/servers/Stable-e4c7e7b1d6d060162f4aa7f8225271b67ce1df75/server/out/nls.messages.json","languagePack":{"translationsConfigFile":"/home/nvidia/.vscode-server/data/clp/4c1d03004af65f9b16ba94f4936a2bd5.zh-cn/tcf.json","messagesFile":"/home/nvidia/.vscode-server/data/clp/4c1d03004af65f9b16ba94f4936a2bd5.zh-cn/e4c7e7b1d6d060162f4aa7f8225271b67ce1df75/nls.messages.json","corruptMarkerFile":"/home/nvidia/.vscode-server/data/clp/4c1d03004af65f9b16ba94f4936a2bd5.zh-cn/corrupted.info"},"locale":"zh-cn","availableLanguages":{"*":"zh-cn"},"_languagePackId":"4c1d03004af65f9b16ba94f4936a2bd5.zh-cn","_languagePackSupport":true,"_translationsConfigFile":"/home/nvidia/.vscode-server/data/clp/4c1d03004af65f9b16ba94f4936a2bd5.zh-cn/tcf.json","_cacheRoot":"/home/nvidia/.vscode-server/data/clp/4c1d03004af65f9b16ba94f4936a2bd5.zh-cn","_resolvedLanguagePackCoreLocation":"/home/nvidia/.vscode-server/data/clp/4c1d03004af65f9b16ba94f4936a2bd5.zh-cn/e4c7e7b1d6d060162f4aa7f8225271b67ce1df75","_corruptedFile":"/home/nvidia/.vscode-server/data/clp/4c1d03004af65f9b16ba94f4936a2bd5.zh-cn/corrupted.info"}'), ('GIT_EDITOR', 'true'), ('VSCODE_HANDLES_UNCAUGHT_ERRORS', 'true'), ('XDG_SESSION_TYPE', 'tty'), ('CLAUDE_AGENT_SDK_VERSION', '0.3.215'), ('SHLVL', '0'), ('LD_LIBRARY_PATH', '/home/nvidia/DS10_Modbus/install/ds10_interfaces/lib:/opt/ros/humble/opt/rviz_ogre_vendor/lib:/opt/ros/humble/lib/aarch64-linux-gnu:/opt/ros/humble/lib:/usr/local/lib:/usr/local/cuda-12.6/lib64'), ('BROWSER', '/home/nvidia/.vscode-server/cli/servers/Stable-e4c7e7b1d6d060162f4aa7f8225271b67ce1df75/server/bin/helpers/browser.sh'), ('MOTD_SHOWN', 'pam'), ('HOME', '/home/nvidia'), ('VSCODE_RECONNECTION_GRACE_TIME', '10800000'), ('VSCODE_IPC_HOOK_CLI', '/run/user/1000/vscode-ipc-f7907052-7d99-418a-872f-23827cf78271.sock'), ('JETSON_L4T', '36.4.7'), ('ROS_PYTHON_VERSION', '3'), ('JETSON_MODEL', 'NVIDIA Jetson Orin Nano Engineering Reference Developer Kit Super'), ('CLAUDE_CODE_CHILD_SESSION', '1'), ('DBUS_SESSION_BUS_ADDRESS', 'unix:path=/run/user/1000/bus'), ('ROS_DISTRO', 'humble'), ('LOGNAME', 'nvidia'), ('JETSON_MODULE', 'NVIDIA Jetson Orin Nano (8GB ram)'), ('JETSON_SERIAL_NUMBER', '1421126024259'), ('VSCODE_HANDLES_SIGPIPE', 'true'), ('_', '/usr/bin/colcon'), ('ROS_VERSION', '2'), ('XDG_SESSION_CLASS', 'user'), ('ANTHROPIC_BASE_URL', 'http://192.168.50.76:3000'), ('XDG_SESSION_ID', '3'), ('VSCODE_CLI_REQUIRE_TOKEN', '12470a3d-3c04-4dae-84b1-ca96a54c3e7f'), ('ROS_LOCALHOST_ONLY', '0'), ('MCP_CONNECTION_NONBLOCKING', 'true'), ('PATH', '/home/nvidia/.local/bin:/home/nvidia/.cargo/bin:/home/nvidia/.npm-global/bin:/usr/local/cuda-12.6/bin:/home/nvidia/.vscode-server/cli/servers/Stable-e4c7e7b1d6d060162f4aa7f8225271b67ce1df75/server/bin/remote-cli:/home/nvidia/.local/bin:/home/nvidia/.cargo/bin:/home/nvidia/.cargo/bin:/home/nvidia/.npm-global/bin:/opt/ros/humble/bin:/usr/local/cuda-12.6/bin:/usr/local/sbin:/usr/local/bin:/usr/sbin:/usr/bin:/sbin:/bin:/usr/games:/usr/local/games:/snap/bin:/home/nvidia/.claude/plugins/cache/mattpocock/mattpocock-skills/1.2.3/bin'), ('VSCODE_AGENT_FOLDER', '/home/nvidia/.vscode-server'), ('COREPACK_ENABLE_AUTO_PIN', '0'), ('XDG_RUNTIME_DIR', '/run/user/1000'), ('CLAUDE_EFFORT', 'high'), ('CLAUDE_PID', '20391'), ('NoDefaultCurrentDirectoryInExePath', '1'), ('LANG', 'zh_CN.UTF-8'), ('LS_COLORS', ''), ('JETSON_SOC', 'tegra234'), ('AMENT_PREFIX_PATH', '/home/nvidia/DS10_Modbus/install/ds10_interfaces:/opt/ros/humble'), ('SHELL', '/bin/bash'), ('ANTHROPIC_AUTH_TOKEN', 'sk-KbQCT02wki7cd9dT5QZFvDBjR4eJM6qxv9W1Omqat9gyQEhR'), ('ELECTRON_RUN_AS_NODE', '1'), ('CLAUDE_CODE_ENABLE_SDK_FILE_CHECKPOINTING', 'true'), ('CLAUDE_CODE_SESSION_ID', '8d684188-04c1-44c0-9355-04c47b56605a'), ('LESSCLOSE', '/usr/bin/lesspipe %s %s'), ('CLAUDECODE', '1'), ('JETSON_CUDA_ARCH_BIN', '8.7'), ('PWD', '/home/nvidia/DS10_Modbus/build/ds10_driver'), ('CODEWHALE_TUI_BIN', '/home/nvidia/.npm-global/bin/codewhale-tui'), ('SSH_CONNECTION', '192.168.130.26 59645 192.168.130.180 22'), ('XDG_DATA_DIRS', '/usr/share/gnome:/usr/local/share:/usr/share:/var/lib/snapd/desktop'), ('CLAUDE_CODE_EXECPATH', '/home/nvidia/.vscode-server/extensions/anthropic.claude-code-2.1.215-linux-arm64/resources/native-binary/claude'), ('PYTHONPATH', '/home/nvidia/DS10_Modbus/install/ds10_interfaces/local/lib/python3.10/dist-packages:/opt/ros/humble/lib/python3.10/site-packages:/opt/ros/humble/local/lib/python3.10/dist-packages:/usr/local/lib/python3.10/site-packages/:'), ('CLAUDE_CODE_ENABLE_TASKS', '0'), ('COLCON', '1'), ('JETSON_JETPACK', ''), ('JETSON_P_NUMBER', 'p3767-0003'), ('CMAKE_PREFIX_PATH', '/home/nvidia/DS10_Modbus/install/ds10_interfaces:/opt/ros/humble')]), 'shell': False}
+[8.724465] (-) TimerEvent: {}
+[8.724951] (ds10_driver) StdoutLine: {'line': b'-- The C compiler identification is GNU 11.4.0\n'}
+[8.816103] (ds10_driver) StdoutLine: {'line': b'-- The CXX compiler identification is GNU 11.4.0\n'}
+[8.824176] (-) TimerEvent: {}
+[8.836914] (ds10_driver) StdoutLine: {'line': b'-- Detecting C compiler ABI info\n'}
+[8.924370] (-) TimerEvent: {}
+[8.977599] (ds10_driver) StdoutLine: {'line': b'-- Detecting C compiler ABI info - done\n'}
+[9.002094] (ds10_driver) StdoutLine: {'line': b'-- Check for working C compiler: /usr/bin/cc - skipped\n'}
+[9.002859] (ds10_driver) StdoutLine: {'line': b'-- Detecting C compile features\n'}
+[9.004305] (ds10_driver) StdoutLine: {'line': b'-- Detecting C compile features - done\n'}
+[9.014827] (ds10_driver) StdoutLine: {'line': b'-- Detecting CXX compiler ABI info\n'}
+[9.024471] (-) TimerEvent: {}
+[9.124794] (-) TimerEvent: {}
+[9.179446] (ds10_driver) StdoutLine: {'line': b'-- Detecting CXX compiler ABI info - done\n'}
+[9.204314] (ds10_driver) StdoutLine: {'line': b'-- Check for working CXX compiler: /usr/bin/c++ - skipped\n'}
+[9.205261] (ds10_driver) StdoutLine: {'line': b'-- Detecting CXX compile features\n'}
+[9.206820] (ds10_driver) StdoutLine: {'line': b'-- Detecting CXX compile features - done\n'}
+[9.215269] (ds10_driver) StdoutLine: {'line': b'-- Found ament_cmake: 1.3.14 (/opt/ros/humble/share/ament_cmake/cmake)\n'}
+[9.224855] (-) TimerEvent: {}
+[9.325031] (-) TimerEvent: {}
+[9.425304] (-) TimerEvent: {}
+[9.525630] (-) TimerEvent: {}
+[9.625940] (-) TimerEvent: {}
+[9.726214] (-) TimerEvent: {}
+[9.826480] (-) TimerEvent: {}
+[9.924044] (ds10_driver) StdoutLine: {'line': b'-- Found Python3: /usr/bin/python3 (found version "3.10.12") found components: Interpreter \n'}
+[9.926572] (-) TimerEvent: {}
+[10.026812] (-) TimerEvent: {}
+[10.127191] (-) TimerEvent: {}
+[10.134390] (ds10_driver) StdoutLine: {'line': b'-- Found rclcpp: 16.0.19 (/opt/ros/humble/share/rclcpp/cmake)\n'}
+[10.217449] (ds10_driver) StdoutLine: {'line': b'-- Found rosidl_generator_c: 3.1.9 (/opt/ros/humble/share/rosidl_generator_c/cmake)\n'}
+[10.225473] (ds10_driver) StdoutLine: {'line': b'-- Found rosidl_adapter: 3.1.9 (/opt/ros/humble/share/rosidl_adapter/cmake)\n'}
+[10.227236] (-) TimerEvent: {}
+[10.239121] (ds10_driver) StdoutLine: {'line': b'-- Found rosidl_generator_cpp: 3.1.9 (/opt/ros/humble/share/rosidl_generator_cpp/cmake)\n'}
+[10.258224] (ds10_driver) StdoutLine: {'line': b'-- Using all available rosidl_typesupport_c: rosidl_typesupport_fastrtps_c;rosidl_typesupport_introspection_c\n'}
+[10.282955] (ds10_driver) StdoutLine: {'line': b'-- Using all available rosidl_typesupport_cpp: rosidl_typesupport_fastrtps_cpp;rosidl_typesupport_introspection_cpp\n'}
+[10.327438] (-) TimerEvent: {}
+[10.350761] (ds10_driver) StdoutLine: {'line': b'-- Found rmw_implementation_cmake: 6.1.3 (/opt/ros/humble/share/rmw_implementation_cmake/cmake)\n'}
+[10.354319] (ds10_driver) StdoutLine: {'line': b'-- Found rmw_fastrtps_cpp: 6.2.10 (/opt/ros/humble/share/rmw_fastrtps_cpp/cmake)\n'}
+[10.427576] (-) TimerEvent: {}
+[10.488360] (ds10_driver) StdoutLine: {'line': b'-- Found OpenSSL: /usr/lib/aarch64-linux-gnu/libcrypto.so (found version "3.0.2")  \n'}
+[10.527745] (-) TimerEvent: {}
+[10.542863] (ds10_driver) StdoutLine: {'line': b'-- Found FastRTPS: /opt/ros/humble/include  \n'}
+[10.614291] (ds10_driver) StdoutLine: {'line': b"-- Using RMW implementation 'rmw_fastrtps_cpp' as default\n"}
+[10.627840] (ds10_driver) StdoutLine: {'line': b'-- Looking for pthread.h\n'}
+[10.628096] (-) TimerEvent: {}
+[10.728344] (-) TimerEvent: {}
+[10.760676] (ds10_driver) StdoutLine: {'line': b'-- Looking for pthread.h - found\n'}
+[10.761912] (ds10_driver) StdoutLine: {'line': b'-- Performing Test CMAKE_HAVE_LIBC_PTHREAD\n'}
+[10.828518] (-) TimerEvent: {}
+[10.914032] (ds10_driver) StdoutLine: {'line': b'-- Performing Test CMAKE_HAVE_LIBC_PTHREAD - Success\n'}
+[10.918008] (ds10_driver) StdoutLine: {'line': b'-- Found Threads: TRUE  \n'}
+[10.928591] (-) TimerEvent: {}
+[11.028874] (-) TimerEvent: {}
+[11.046426] (ds10_driver) StdoutLine: {'line': b'-- Found diagnostic_updater: 4.0.7 (/opt/ros/humble/share/diagnostic_updater/cmake)\n'}
+[11.077925] (ds10_driver) StdoutLine: {'line': b'-- Found ds10_interfaces: 0.1.0 (/home/nvidia/DS10_Modbus/install/ds10_interfaces/share/ds10_interfaces/cmake)\n'}
+[11.102472] (ds10_driver) StdoutLine: {'line': b'-- Found ament_lint_auto: 0.12.15 (/opt/ros/humble/share/ament_lint_auto/cmake)\n'}
+[11.129002] (-) TimerEvent: {}
+[11.229354] (-) TimerEvent: {}
+[11.301175] (ds10_driver) StdoutLine: {'line': b'-- Found python_cmake_module: 0.10.0 (/opt/ros/humble/share/python_cmake_module/cmake)\n'}
+[11.329437] (-) TimerEvent: {}
+[11.344940] (ds10_driver) StdoutLine: {'line': b'-- Found PythonInterp: /usr/bin/python3 (found suitable version "3.10.12", minimum required is "3.6") \n'}
+[11.354402] (ds10_driver) StdoutLine: {'line': b'-- Found PythonLibs: /usr/lib/aarch64-linux-gnu/libpython3.10.so (found suitable version "3.10.12", minimum required is "3.5") \n'}
+[11.354743] (ds10_driver) StdoutLine: {'line': b'-- Using PYTHON_EXECUTABLE: /usr/bin/python3\n'}
+[11.354866] (ds10_driver) StdoutLine: {'line': b'-- Using PYTHON_INCLUDE_DIRS: /usr/include/python3.10\n'}
+[11.354978] (ds10_driver) StdoutLine: {'line': b'-- Using PYTHON_LIBRARIES: /usr/lib/aarch64-linux-gnu/libpython3.10.so\n'}
+[11.403516] (ds10_driver) StdoutLine: {'line': b'-- Found PythonExtra: .so  \n'}
+[11.429536] (-) TimerEvent: {}
+[11.450927] (ds10_driver) StdoutLine: {'line': b"-- Found gtest sources under '/opt/ros/humble/src/gtest_vendor': C++ tests using 'Google Test' will be built\n"}
+[11.467494] (ds10_driver) StdoutLine: {'line': b"-- Added test 'copyright' to check source files copyright and LICENSE\n"}
+[11.470449] (ds10_driver) StdoutLine: {'line': b"-- Added test 'cppcheck' to perform static code analysis on C / C++ code\n"}
+[11.470780] (ds10_driver) StdoutLine: {'line': b'-- Configured cppcheck include dirs: $<BUILD_INTERFACE:/home/nvidia/DS10_Modbus/src/ds10_driver/include>\n'}
+[11.470937] (ds10_driver) StdoutLine: {'line': b'-- Configured cppcheck exclude dirs and/or files: \n'}
+[11.473241] (ds10_driver) StdoutLine: {'line': b"-- Added test 'cpplint' to check C / C++ code against the Google style\n"}
+[11.473394] (ds10_driver) StdoutLine: {'line': b'-- Configured cpplint exclude dirs and/or files: \n'}
+[11.474178] (ds10_driver) StdoutLine: {'line': b"-- Added test 'flake8' to check Python code syntax and style conventions\n"}
+[11.475274] (ds10_driver) StdoutLine: {'line': b"-- Added test 'lint_cmake' to check CMake code style\n"}
+[11.476281] (ds10_driver) StdoutLine: {'line': b"-- Added test 'pep257' to check Python code against some of the docstring style conventions in PEP 257\n"}
+[11.478573] (ds10_driver) StdoutLine: {'line': b"-- Added test 'uncrustify' to check C / C++ code style\n"}
+[11.478689] (ds10_driver) StdoutLine: {'line': b'-- Configured uncrustify additional arguments: \n'}
+[11.479466] (ds10_driver) StdoutLine: {'line': b"-- Added test 'xmllint' to check XML markup files\n"}
+[11.484385] (ds10_driver) StdoutLine: {'line': b'-- Configuring done\n'}
+[11.520209] (ds10_driver) StdoutLine: {'line': b'-- Generating done\n'}
+[11.529651] (-) TimerEvent: {}
+[11.533187] (ds10_driver) StdoutLine: {'line': b'-- Build files have been written to: /home/nvidia/DS10_Modbus/build/ds10_driver\n'}
+[11.560294] (ds10_driver) CommandEnded: {'returncode': 0}
+[11.562221] (ds10_driver) JobProgress: {'identifier': 'ds10_driver', 'progress': 'build'}
+[11.563146] (ds10_driver) Command: {'cmd': ['/usr/bin/cmake', '--build', '/home/nvidia/DS10_Modbus/build/ds10_driver', '--', '-j6', '-l6'], 'cwd': '/home/nvidia/DS10_Modbus/build/ds10_driver', 'env': OrderedDict([('LESSOPEN', '| /usr/bin/lesspipe %s'), ('VSCODE_CWD', '/home/nvidia'), ('VSCODE_ESM_ENTRYPOINT', 'vs/workbench/api/node/extensionHostProcess'), ('AI_AGENT', 'claude-code_2-1-215_agent'), ('LANGUAGE', 'zh_CN:zh'), ('CODEX_HOME', '/home/nvidia/.codex'), ('USER', 'nvidia'), ('SSH_CLIENT', '192.168.130.26 59645 22'), ('CLAUDE_CODE_ENTRYPOINT', 'claude-vscode'), ('VSCODE_NLS_CONFIG', '{"userLocale":"zh-cn","osLocale":"zh-cn","resolvedLanguage":"zh-cn","defaultMessagesFile":"/home/nvidia/.vscode-server/cli/servers/Stable-e4c7e7b1d6d060162f4aa7f8225271b67ce1df75/server/out/nls.messages.json","languagePack":{"translationsConfigFile":"/home/nvidia/.vscode-server/data/clp/4c1d03004af65f9b16ba94f4936a2bd5.zh-cn/tcf.json","messagesFile":"/home/nvidia/.vscode-server/data/clp/4c1d03004af65f9b16ba94f4936a2bd5.zh-cn/e4c7e7b1d6d060162f4aa7f8225271b67ce1df75/nls.messages.json","corruptMarkerFile":"/home/nvidia/.vscode-server/data/clp/4c1d03004af65f9b16ba94f4936a2bd5.zh-cn/corrupted.info"},"locale":"zh-cn","availableLanguages":{"*":"zh-cn"},"_languagePackId":"4c1d03004af65f9b16ba94f4936a2bd5.zh-cn","_languagePackSupport":true,"_translationsConfigFile":"/home/nvidia/.vscode-server/data/clp/4c1d03004af65f9b16ba94f4936a2bd5.zh-cn/tcf.json","_cacheRoot":"/home/nvidia/.vscode-server/data/clp/4c1d03004af65f9b16ba94f4936a2bd5.zh-cn","_resolvedLanguagePackCoreLocation":"/home/nvidia/.vscode-server/data/clp/4c1d03004af65f9b16ba94f4936a2bd5.zh-cn/e4c7e7b1d6d060162f4aa7f8225271b67ce1df75","_corruptedFile":"/home/nvidia/.vscode-server/data/clp/4c1d03004af65f9b16ba94f4936a2bd5.zh-cn/corrupted.info"}'), ('GIT_EDITOR', 'true'), ('VSCODE_HANDLES_UNCAUGHT_ERRORS', 'true'), ('XDG_SESSION_TYPE', 'tty'), ('CLAUDE_AGENT_SDK_VERSION', '0.3.215'), ('SHLVL', '0'), ('LD_LIBRARY_PATH', '/home/nvidia/DS10_Modbus/install/ds10_interfaces/lib:/opt/ros/humble/opt/rviz_ogre_vendor/lib:/opt/ros/humble/lib/aarch64-linux-gnu:/opt/ros/humble/lib:/usr/local/lib:/usr/local/cuda-12.6/lib64'), ('BROWSER', '/home/nvidia/.vscode-server/cli/servers/Stable-e4c7e7b1d6d060162f4aa7f8225271b67ce1df75/server/bin/helpers/browser.sh'), ('MOTD_SHOWN', 'pam'), ('HOME', '/home/nvidia'), ('VSCODE_RECONNECTION_GRACE_TIME', '10800000'), ('VSCODE_IPC_HOOK_CLI', '/run/user/1000/vscode-ipc-f7907052-7d99-418a-872f-23827cf78271.sock'), ('JETSON_L4T', '36.4.7'), ('ROS_PYTHON_VERSION', '3'), ('JETSON_MODEL', 'NVIDIA Jetson Orin Nano Engineering Reference Developer Kit Super'), ('CLAUDE_CODE_CHILD_SESSION', '1'), ('DBUS_SESSION_BUS_ADDRESS', 'unix:path=/run/user/1000/bus'), ('ROS_DISTRO', 'humble'), ('LOGNAME', 'nvidia'), ('JETSON_MODULE', 'NVIDIA Jetson Orin Nano (8GB ram)'), ('JETSON_SERIAL_NUMBER', '1421126024259'), ('VSCODE_HANDLES_SIGPIPE', 'true'), ('_', '/usr/bin/colcon'), ('ROS_VERSION', '2'), ('XDG_SESSION_CLASS', 'user'), ('ANTHROPIC_BASE_URL', 'http://192.168.50.76:3000'), ('XDG_SESSION_ID', '3'), ('VSCODE_CLI_REQUIRE_TOKEN', '12470a3d-3c04-4dae-84b1-ca96a54c3e7f'), ('ROS_LOCALHOST_ONLY', '0'), ('MCP_CONNECTION_NONBLOCKING', 'true'), ('PATH', '/home/nvidia/.local/bin:/home/nvidia/.cargo/bin:/home/nvidia/.npm-global/bin:/usr/local/cuda-12.6/bin:/home/nvidia/.vscode-server/cli/servers/Stable-e4c7e7b1d6d060162f4aa7f8225271b67ce1df75/server/bin/remote-cli:/home/nvidia/.local/bin:/home/nvidia/.cargo/bin:/home/nvidia/.cargo/bin:/home/nvidia/.npm-global/bin:/opt/ros/humble/bin:/usr/local/cuda-12.6/bin:/usr/local/sbin:/usr/local/bin:/usr/sbin:/usr/bin:/sbin:/bin:/usr/games:/usr/local/games:/snap/bin:/home/nvidia/.claude/plugins/cache/mattpocock/mattpocock-skills/1.2.3/bin'), ('VSCODE_AGENT_FOLDER', '/home/nvidia/.vscode-server'), ('COREPACK_ENABLE_AUTO_PIN', '0'), ('XDG_RUNTIME_DIR', '/run/user/1000'), ('CLAUDE_EFFORT', 'high'), ('CLAUDE_PID', '20391'), ('NoDefaultCurrentDirectoryInExePath', '1'), ('LANG', 'zh_CN.UTF-8'), ('LS_COLORS', ''), ('JETSON_SOC', 'tegra234'), ('AMENT_PREFIX_PATH', '/home/nvidia/DS10_Modbus/install/ds10_interfaces:/opt/ros/humble'), ('SHELL', '/bin/bash'), ('ANTHROPIC_AUTH_TOKEN', 'sk-KbQCT02wki7cd9dT5QZFvDBjR4eJM6qxv9W1Omqat9gyQEhR'), ('ELECTRON_RUN_AS_NODE', '1'), ('CLAUDE_CODE_ENABLE_SDK_FILE_CHECKPOINTING', 'true'), ('CLAUDE_CODE_SESSION_ID', '8d684188-04c1-44c0-9355-04c47b56605a'), ('LESSCLOSE', '/usr/bin/lesspipe %s %s'), ('CLAUDECODE', '1'), ('JETSON_CUDA_ARCH_BIN', '8.7'), ('PWD', '/home/nvidia/DS10_Modbus/build/ds10_driver'), ('CODEWHALE_TUI_BIN', '/home/nvidia/.npm-global/bin/codewhale-tui'), ('SSH_CONNECTION', '192.168.130.26 59645 192.168.130.180 22'), ('XDG_DATA_DIRS', '/usr/share/gnome:/usr/local/share:/usr/share:/var/lib/snapd/desktop'), ('CLAUDE_CODE_EXECPATH', '/home/nvidia/.vscode-server/extensions/anthropic.claude-code-2.1.215-linux-arm64/resources/native-binary/claude'), ('PYTHONPATH', '/home/nvidia/DS10_Modbus/install/ds10_interfaces/local/lib/python3.10/dist-packages:/opt/ros/humble/lib/python3.10/site-packages:/opt/ros/humble/local/lib/python3.10/dist-packages:/usr/local/lib/python3.10/site-packages/:'), ('CLAUDE_CODE_ENABLE_TASKS', '0'), ('COLCON', '1'), ('JETSON_JETPACK', ''), ('JETSON_P_NUMBER', 'p3767-0003'), ('CMAKE_PREFIX_PATH', '/home/nvidia/DS10_Modbus/install/ds10_interfaces:/opt/ros/humble')]), 'shell': False}
+[11.629851] (-) TimerEvent: {}
+[11.664303] (ds10_driver) StdoutLine: {'line': b'[ 33%] Building CXX object gtest/CMakeFiles/gtest_main.dir/src/gtest_main.cc.o\n'}
+[11.664718] (ds10_driver) StdoutLine: {'line': b'[ 33%] Building CXX object CMakeFiles/ds10_driver_lib.dir/src/modbus_frame_codec.cpp.o\n'}
+[11.664884] (ds10_driver) StdoutLine: {'line': b'[ 33%] Building CXX object gtest/CMakeFiles/gtest.dir/src/gtest-all.cc.o\n'}
+[11.665006] (ds10_driver) StdoutLine: {'line': b'[ 33%] Building CXX object CMakeFiles/ds10_driver_lib.dir/src/serial_port.cpp.o\n'}
+[11.665338] (ds10_driver) StdoutLine: {'line': b'[ 41%] Building CXX object CMakeFiles/ds10_driver_lib.dir/src/ds10_node.cpp.o\n'}
+[11.730052] (-) TimerEvent: {}
+[11.830469] (-) TimerEvent: {}
+[11.930912] (-) TimerEvent: {}
+[12.031355] (-) TimerEvent: {}
+[12.131799] (-) TimerEvent: {}
+[12.232221] (-) TimerEvent: {}
+[12.332614] (-) TimerEvent: {}
+[12.433016] (-) TimerEvent: {}
+[12.533416] (-) TimerEvent: {}
+[12.633831] (-) TimerEvent: {}
+[12.734225] (-) TimerEvent: {}
+[12.834623] (-) TimerEvent: {}
+[12.935054] (-) TimerEvent: {}
+[13.035491] (-) TimerEvent: {}
+[13.135958] (-) TimerEvent: {}
+[13.236399] (-) TimerEvent: {}
+[13.336833] (-) TimerEvent: {}
+[13.437277] (-) TimerEvent: {}
+[13.537688] (-) TimerEvent: {}
+[13.597355] (ds10_driver) StdoutLine: {'line': b'[ 50%] Linking CXX static library libgtest_main.a\n'}
+[13.637882] (-) TimerEvent: {}
+[13.655145] (ds10_driver) StdoutLine: {'line': b'[ 50%] Built target gtest_main\n'}
+[13.738064] (-) TimerEvent: {}
+[13.838448] (-) TimerEvent: {}
+[13.938840] (-) TimerEvent: {}
+[14.039226] (-) TimerEvent: {}
+[14.139634] (-) TimerEvent: {}
+[14.240029] (-) TimerEvent: {}
+[14.340407] (-) TimerEvent: {}
+[14.440781] (-) TimerEvent: {}
+[14.541188] (-) TimerEvent: {}
+[14.641594] (-) TimerEvent: {}
+[14.741987] (-) TimerEvent: {}
+[14.842379] (-) TimerEvent: {}
+[14.942778] (-) TimerEvent: {}
+[15.043172] (-) TimerEvent: {}
+[15.143585] (-) TimerEvent: {}
+[15.244008] (-) TimerEvent: {}
+[15.344374] (-) TimerEvent: {}
+[15.444762] (-) TimerEvent: {}
+[15.545378] (-) TimerEvent: {}
+[15.645754] (-) TimerEvent: {}
+[15.746117] (-) TimerEvent: {}
+[15.846480] (-) TimerEvent: {}
+[15.946870] (-) TimerEvent: {}
+[16.047235] (-) TimerEvent: {}
+[16.147644] (-) TimerEvent: {}
+[16.248002] (-) TimerEvent: {}
+[16.348387] (-) TimerEvent: {}
+[16.448766] (-) TimerEvent: {}
+[16.549133] (-) TimerEvent: {}
+[16.649503] (-) TimerEvent: {}
+[16.749874] (-) TimerEvent: {}
+[16.850239] (-) TimerEvent: {}
+[16.950600] (-) TimerEvent: {}
+[17.050958] (-) TimerEvent: {}
+[17.151312] (-) TimerEvent: {}
+[17.251697] (-) TimerEvent: {}
+[17.352055] (-) TimerEvent: {}
+[17.452426] (-) TimerEvent: {}
+[17.552821] (-) TimerEvent: {}
+[17.653213] (-) TimerEvent: {}
+[17.753605] (-) TimerEvent: {}
+[17.854006] (-) TimerEvent: {}
+[17.954433] (-) TimerEvent: {}
+[17.993443] (ds10_driver) StdoutLine: {'line': b'[ 58%] Linking CXX static library libgtest.a\n'}
+[18.054618] (-) TimerEvent: {}
+[18.118299] (ds10_driver) StdoutLine: {'line': b'[ 58%] Built target gtest\n'}
+[18.154820] (-) TimerEvent: {}
+[18.255274] (-) TimerEvent: {}
+[18.355756] (-) TimerEvent: {}
+[18.456191] (-) TimerEvent: {}
+[18.556646] (-) TimerEvent: {}
+[18.657095] (-) TimerEvent: {}
+[18.757537] (-) TimerEvent: {}
+[18.858001] (-) TimerEvent: {}
+[18.958398] (-) TimerEvent: {}
+[19.058785] (-) TimerEvent: {}
+[19.159219] (-) TimerEvent: {}
+[19.259707] (-) TimerEvent: {}
+[19.360128] (-) TimerEvent: {}
+[19.460517] (-) TimerEvent: {}
+[19.561027] (-) TimerEvent: {}
+[19.661408] (-) TimerEvent: {}
+[19.762014] (-) TimerEvent: {}
+[19.862366] (-) TimerEvent: {}
+[19.962741] (-) TimerEvent: {}
+[20.063092] (-) TimerEvent: {}
+[20.163490] (-) TimerEvent: {}
+[20.263965] (-) TimerEvent: {}
+[20.364421] (-) TimerEvent: {}
+[20.464848] (-) TimerEvent: {}
+[20.565241] (-) TimerEvent: {}
+[20.665654] (-) TimerEvent: {}
+[20.766051] (-) TimerEvent: {}
+[20.866423] (-) TimerEvent: {}
+[20.966802] (-) TimerEvent: {}
+[21.067178] (-) TimerEvent: {}
+[21.167613] (-) TimerEvent: {}
+[21.268050] (-) TimerEvent: {}
+[21.368498] (-) TimerEvent: {}
+[21.468873] (-) TimerEvent: {}
+[21.569221] (-) TimerEvent: {}
+[21.669547] (-) TimerEvent: {}
+[21.769798] (-) TimerEvent: {}
+[21.870065] (-) TimerEvent: {}
+[21.970392] (-) TimerEvent: {}
+[22.070692] (-) TimerEvent: {}
+[22.171062] (-) TimerEvent: {}
+[22.271535] (-) TimerEvent: {}
+[22.372029] (-) TimerEvent: {}
+[22.472401] (-) TimerEvent: {}
+[22.572996] (-) TimerEvent: {}
+[22.673403] (-) TimerEvent: {}
+[22.773790] (-) TimerEvent: {}
+[22.874178] (-) TimerEvent: {}
+[22.974569] (-) TimerEvent: {}
+[23.074966] (-) TimerEvent: {}
+[23.175372] (-) TimerEvent: {}
+[23.275748] (-) TimerEvent: {}
+[23.376137] (-) TimerEvent: {}
+[23.476541] (-) TimerEvent: {}
+[23.576968] (-) TimerEvent: {}
+[23.677350] (-) TimerEvent: {}
+[23.777720] (-) TimerEvent: {}
+[23.878086] (-) TimerEvent: {}
+[23.978443] (-) TimerEvent: {}
+[24.078800] (-) TimerEvent: {}
+[24.179204] (-) TimerEvent: {}
+[24.279662] (-) TimerEvent: {}
+[24.380081] (-) TimerEvent: {}
+[24.480744] (-) TimerEvent: {}
+[24.581121] (-) TimerEvent: {}
+[24.681483] (-) TimerEvent: {}
+[24.781862] (-) TimerEvent: {}
+[24.882214] (-) TimerEvent: {}
+[24.982586] (-) TimerEvent: {}
+[25.082922] (-) TimerEvent: {}
+[25.183297] (-) TimerEvent: {}
+[25.283689] (-) TimerEvent: {}
+[25.384030] (-) TimerEvent: {}
+[25.484395] (-) TimerEvent: {}
+[25.584823] (-) TimerEvent: {}
+[25.685427] (-) TimerEvent: {}
+[25.785996] (-) TimerEvent: {}
+[25.886336] (-) TimerEvent: {}
+[25.986702] (-) TimerEvent: {}
+[26.087103] (-) TimerEvent: {}
+[26.187533] (-) TimerEvent: {}
+[26.287993] (-) TimerEvent: {}
+[26.388440] (-) TimerEvent: {}
+[26.488877] (-) TimerEvent: {}
+[26.589210] (-) TimerEvent: {}
+[26.689625] (-) TimerEvent: {}
+[26.789973] (-) TimerEvent: {}
+[26.890328] (-) TimerEvent: {}
+[26.990702] (-) TimerEvent: {}
+[27.091038] (-) TimerEvent: {}
+[27.191402] (-) TimerEvent: {}
+[27.291828] (-) TimerEvent: {}
+[27.392213] (-) TimerEvent: {}
+[27.492690] (-) TimerEvent: {}
+[27.593148] (-) TimerEvent: {}
+[27.693525] (-) TimerEvent: {}
+[27.793891] (-) TimerEvent: {}
+[27.894277] (-) TimerEvent: {}
+[27.994661] (-) TimerEvent: {}
+[28.094978] (-) TimerEvent: {}
+[28.195350] (-) TimerEvent: {}
+[28.295792] (-) TimerEvent: {}
+[28.396207] (-) TimerEvent: {}
+[28.496648] (-) TimerEvent: {}
+[28.597028] (-) TimerEvent: {}
+[28.697650] (-) TimerEvent: {}
+[28.798085] (-) TimerEvent: {}
+[28.898566] (-) TimerEvent: {}
+[28.945308] (ds10_driver) StdoutLine: {'line': b'[ 66%] Linking CXX shared library libds10_driver_lib.so\n'}
+[28.998728] (-) TimerEvent: {}
+[29.099152] (-) TimerEvent: {}
+[29.199557] (-) TimerEvent: {}
+[29.299966] (-) TimerEvent: {}
+[29.400337] (-) TimerEvent: {}
+[29.500718] (-) TimerEvent: {}
+[29.601096] (-) TimerEvent: {}
+[29.701481] (-) TimerEvent: {}
+[29.780408] (ds10_driver) StdoutLine: {'line': b'[ 66%] Built target ds10_driver_lib\n'}
+[29.801661] (-) TimerEvent: {}
+[29.818934] (ds10_driver) StdoutLine: {'line': b'[ 83%] Building CXX object CMakeFiles/ds10_node.dir/src/main.cpp.o\n'}
+[29.819335] (ds10_driver) StdoutLine: {'line': b'[ 83%] Building CXX object CMakeFiles/test_modbus_frame_codec.dir/test/test_modbus_frame_codec.cpp.o\n'}
+[29.901831] (-) TimerEvent: {}
+[30.002214] (-) TimerEvent: {}
+[30.102594] (-) TimerEvent: {}
+[30.202967] (-) TimerEvent: {}
+[30.303351] (-) TimerEvent: {}
+[30.403740] (-) TimerEvent: {}
+[30.504117] (-) TimerEvent: {}
+[30.604505] (-) TimerEvent: {}
+[30.704896] (-) TimerEvent: {}
+[30.805272] (-) TimerEvent: {}
+[30.905664] (-) TimerEvent: {}
+[31.006056] (-) TimerEvent: {}
+[31.106434] (-) TimerEvent: {}
+[31.206809] (-) TimerEvent: {}
+[31.307191] (-) TimerEvent: {}
+[31.407586] (-) TimerEvent: {}
+[31.507978] (-) TimerEvent: {}
+[31.608366] (-) TimerEvent: {}
+[31.708762] (-) TimerEvent: {}
+[31.809149] (-) TimerEvent: {}
+[31.909541] (-) TimerEvent: {}
+[32.009908] (-) TimerEvent: {}
+[32.110276] (-) TimerEvent: {}
+[32.210650] (-) TimerEvent: {}
+[32.311046] (-) TimerEvent: {}
+[32.320126] (ds10_driver) StdoutLine: {'line': b'[ 91%] Linking CXX executable test_modbus_frame_codec\n'}
+[32.411211] (-) TimerEvent: {}
+[32.511626] (-) TimerEvent: {}
+[32.612009] (-) TimerEvent: {}
+[32.712393] (-) TimerEvent: {}
+[32.812765] (-) TimerEvent: {}
+[32.861795] (ds10_driver) StdoutLine: {'line': b'[ 91%] Built target test_modbus_frame_codec\n'}
+[32.912931] (-) TimerEvent: {}
+[33.013297] (-) TimerEvent: {}
+[33.113667] (-) TimerEvent: {}
+[33.214040] (-) TimerEvent: {}
+[33.314417] (-) TimerEvent: {}
+[33.414802] (-) TimerEvent: {}
+[33.515199] (-) TimerEvent: {}
+[33.615606] (-) TimerEvent: {}
+[33.715986] (-) TimerEvent: {}
+[33.816365] (-) TimerEvent: {}
+[33.916759] (-) TimerEvent: {}
+[34.017150] (-) TimerEvent: {}
+[34.117535] (-) TimerEvent: {}
+[34.217909] (-) TimerEvent: {}
+[34.318318] (-) TimerEvent: {}
+[34.418695] (-) TimerEvent: {}
+[34.519074] (-) TimerEvent: {}
+[34.619466] (-) TimerEvent: {}
+[34.719892] (-) TimerEvent: {}
+[34.820263] (-) TimerEvent: {}
+[34.920641] (-) TimerEvent: {}
+[35.021019] (-) TimerEvent: {}
+[35.121398] (-) TimerEvent: {}
+[35.221785] (-) TimerEvent: {}
+[35.322178] (-) TimerEvent: {}
+[35.422586] (-) TimerEvent: {}
+[35.522976] (-) TimerEvent: {}
+[35.623357] (-) TimerEvent: {}
+[35.723757] (-) TimerEvent: {}
+[35.824123] (-) TimerEvent: {}
+[35.924506] (-) TimerEvent: {}
+[35.933627] (ds10_driver) StdoutLine: {'line': b'[100%] Linking CXX executable ds10_node\n'}
+[36.024679] (-) TimerEvent: {}
+[36.125076] (-) TimerEvent: {}
+[36.225459] (-) TimerEvent: {}
+[36.325910] (-) TimerEvent: {}
+[36.337247] (ds10_driver) StdoutLine: {'line': b'[100%] Built target ds10_node\n'}
+[36.360941] (ds10_driver) CommandEnded: {'returncode': 0}
+[36.363347] (ds10_driver) JobProgress: {'identifier': 'ds10_driver', 'progress': 'install'}
+[36.364230] (ds10_driver) Command: {'cmd': ['/usr/bin/cmake', '--install', '/home/nvidia/DS10_Modbus/build/ds10_driver'], 'cwd': '/home/nvidia/DS10_Modbus/build/ds10_driver', 'env': OrderedDict([('LESSOPEN', '| /usr/bin/lesspipe %s'), ('VSCODE_CWD', '/home/nvidia'), ('VSCODE_ESM_ENTRYPOINT', 'vs/workbench/api/node/extensionHostProcess'), ('AI_AGENT', 'claude-code_2-1-215_agent'), ('LANGUAGE', 'zh_CN:zh'), ('CODEX_HOME', '/home/nvidia/.codex'), ('USER', 'nvidia'), ('SSH_CLIENT', '192.168.130.26 59645 22'), ('CLAUDE_CODE_ENTRYPOINT', 'claude-vscode'), ('VSCODE_NLS_CONFIG', '{"userLocale":"zh-cn","osLocale":"zh-cn","resolvedLanguage":"zh-cn","defaultMessagesFile":"/home/nvidia/.vscode-server/cli/servers/Stable-e4c7e7b1d6d060162f4aa7f8225271b67ce1df75/server/out/nls.messages.json","languagePack":{"translationsConfigFile":"/home/nvidia/.vscode-server/data/clp/4c1d03004af65f9b16ba94f4936a2bd5.zh-cn/tcf.json","messagesFile":"/home/nvidia/.vscode-server/data/clp/4c1d03004af65f9b16ba94f4936a2bd5.zh-cn/e4c7e7b1d6d060162f4aa7f8225271b67ce1df75/nls.messages.json","corruptMarkerFile":"/home/nvidia/.vscode-server/data/clp/4c1d03004af65f9b16ba94f4936a2bd5.zh-cn/corrupted.info"},"locale":"zh-cn","availableLanguages":{"*":"zh-cn"},"_languagePackId":"4c1d03004af65f9b16ba94f4936a2bd5.zh-cn","_languagePackSupport":true,"_translationsConfigFile":"/home/nvidia/.vscode-server/data/clp/4c1d03004af65f9b16ba94f4936a2bd5.zh-cn/tcf.json","_cacheRoot":"/home/nvidia/.vscode-server/data/clp/4c1d03004af65f9b16ba94f4936a2bd5.zh-cn","_resolvedLanguagePackCoreLocation":"/home/nvidia/.vscode-server/data/clp/4c1d03004af65f9b16ba94f4936a2bd5.zh-cn/e4c7e7b1d6d060162f4aa7f8225271b67ce1df75","_corruptedFile":"/home/nvidia/.vscode-server/data/clp/4c1d03004af65f9b16ba94f4936a2bd5.zh-cn/corrupted.info"}'), ('GIT_EDITOR', 'true'), ('VSCODE_HANDLES_UNCAUGHT_ERRORS', 'true'), ('XDG_SESSION_TYPE', 'tty'), ('CLAUDE_AGENT_SDK_VERSION', '0.3.215'), ('SHLVL', '0'), ('LD_LIBRARY_PATH', '/home/nvidia/DS10_Modbus/install/ds10_interfaces/lib:/opt/ros/humble/opt/rviz_ogre_vendor/lib:/opt/ros/humble/lib/aarch64-linux-gnu:/opt/ros/humble/lib:/usr/local/lib:/usr/local/cuda-12.6/lib64'), ('BROWSER', '/home/nvidia/.vscode-server/cli/servers/Stable-e4c7e7b1d6d060162f4aa7f8225271b67ce1df75/server/bin/helpers/browser.sh'), ('MOTD_SHOWN', 'pam'), ('HOME', '/home/nvidia'), ('VSCODE_RECONNECTION_GRACE_TIME', '10800000'), ('VSCODE_IPC_HOOK_CLI', '/run/user/1000/vscode-ipc-f7907052-7d99-418a-872f-23827cf78271.sock'), ('JETSON_L4T', '36.4.7'), ('ROS_PYTHON_VERSION', '3'), ('JETSON_MODEL', 'NVIDIA Jetson Orin Nano Engineering Reference Developer Kit Super'), ('CLAUDE_CODE_CHILD_SESSION', '1'), ('DBUS_SESSION_BUS_ADDRESS', 'unix:path=/run/user/1000/bus'), ('ROS_DISTRO', 'humble'), ('LOGNAME', 'nvidia'), ('JETSON_MODULE', 'NVIDIA Jetson Orin Nano (8GB ram)'), ('JETSON_SERIAL_NUMBER', '1421126024259'), ('VSCODE_HANDLES_SIGPIPE', 'true'), ('_', '/usr/bin/colcon'), ('ROS_VERSION', '2'), ('XDG_SESSION_CLASS', 'user'), ('ANTHROPIC_BASE_URL', 'http://192.168.50.76:3000'), ('XDG_SESSION_ID', '3'), ('VSCODE_CLI_REQUIRE_TOKEN', '12470a3d-3c04-4dae-84b1-ca96a54c3e7f'), ('ROS_LOCALHOST_ONLY', '0'), ('MCP_CONNECTION_NONBLOCKING', 'true'), ('PATH', '/home/nvidia/.local/bin:/home/nvidia/.cargo/bin:/home/nvidia/.npm-global/bin:/usr/local/cuda-12.6/bin:/home/nvidia/.vscode-server/cli/servers/Stable-e4c7e7b1d6d060162f4aa7f8225271b67ce1df75/server/bin/remote-cli:/home/nvidia/.local/bin:/home/nvidia/.cargo/bin:/home/nvidia/.cargo/bin:/home/nvidia/.npm-global/bin:/opt/ros/humble/bin:/usr/local/cuda-12.6/bin:/usr/local/sbin:/usr/local/bin:/usr/sbin:/usr/bin:/sbin:/bin:/usr/games:/usr/local/games:/snap/bin:/home/nvidia/.claude/plugins/cache/mattpocock/mattpocock-skills/1.2.3/bin'), ('VSCODE_AGENT_FOLDER', '/home/nvidia/.vscode-server'), ('COREPACK_ENABLE_AUTO_PIN', '0'), ('XDG_RUNTIME_DIR', '/run/user/1000'), ('CLAUDE_EFFORT', 'high'), ('CLAUDE_PID', '20391'), ('NoDefaultCurrentDirectoryInExePath', '1'), ('LANG', 'zh_CN.UTF-8'), ('LS_COLORS', ''), ('JETSON_SOC', 'tegra234'), ('AMENT_PREFIX_PATH', '/home/nvidia/DS10_Modbus/install/ds10_interfaces:/opt/ros/humble'), ('SHELL', '/bin/bash'), ('ANTHROPIC_AUTH_TOKEN', 'sk-KbQCT02wki7cd9dT5QZFvDBjR4eJM6qxv9W1Omqat9gyQEhR'), ('ELECTRON_RUN_AS_NODE', '1'), ('CLAUDE_CODE_ENABLE_SDK_FILE_CHECKPOINTING', 'true'), ('CLAUDE_CODE_SESSION_ID', '8d684188-04c1-44c0-9355-04c47b56605a'), ('LESSCLOSE', '/usr/bin/lesspipe %s %s'), ('CLAUDECODE', '1'), ('JETSON_CUDA_ARCH_BIN', '8.7'), ('PWD', '/home/nvidia/DS10_Modbus/build/ds10_driver'), ('CODEWHALE_TUI_BIN', '/home/nvidia/.npm-global/bin/codewhale-tui'), ('SSH_CONNECTION', '192.168.130.26 59645 192.168.130.180 22'), ('XDG_DATA_DIRS', '/usr/share/gnome:/usr/local/share:/usr/share:/var/lib/snapd/desktop'), ('CLAUDE_CODE_EXECPATH', '/home/nvidia/.vscode-server/extensions/anthropic.claude-code-2.1.215-linux-arm64/resources/native-binary/claude'), ('PYTHONPATH', '/home/nvidia/DS10_Modbus/install/ds10_interfaces/local/lib/python3.10/dist-packages:/opt/ros/humble/lib/python3.10/site-packages:/opt/ros/humble/local/lib/python3.10/dist-packages:/usr/local/lib/python3.10/site-packages/:'), ('CLAUDE_CODE_ENABLE_TASKS', '0'), ('COLCON', '1'), ('JETSON_JETPACK', ''), ('JETSON_P_NUMBER', 'p3767-0003'), ('CMAKE_PREFIX_PATH', '/home/nvidia/DS10_Modbus/install/ds10_interfaces:/opt/ros/humble')]), 'shell': False}
+[36.382192] (ds10_driver) StdoutLine: {'line': b'-- Install configuration: ""\n'}
+[36.382749] (ds10_driver) StdoutLine: {'line': b'-- Installing: /home/nvidia/DS10_Modbus/install/ds10_driver/lib/libds10_driver_lib.so\n'}
+[36.397075] (ds10_driver) StdoutLine: {'line': b'-- Set runtime path of "/home/nvidia/DS10_Modbus/install/ds10_driver/lib/libds10_driver_lib.so" to ""\n'}
+[36.397430] (ds10_driver) StdoutLine: {'line': b'-- Installing: /home/nvidia/DS10_Modbus/install/ds10_driver/lib/ds10_driver/ds10_node\n'}
+[36.398077] (ds10_driver) StdoutLine: {'line': b'-- Set runtime path of "/home/nvidia/DS10_Modbus/install/ds10_driver/lib/ds10_driver/ds10_node" to ""\n'}
+[36.398292] (ds10_driver) StdoutLine: {'line': b'-- Installing: /home/nvidia/DS10_Modbus/install/ds10_driver/share/ds10_driver/launch\n'}
+[36.398525] (ds10_driver) StdoutLine: {'line': b'-- Installing: /home/nvidia/DS10_Modbus/install/ds10_driver/share/ds10_driver/launch/ds10_slave.launch.py\n'}
+[36.398737] (ds10_driver) StdoutLine: {'line': b'-- Installing: /home/nvidia/DS10_Modbus/install/ds10_driver/share/ds10_driver/launch/ds10_master.launch.py\n'}
+[36.399014] (ds10_driver) StdoutLine: {'line': b'-- Installing: /home/nvidia/DS10_Modbus/install/ds10_driver/share/ds10_driver/config\n'}
+[36.399213] (ds10_driver) StdoutLine: {'line': b'-- Installing: /home/nvidia/DS10_Modbus/install/ds10_driver/share/ds10_driver/config/ds10_slave.yaml\n'}
+[36.399414] (ds10_driver) StdoutLine: {'line': b'-- Installing: /home/nvidia/DS10_Modbus/install/ds10_driver/share/ds10_driver/config/ds10_master.yaml\n'}
+[36.399890] (ds10_driver) StdoutLine: {'line': b'-- Installing: /home/nvidia/DS10_Modbus/install/ds10_driver/include/\n'}
+[36.400154] (ds10_driver) StdoutLine: {'line': b'-- Installing: /home/nvidia/DS10_Modbus/install/ds10_driver/include//ds10_driver\n'}
+[36.400283] (ds10_driver) StdoutLine: {'line': b'-- Installing: /home/nvidia/DS10_Modbus/install/ds10_driver/include//ds10_driver/ds10_node.hpp\n'}
+[36.400499] (ds10_driver) StdoutLine: {'line': b'-- Installing: /home/nvidia/DS10_Modbus/install/ds10_driver/include//ds10_driver/modbus_frame_codec.hpp\n'}
+[36.400693] (ds10_driver) StdoutLine: {'line': b'-- Installing: /home/nvidia/DS10_Modbus/install/ds10_driver/include//ds10_driver/serial_port.hpp\n'}
+[36.400800] (ds10_driver) StdoutLine: {'line': b'-- Installing: /home/nvidia/DS10_Modbus/install/ds10_driver/share/ds10_driver/environment/library_path.sh\n'}
+[36.400905] (ds10_driver) StdoutLine: {'line': b'-- Installing: /home/nvidia/DS10_Modbus/install/ds10_driver/share/ds10_driver/environment/library_path.dsv\n'}
+[36.401203] (ds10_driver) StdoutLine: {'line': b'-- Installing: /home/nvidia/DS10_Modbus/install/ds10_driver/share/ament_index/resource_index/package_run_dependencies/ds10_driver\n'}
+[36.401484] (ds10_driver) StdoutLine: {'line': b'-- Installing: /home/nvidia/DS10_Modbus/install/ds10_driver/share/ament_index/resource_index/parent_prefix_path/ds10_driver\n'}
+[36.401730] (ds10_driver) StdoutLine: {'line': b'-- Installing: /home/nvidia/DS10_Modbus/install/ds10_driver/share/ds10_driver/environment/ament_prefix_path.sh\n'}
+[36.401935] (ds10_driver) StdoutLine: {'line': b'-- Installing: /home/nvidia/DS10_Modbus/install/ds10_driver/share/ds10_driver/environment/ament_prefix_path.dsv\n'}
+[36.402152] (ds10_driver) StdoutLine: {'line': b'-- Installing: /home/nvidia/DS10_Modbus/install/ds10_driver/share/ds10_driver/environment/path.sh\n'}
+[36.402366] (ds10_driver) StdoutLine: {'line': b'-- Installing: /home/nvidia/DS10_Modbus/install/ds10_driver/share/ds10_driver/environment/path.dsv\n'}
+[36.402568] (ds10_driver) StdoutLine: {'line': b'-- Installing: /home/nvidia/DS10_Modbus/install/ds10_driver/share/ds10_driver/local_setup.bash\n'}
+[36.402791] (ds10_driver) StdoutLine: {'line': b'-- Installing: /home/nvidia/DS10_Modbus/install/ds10_driver/share/ds10_driver/local_setup.sh\n'}
+[36.403030] (ds10_driver) StdoutLine: {'line': b'-- Installing: /home/nvidia/DS10_Modbus/install/ds10_driver/share/ds10_driver/local_setup.zsh\n'}
+[36.403250] (ds10_driver) StdoutLine: {'line': b'-- Installing: /home/nvidia/DS10_Modbus/install/ds10_driver/share/ds10_driver/local_setup.dsv\n'}
+[36.403462] (ds10_driver) StdoutLine: {'line': b'-- Installing: /home/nvidia/DS10_Modbus/install/ds10_driver/share/ds10_driver/package.dsv\n'}
+[36.403841] (ds10_driver) StdoutLine: {'line': b'-- Installing: /home/nvidia/DS10_Modbus/install/ds10_driver/share/ament_index/resource_index/packages/ds10_driver\n'}
+[36.404167] (ds10_driver) StdoutLine: {'line': b'-- Installing: /home/nvidia/DS10_Modbus/install/ds10_driver/share/ds10_driver/cmake/ament_cmake_export_dependencies-extras.cmake\n'}
+[36.404379] (ds10_driver) StdoutLine: {'line': b'-- Installing: /home/nvidia/DS10_Modbus/install/ds10_driver/share/ds10_driver/cmake/ament_cmake_export_include_directories-extras.cmake\n'}
+[36.404580] (ds10_driver) StdoutLine: {'line': b'-- Installing: /home/nvidia/DS10_Modbus/install/ds10_driver/share/ds10_driver/cmake/ament_cmake_export_libraries-extras.cmake\n'}
+[36.404811] (ds10_driver) StdoutLine: {'line': b'-- Installing: /home/nvidia/DS10_Modbus/install/ds10_driver/share/ds10_driver/cmake/ds10_driverConfig.cmake\n'}
+[36.404997] (ds10_driver) StdoutLine: {'line': b'-- Installing: /home/nvidia/DS10_Modbus/install/ds10_driver/share/ds10_driver/cmake/ds10_driverConfig-version.cmake\n'}
+[36.405204] (ds10_driver) StdoutLine: {'line': b'-- Installing: /home/nvidia/DS10_Modbus/install/ds10_driver/share/ds10_driver/package.xml\n'}
+[36.409052] (ds10_driver) CommandEnded: {'returncode': 0}
+[36.427265] (-) TimerEvent: {}
+[36.464790] (ds10_driver) JobEnded: {'identifier': 'ds10_driver', 'rc': 0}
+[36.466562] (-) EventReactorShutdown: {}

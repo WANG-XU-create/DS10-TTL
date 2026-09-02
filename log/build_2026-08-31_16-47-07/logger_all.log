@@ -1,0 +1,263 @@
+[0.215s] colcon DEBUG Command line arguments: ['/usr/bin/colcon', 'build']
+[0.216s] colcon DEBUG Parsed command line arguments: Namespace(log_base=None, log_level=None, verb_name='build', build_base='build', install_base='install', merge_install=False, symlink_install=False, test_result_base=None, continue_on_error=False, executor='parallel', parallel_workers=6, event_handlers=None, ignore_user_meta=False, metas=['./colcon.meta'], base_paths=['.'], packages_ignore=None, packages_ignore_regex=None, paths=None, packages_up_to=None, packages_up_to_regex=None, packages_above=None, packages_above_and_dependencies=None, packages_above_depth=None, packages_select_by_dep=None, packages_skip_by_dep=None, packages_skip_up_to=None, packages_select_build_failed=False, packages_skip_build_finished=False, packages_select_test_failures=False, packages_skip_test_passed=False, packages_select=None, packages_skip=None, packages_select_regex=None, packages_skip_regex=None, packages_start=None, packages_end=None, allow_overriding=[], cmake_args=None, cmake_target=None, cmake_target_skip_unavailable=False, cmake_clean_cache=False, cmake_clean_first=False, cmake_force_configure=False, ament_cmake_args=None, catkin_cmake_args=None, catkin_skip_building_tests=False, verb_parser=<colcon_defaults.argument_parser.defaults.DefaultArgumentsDecorator object at 0xffff7da8c5e0>, verb_extension=<colcon_core.verb.build.BuildVerb object at 0xffff7db9a3b0>, main=<bound method BuildVerb.main of <colcon_core.verb.build.BuildVerb object at 0xffff7db9a3b0>>)
+[0.287s] colcon.colcon_core.package_discovery Level 1 discover_packages(colcon_meta) check parameters
+[0.287s] colcon.colcon_core.package_discovery Level 1 discover_packages(recursive) check parameters
+[0.287s] colcon.colcon_core.package_discovery Level 1 discover_packages(ignore) check parameters
+[0.287s] colcon.colcon_core.package_discovery Level 1 discover_packages(path) check parameters
+[0.287s] colcon.colcon_core.package_discovery Level 1 discover_packages(colcon_meta) discover
+[0.288s] colcon.colcon_core.package_discovery Level 1 discover_packages(recursive) discover
+[0.288s] colcon.colcon_core.package_discovery INFO Crawling recursively for packages in '/home/nvidia/DS10_Modbus'
+[0.288s] colcon.colcon_core.package_identification Level 1 _identify(.) by extensions ['ignore', 'ignore_ament_install']
+[0.288s] colcon.colcon_core.package_identification Level 1 _identify(.) by extension 'ignore'
+[0.288s] colcon.colcon_core.package_identification Level 1 _identify(.) by extension 'ignore_ament_install'
+[0.288s] colcon.colcon_core.package_identification Level 1 _identify(.) by extensions ['colcon_pkg']
+[0.288s] colcon.colcon_core.package_identification Level 1 _identify(.) by extension 'colcon_pkg'
+[0.289s] colcon.colcon_core.package_identification Level 1 _identify(.) by extensions ['colcon_meta']
+[0.289s] colcon.colcon_core.package_identification Level 1 _identify(.) by extension 'colcon_meta'
+[0.289s] colcon.colcon_core.package_identification Level 1 _identify(.) by extensions ['ros']
+[0.289s] colcon.colcon_core.package_identification Level 1 _identify(.) by extension 'ros'
+[0.316s] colcon.colcon_core.package_identification Level 1 _identify(.) by extensions ['cmake', 'python']
+[0.316s] colcon.colcon_core.package_identification Level 1 _identify(.) by extension 'cmake'
+[0.317s] colcon.colcon_core.package_identification Level 1 _identify(.) by extension 'python'
+[0.317s] colcon.colcon_core.package_identification Level 1 _identify(.) by extensions ['python_setup_py']
+[0.317s] colcon.colcon_core.package_identification Level 1 _identify(.) by extension 'python_setup_py'
+[0.317s] colcon.colcon_core.package_identification Level 1 _identify(__pycache__) by extensions ['ignore', 'ignore_ament_install']
+[0.317s] colcon.colcon_core.package_identification Level 1 _identify(__pycache__) by extension 'ignore'
+[0.317s] colcon.colcon_core.package_identification Level 1 _identify(__pycache__) by extension 'ignore_ament_install'
+[0.318s] colcon.colcon_core.package_identification Level 1 _identify(__pycache__) by extensions ['colcon_pkg']
+[0.318s] colcon.colcon_core.package_identification Level 1 _identify(__pycache__) by extension 'colcon_pkg'
+[0.318s] colcon.colcon_core.package_identification Level 1 _identify(__pycache__) by extensions ['colcon_meta']
+[0.318s] colcon.colcon_core.package_identification Level 1 _identify(__pycache__) by extension 'colcon_meta'
+[0.318s] colcon.colcon_core.package_identification Level 1 _identify(__pycache__) by extensions ['ros']
+[0.318s] colcon.colcon_core.package_identification Level 1 _identify(__pycache__) by extension 'ros'
+[0.318s] colcon.colcon_core.package_identification Level 1 _identify(__pycache__) by extensions ['cmake', 'python']
+[0.318s] colcon.colcon_core.package_identification Level 1 _identify(__pycache__) by extension 'cmake'
+[0.318s] colcon.colcon_core.package_identification Level 1 _identify(__pycache__) by extension 'python'
+[0.318s] colcon.colcon_core.package_identification Level 1 _identify(__pycache__) by extensions ['python_setup_py']
+[0.318s] colcon.colcon_core.package_identification Level 1 _identify(__pycache__) by extension 'python_setup_py'
+[0.319s] colcon.colcon_core.package_identification Level 1 _identify(build) by extensions ['ignore', 'ignore_ament_install']
+[0.319s] colcon.colcon_core.package_identification Level 1 _identify(build) by extension 'ignore'
+[0.319s] colcon.colcon_core.package_identification Level 1 _identify(build) ignored
+[0.319s] colcon.colcon_core.package_identification Level 1 _identify(docs) by extensions ['ignore', 'ignore_ament_install']
+[0.319s] colcon.colcon_core.package_identification Level 1 _identify(docs) by extension 'ignore'
+[0.319s] colcon.colcon_core.package_identification Level 1 _identify(docs) by extension 'ignore_ament_install'
+[0.319s] colcon.colcon_core.package_identification Level 1 _identify(docs) by extensions ['colcon_pkg']
+[0.319s] colcon.colcon_core.package_identification Level 1 _identify(docs) by extension 'colcon_pkg'
+[0.320s] colcon.colcon_core.package_identification Level 1 _identify(docs) by extensions ['colcon_meta']
+[0.320s] colcon.colcon_core.package_identification Level 1 _identify(docs) by extension 'colcon_meta'
+[0.320s] colcon.colcon_core.package_identification Level 1 _identify(docs) by extensions ['ros']
+[0.320s] colcon.colcon_core.package_identification Level 1 _identify(docs) by extension 'ros'
+[0.320s] colcon.colcon_core.package_identification Level 1 _identify(docs) by extensions ['cmake', 'python']
+[0.320s] colcon.colcon_core.package_identification Level 1 _identify(docs) by extension 'cmake'
+[0.320s] colcon.colcon_core.package_identification Level 1 _identify(docs) by extension 'python'
+[0.320s] colcon.colcon_core.package_identification Level 1 _identify(docs) by extensions ['python_setup_py']
+[0.320s] colcon.colcon_core.package_identification Level 1 _identify(docs) by extension 'python_setup_py'
+[0.320s] colcon.colcon_core.package_identification Level 1 _identify(install) by extensions ['ignore', 'ignore_ament_install']
+[0.320s] colcon.colcon_core.package_identification Level 1 _identify(install) by extension 'ignore'
+[0.321s] colcon.colcon_core.package_identification Level 1 _identify(install) ignored
+[0.321s] colcon.colcon_core.package_identification Level 1 _identify(issues) by extensions ['ignore', 'ignore_ament_install']
+[0.321s] colcon.colcon_core.package_identification Level 1 _identify(issues) by extension 'ignore'
+[0.321s] colcon.colcon_core.package_identification Level 1 _identify(issues) by extension 'ignore_ament_install'
+[0.321s] colcon.colcon_core.package_identification Level 1 _identify(issues) by extensions ['colcon_pkg']
+[0.321s] colcon.colcon_core.package_identification Level 1 _identify(issues) by extension 'colcon_pkg'
+[0.321s] colcon.colcon_core.package_identification Level 1 _identify(issues) by extensions ['colcon_meta']
+[0.321s] colcon.colcon_core.package_identification Level 1 _identify(issues) by extension 'colcon_meta'
+[0.321s] colcon.colcon_core.package_identification Level 1 _identify(issues) by extensions ['ros']
+[0.321s] colcon.colcon_core.package_identification Level 1 _identify(issues) by extension 'ros'
+[0.321s] colcon.colcon_core.package_identification Level 1 _identify(issues) by extensions ['cmake', 'python']
+[0.322s] colcon.colcon_core.package_identification Level 1 _identify(issues) by extension 'cmake'
+[0.322s] colcon.colcon_core.package_identification Level 1 _identify(issues) by extension 'python'
+[0.322s] colcon.colcon_core.package_identification Level 1 _identify(issues) by extensions ['python_setup_py']
+[0.322s] colcon.colcon_core.package_identification Level 1 _identify(issues) by extension 'python_setup_py'
+[0.322s] colcon.colcon_core.package_identification Level 1 _identify(log) by extensions ['ignore', 'ignore_ament_install']
+[0.322s] colcon.colcon_core.package_identification Level 1 _identify(log) by extension 'ignore'
+[0.322s] colcon.colcon_core.package_identification Level 1 _identify(log) ignored
+[0.322s] colcon.colcon_core.package_identification Level 1 _identify(src) by extensions ['ignore', 'ignore_ament_install']
+[0.322s] colcon.colcon_core.package_identification Level 1 _identify(src) by extension 'ignore'
+[0.323s] colcon.colcon_core.package_identification Level 1 _identify(src) by extension 'ignore_ament_install'
+[0.323s] colcon.colcon_core.package_identification Level 1 _identify(src) by extensions ['colcon_pkg']
+[0.323s] colcon.colcon_core.package_identification Level 1 _identify(src) by extension 'colcon_pkg'
+[0.323s] colcon.colcon_core.package_identification Level 1 _identify(src) by extensions ['colcon_meta']
+[0.323s] colcon.colcon_core.package_identification Level 1 _identify(src) by extension 'colcon_meta'
+[0.323s] colcon.colcon_core.package_identification Level 1 _identify(src) by extensions ['ros']
+[0.323s] colcon.colcon_core.package_identification Level 1 _identify(src) by extension 'ros'
+[0.323s] colcon.colcon_core.package_identification Level 1 _identify(src) by extensions ['cmake', 'python']
+[0.323s] colcon.colcon_core.package_identification Level 1 _identify(src) by extension 'cmake'
+[0.323s] colcon.colcon_core.package_identification Level 1 _identify(src) by extension 'python'
+[0.323s] colcon.colcon_core.package_identification Level 1 _identify(src) by extensions ['python_setup_py']
+[0.323s] colcon.colcon_core.package_identification Level 1 _identify(src) by extension 'python_setup_py'
+[0.324s] colcon.colcon_core.package_identification Level 1 _identify(src/ds10_driver) by extensions ['ignore', 'ignore_ament_install']
+[0.324s] colcon.colcon_core.package_identification Level 1 _identify(src/ds10_driver) by extension 'ignore'
+[0.324s] colcon.colcon_core.package_identification Level 1 _identify(src/ds10_driver) by extension 'ignore_ament_install'
+[0.324s] colcon.colcon_core.package_identification Level 1 _identify(src/ds10_driver) by extensions ['colcon_pkg']
+[0.324s] colcon.colcon_core.package_identification Level 1 _identify(src/ds10_driver) by extension 'colcon_pkg'
+[0.324s] colcon.colcon_core.package_identification Level 1 _identify(src/ds10_driver) by extensions ['colcon_meta']
+[0.324s] colcon.colcon_core.package_identification Level 1 _identify(src/ds10_driver) by extension 'colcon_meta'
+[0.324s] colcon.colcon_core.package_identification Level 1 _identify(src/ds10_driver) by extensions ['ros']
+[0.324s] colcon.colcon_core.package_identification Level 1 _identify(src/ds10_driver) by extension 'ros'
+[0.329s] colcon.colcon_core.package_identification DEBUG Package 'src/ds10_driver' with type 'ros.ament_cmake' and name 'ds10_driver'
+[0.330s] colcon.colcon_core.package_identification Level 1 _identify(src/ds10_interfaces) by extensions ['ignore', 'ignore_ament_install']
+[0.330s] colcon.colcon_core.package_identification Level 1 _identify(src/ds10_interfaces) by extension 'ignore'
+[0.330s] colcon.colcon_core.package_identification Level 1 _identify(src/ds10_interfaces) by extension 'ignore_ament_install'
+[0.330s] colcon.colcon_core.package_identification Level 1 _identify(src/ds10_interfaces) by extensions ['colcon_pkg']
+[0.330s] colcon.colcon_core.package_identification Level 1 _identify(src/ds10_interfaces) by extension 'colcon_pkg'
+[0.330s] colcon.colcon_core.package_identification Level 1 _identify(src/ds10_interfaces) by extensions ['colcon_meta']
+[0.330s] colcon.colcon_core.package_identification Level 1 _identify(src/ds10_interfaces) by extension 'colcon_meta'
+[0.331s] colcon.colcon_core.package_identification Level 1 _identify(src/ds10_interfaces) by extensions ['ros']
+[0.331s] colcon.colcon_core.package_identification Level 1 _identify(src/ds10_interfaces) by extension 'ros'
+[0.332s] colcon.colcon_core.package_identification DEBUG Package 'src/ds10_interfaces' with type 'ros.ament_cmake' and name 'ds10_interfaces'
+[0.332s] colcon.colcon_core.package_discovery Level 1 discover_packages(recursive) using defaults
+[0.332s] colcon.colcon_core.package_discovery Level 1 discover_packages(ignore) discover
+[0.332s] colcon.colcon_core.package_discovery Level 1 discover_packages(ignore) using defaults
+[0.332s] colcon.colcon_core.package_discovery Level 1 discover_packages(path) discover
+[0.332s] colcon.colcon_core.package_discovery Level 1 discover_packages(path) using defaults
+[0.363s] colcon.colcon_core.package_discovery Level 1 discover_packages(prefix_path) check parameters
+[0.363s] colcon.colcon_core.package_discovery Level 1 discover_packages(prefix_path) discover
+[0.367s] colcon.colcon_installed_package_information.package_discovery DEBUG Found 306 installed packages in /opt/ros/humble
+[0.369s] colcon.colcon_core.package_discovery Level 1 discover_packages(prefix_path) using defaults
+[0.442s] colcon.colcon_core.verb Level 5 set package 'ds10_interfaces' build argument 'cmake_args' from command line to 'None'
+[0.442s] colcon.colcon_core.verb Level 5 set package 'ds10_interfaces' build argument 'cmake_target' from command line to 'None'
+[0.442s] colcon.colcon_core.verb Level 5 set package 'ds10_interfaces' build argument 'cmake_target_skip_unavailable' from command line to 'False'
+[0.443s] colcon.colcon_core.verb Level 5 set package 'ds10_interfaces' build argument 'cmake_clean_cache' from command line to 'False'
+[0.443s] colcon.colcon_core.verb Level 5 set package 'ds10_interfaces' build argument 'cmake_clean_first' from command line to 'False'
+[0.443s] colcon.colcon_core.verb Level 5 set package 'ds10_interfaces' build argument 'cmake_force_configure' from command line to 'False'
+[0.443s] colcon.colcon_core.verb Level 5 set package 'ds10_interfaces' build argument 'ament_cmake_args' from command line to 'None'
+[0.443s] colcon.colcon_core.verb Level 5 set package 'ds10_interfaces' build argument 'catkin_cmake_args' from command line to 'None'
+[0.443s] colcon.colcon_core.verb Level 5 set package 'ds10_interfaces' build argument 'catkin_skip_building_tests' from command line to 'False'
+[0.443s] colcon.colcon_core.verb DEBUG Building package 'ds10_interfaces' with the following arguments: {'ament_cmake_args': None, 'build_base': '/home/nvidia/DS10_Modbus/build/ds10_interfaces', 'catkin_cmake_args': None, 'catkin_skip_building_tests': False, 'cmake_args': None, 'cmake_clean_cache': False, 'cmake_clean_first': False, 'cmake_force_configure': False, 'cmake_target': None, 'cmake_target_skip_unavailable': False, 'install_base': '/home/nvidia/DS10_Modbus/install/ds10_interfaces', 'merge_install': False, 'path': '/home/nvidia/DS10_Modbus/src/ds10_interfaces', 'symlink_install': False, 'test_result_base': None}
+[0.443s] colcon.colcon_core.verb Level 5 set package 'ds10_driver' build argument 'cmake_args' from command line to 'None'
+[0.443s] colcon.colcon_core.verb Level 5 set package 'ds10_driver' build argument 'cmake_target' from command line to 'None'
+[0.443s] colcon.colcon_core.verb Level 5 set package 'ds10_driver' build argument 'cmake_target_skip_unavailable' from command line to 'False'
+[0.443s] colcon.colcon_core.verb Level 5 set package 'ds10_driver' build argument 'cmake_clean_cache' from command line to 'False'
+[0.444s] colcon.colcon_core.verb Level 5 set package 'ds10_driver' build argument 'cmake_clean_first' from command line to 'False'
+[0.444s] colcon.colcon_core.verb Level 5 set package 'ds10_driver' build argument 'cmake_force_configure' from command line to 'False'
+[0.444s] colcon.colcon_core.verb Level 5 set package 'ds10_driver' build argument 'ament_cmake_args' from command line to 'None'
+[0.444s] colcon.colcon_core.verb Level 5 set package 'ds10_driver' build argument 'catkin_cmake_args' from command line to 'None'
+[0.444s] colcon.colcon_core.verb Level 5 set package 'ds10_driver' build argument 'catkin_skip_building_tests' from command line to 'False'
+[0.444s] colcon.colcon_core.verb DEBUG Building package 'ds10_driver' with the following arguments: {'ament_cmake_args': None, 'build_base': '/home/nvidia/DS10_Modbus/build/ds10_driver', 'catkin_cmake_args': None, 'catkin_skip_building_tests': False, 'cmake_args': None, 'cmake_clean_cache': False, 'cmake_clean_first': False, 'cmake_force_configure': False, 'cmake_target': None, 'cmake_target_skip_unavailable': False, 'install_base': '/home/nvidia/DS10_Modbus/install/ds10_driver', 'merge_install': False, 'path': '/home/nvidia/DS10_Modbus/src/ds10_driver', 'symlink_install': False, 'test_result_base': None}
+[0.444s] colcon.colcon_core.executor INFO Executing jobs using 'parallel' executor
+[0.446s] colcon.colcon_parallel_executor.executor.parallel DEBUG run_until_complete
+[0.446s] colcon.colcon_ros.task.ament_cmake.build INFO Building ROS package in '/home/nvidia/DS10_Modbus/src/ds10_interfaces' with build type 'ament_cmake'
+[0.447s] colcon.colcon_cmake.task.cmake.build INFO Building CMake package in '/home/nvidia/DS10_Modbus/src/ds10_interfaces'
+[0.450s] colcon.colcon_core.plugin_system INFO Skipping extension 'colcon_core.shell.bat': Not used on non-Windows systems
+[0.450s] colcon.colcon_core.shell INFO Skip shell extension 'powershell' for command environment: Not usable outside of PowerShell
+[0.450s] colcon.colcon_core.shell DEBUG Skip shell extension 'dsv' for command environment
+[0.462s] colcon.colcon_core.event_handler.log_command DEBUG Invoking command in '/home/nvidia/DS10_Modbus/build/ds10_interfaces': CMAKE_PREFIX_PATH=/opt/ros/humble /usr/bin/cmake /home/nvidia/DS10_Modbus/src/ds10_interfaces -DCMAKE_INSTALL_PREFIX=/home/nvidia/DS10_Modbus/install/ds10_interfaces
+[4.816s] colcon.colcon_core.event_handler.log_command DEBUG Invoked command in '/home/nvidia/DS10_Modbus/build/ds10_interfaces' returned '0': CMAKE_PREFIX_PATH=/opt/ros/humble /usr/bin/cmake /home/nvidia/DS10_Modbus/src/ds10_interfaces -DCMAKE_INSTALL_PREFIX=/home/nvidia/DS10_Modbus/install/ds10_interfaces
+[4.819s] colcon.colcon_core.event_handler.log_command DEBUG Invoking command in '/home/nvidia/DS10_Modbus/build/ds10_interfaces': CMAKE_PREFIX_PATH=/opt/ros/humble /usr/bin/cmake --build /home/nvidia/DS10_Modbus/build/ds10_interfaces -- -j6 -l6
+[8.887s] colcon.colcon_core.event_handler.log_command DEBUG Invoked command in '/home/nvidia/DS10_Modbus/build/ds10_interfaces' returned '0': CMAKE_PREFIX_PATH=/opt/ros/humble /usr/bin/cmake --build /home/nvidia/DS10_Modbus/build/ds10_interfaces -- -j6 -l6
+[8.905s] colcon.colcon_core.event_handler.log_command DEBUG Invoking command in '/home/nvidia/DS10_Modbus/build/ds10_interfaces': CMAKE_PREFIX_PATH=/opt/ros/humble /usr/bin/cmake --install /home/nvidia/DS10_Modbus/build/ds10_interfaces
+[9.031s] colcon.colcon_core.environment Level 1 create_environment_scripts_only(ds10_interfaces)
+[9.032s] colcon.colcon_core.event_handler.log_command DEBUG Invoked command in '/home/nvidia/DS10_Modbus/build/ds10_interfaces' returned '0': CMAKE_PREFIX_PATH=/opt/ros/humble /usr/bin/cmake --install /home/nvidia/DS10_Modbus/build/ds10_interfaces
+[9.036s] colcon.colcon_core.environment Level 1 checking '/home/nvidia/DS10_Modbus/install/ds10_interfaces' for CMake module files
+[9.037s] colcon.colcon_core.environment Level 1 checking '/home/nvidia/DS10_Modbus/install/ds10_interfaces' for CMake config files
+[9.038s] colcon.colcon_core.shell Level 1 create_environment_hook('ds10_interfaces', 'cmake_prefix_path')
+[9.038s] colcon.colcon_core.shell INFO Creating environment hook '/home/nvidia/DS10_Modbus/install/ds10_interfaces/share/ds10_interfaces/hook/cmake_prefix_path.ps1'
+[9.040s] colcon.colcon_core.shell INFO Creating environment descriptor '/home/nvidia/DS10_Modbus/install/ds10_interfaces/share/ds10_interfaces/hook/cmake_prefix_path.dsv'
+[9.040s] colcon.colcon_core.shell INFO Creating environment hook '/home/nvidia/DS10_Modbus/install/ds10_interfaces/share/ds10_interfaces/hook/cmake_prefix_path.sh'
+[9.042s] colcon.colcon_core.environment Level 1 checking '/home/nvidia/DS10_Modbus/install/ds10_interfaces/lib'
+[9.042s] colcon.colcon_core.shell Level 1 create_environment_hook('ds10_interfaces', 'ld_library_path_lib')
+[9.043s] colcon.colcon_core.shell INFO Creating environment hook '/home/nvidia/DS10_Modbus/install/ds10_interfaces/share/ds10_interfaces/hook/ld_library_path_lib.ps1'
+[9.043s] colcon.colcon_core.shell INFO Creating environment descriptor '/home/nvidia/DS10_Modbus/install/ds10_interfaces/share/ds10_interfaces/hook/ld_library_path_lib.dsv'
+[9.044s] colcon.colcon_core.shell INFO Creating environment hook '/home/nvidia/DS10_Modbus/install/ds10_interfaces/share/ds10_interfaces/hook/ld_library_path_lib.sh'
+[9.044s] colcon.colcon_core.environment Level 1 checking '/home/nvidia/DS10_Modbus/install/ds10_interfaces/bin'
+[9.045s] colcon.colcon_core.environment Level 1 checking '/home/nvidia/DS10_Modbus/install/ds10_interfaces/lib/pkgconfig/ds10_interfaces.pc'
+[9.045s] colcon.colcon_core.environment Level 1 checking '/home/nvidia/DS10_Modbus/install/ds10_interfaces/lib/python3.10/site-packages'
+[9.046s] colcon.colcon_core.environment Level 1 checking '/home/nvidia/DS10_Modbus/install/ds10_interfaces/bin'
+[9.046s] colcon.colcon_core.shell INFO Creating package script '/home/nvidia/DS10_Modbus/install/ds10_interfaces/share/ds10_interfaces/package.ps1'
+[9.048s] colcon.colcon_core.shell INFO Creating package descriptor '/home/nvidia/DS10_Modbus/install/ds10_interfaces/share/ds10_interfaces/package.dsv'
+[9.049s] colcon.colcon_core.shell INFO Creating package script '/home/nvidia/DS10_Modbus/install/ds10_interfaces/share/ds10_interfaces/package.sh'
+[9.051s] colcon.colcon_core.shell INFO Creating package script '/home/nvidia/DS10_Modbus/install/ds10_interfaces/share/ds10_interfaces/package.bash'
+[9.052s] colcon.colcon_core.shell INFO Creating package script '/home/nvidia/DS10_Modbus/install/ds10_interfaces/share/ds10_interfaces/package.zsh'
+[9.053s] colcon.colcon_core.environment Level 1 create_file_with_runtime_dependencies(/home/nvidia/DS10_Modbus/install/ds10_interfaces/share/colcon-core/packages/ds10_interfaces)
+[9.054s] colcon.colcon_core.environment Level 1 create_environment_scripts_only(ds10_interfaces)
+[9.054s] colcon.colcon_core.environment Level 1 checking '/home/nvidia/DS10_Modbus/install/ds10_interfaces' for CMake module files
+[9.055s] colcon.colcon_core.environment Level 1 checking '/home/nvidia/DS10_Modbus/install/ds10_interfaces' for CMake config files
+[9.056s] colcon.colcon_core.shell Level 1 create_environment_hook('ds10_interfaces', 'cmake_prefix_path')
+[9.056s] colcon.colcon_core.shell INFO Creating environment hook '/home/nvidia/DS10_Modbus/install/ds10_interfaces/share/ds10_interfaces/hook/cmake_prefix_path.ps1'
+[9.057s] colcon.colcon_core.shell INFO Creating environment descriptor '/home/nvidia/DS10_Modbus/install/ds10_interfaces/share/ds10_interfaces/hook/cmake_prefix_path.dsv'
+[9.058s] colcon.colcon_core.shell INFO Creating environment hook '/home/nvidia/DS10_Modbus/install/ds10_interfaces/share/ds10_interfaces/hook/cmake_prefix_path.sh'
+[9.059s] colcon.colcon_core.environment Level 1 checking '/home/nvidia/DS10_Modbus/install/ds10_interfaces/lib'
+[9.059s] colcon.colcon_core.shell Level 1 create_environment_hook('ds10_interfaces', 'ld_library_path_lib')
+[9.059s] colcon.colcon_core.shell INFO Creating environment hook '/home/nvidia/DS10_Modbus/install/ds10_interfaces/share/ds10_interfaces/hook/ld_library_path_lib.ps1'
+[9.060s] colcon.colcon_core.shell INFO Creating environment descriptor '/home/nvidia/DS10_Modbus/install/ds10_interfaces/share/ds10_interfaces/hook/ld_library_path_lib.dsv'
+[9.060s] colcon.colcon_core.shell INFO Creating environment hook '/home/nvidia/DS10_Modbus/install/ds10_interfaces/share/ds10_interfaces/hook/ld_library_path_lib.sh'
+[9.061s] colcon.colcon_core.environment Level 1 checking '/home/nvidia/DS10_Modbus/install/ds10_interfaces/bin'
+[9.061s] colcon.colcon_core.environment Level 1 checking '/home/nvidia/DS10_Modbus/install/ds10_interfaces/lib/pkgconfig/ds10_interfaces.pc'
+[9.061s] colcon.colcon_core.environment Level 1 checking '/home/nvidia/DS10_Modbus/install/ds10_interfaces/lib/python3.10/site-packages'
+[9.062s] colcon.colcon_core.environment Level 1 checking '/home/nvidia/DS10_Modbus/install/ds10_interfaces/bin'
+[9.063s] colcon.colcon_core.shell INFO Creating package script '/home/nvidia/DS10_Modbus/install/ds10_interfaces/share/ds10_interfaces/package.ps1'
+[9.064s] colcon.colcon_core.shell INFO Creating package descriptor '/home/nvidia/DS10_Modbus/install/ds10_interfaces/share/ds10_interfaces/package.dsv'
+[9.065s] colcon.colcon_core.shell INFO Creating package script '/home/nvidia/DS10_Modbus/install/ds10_interfaces/share/ds10_interfaces/package.sh'
+[9.066s] colcon.colcon_core.shell INFO Creating package script '/home/nvidia/DS10_Modbus/install/ds10_interfaces/share/ds10_interfaces/package.bash'
+[9.066s] colcon.colcon_core.shell INFO Creating package script '/home/nvidia/DS10_Modbus/install/ds10_interfaces/share/ds10_interfaces/package.zsh'
+[9.067s] colcon.colcon_core.environment Level 1 create_file_with_runtime_dependencies(/home/nvidia/DS10_Modbus/install/ds10_interfaces/share/colcon-core/packages/ds10_interfaces)
+[9.068s] colcon.colcon_ros.task.ament_cmake.build INFO Building ROS package in '/home/nvidia/DS10_Modbus/src/ds10_driver' with build type 'ament_cmake'
+[9.068s] colcon.colcon_cmake.task.cmake.build INFO Building CMake package in '/home/nvidia/DS10_Modbus/src/ds10_driver'
+[9.068s] colcon.colcon_core.shell INFO Skip shell extension 'powershell' for command environment: Not usable outside of PowerShell
+[9.068s] colcon.colcon_core.shell DEBUG Skip shell extension 'dsv' for command environment
+[9.083s] colcon.colcon_core.event_handler.log_command DEBUG Invoking command in '/home/nvidia/DS10_Modbus/build/ds10_driver': AMENT_PREFIX_PATH=/home/nvidia/DS10_Modbus/install/ds10_interfaces:${AMENT_PREFIX_PATH} CMAKE_PREFIX_PATH=/home/nvidia/DS10_Modbus/install/ds10_interfaces:/opt/ros/humble LD_LIBRARY_PATH=/home/nvidia/DS10_Modbus/install/ds10_interfaces/lib:/opt/ros/humble/opt/rviz_ogre_vendor/lib:/opt/ros/humble/lib/aarch64-linux-gnu:/opt/ros/humble/lib:/usr/local/lib:/usr/local/cuda-12.6/lib64 PYTHONPATH=/home/nvidia/DS10_Modbus/install/ds10_interfaces/local/lib/python3.10/dist-packages:${PYTHONPATH} /usr/bin/cmake /home/nvidia/DS10_Modbus/src/ds10_driver -DCMAKE_INSTALL_PREFIX=/home/nvidia/DS10_Modbus/install/ds10_driver
+[12.007s] colcon.colcon_core.event_handler.log_command DEBUG Invoked command in '/home/nvidia/DS10_Modbus/build/ds10_driver' returned '0': AMENT_PREFIX_PATH=/home/nvidia/DS10_Modbus/install/ds10_interfaces:${AMENT_PREFIX_PATH} CMAKE_PREFIX_PATH=/home/nvidia/DS10_Modbus/install/ds10_interfaces:/opt/ros/humble LD_LIBRARY_PATH=/home/nvidia/DS10_Modbus/install/ds10_interfaces/lib:/opt/ros/humble/opt/rviz_ogre_vendor/lib:/opt/ros/humble/lib/aarch64-linux-gnu:/opt/ros/humble/lib:/usr/local/lib:/usr/local/cuda-12.6/lib64 PYTHONPATH=/home/nvidia/DS10_Modbus/install/ds10_interfaces/local/lib/python3.10/dist-packages:${PYTHONPATH} /usr/bin/cmake /home/nvidia/DS10_Modbus/src/ds10_driver -DCMAKE_INSTALL_PREFIX=/home/nvidia/DS10_Modbus/install/ds10_driver
+[12.010s] colcon.colcon_core.event_handler.log_command DEBUG Invoking command in '/home/nvidia/DS10_Modbus/build/ds10_driver': AMENT_PREFIX_PATH=/home/nvidia/DS10_Modbus/install/ds10_interfaces:${AMENT_PREFIX_PATH} CMAKE_PREFIX_PATH=/home/nvidia/DS10_Modbus/install/ds10_interfaces:/opt/ros/humble LD_LIBRARY_PATH=/home/nvidia/DS10_Modbus/install/ds10_interfaces/lib:/opt/ros/humble/opt/rviz_ogre_vendor/lib:/opt/ros/humble/lib/aarch64-linux-gnu:/opt/ros/humble/lib:/usr/local/lib:/usr/local/cuda-12.6/lib64 PYTHONPATH=/home/nvidia/DS10_Modbus/install/ds10_interfaces/local/lib/python3.10/dist-packages:${PYTHONPATH} /usr/bin/cmake --build /home/nvidia/DS10_Modbus/build/ds10_driver -- -j6 -l6
+[36.808s] colcon.colcon_core.event_handler.log_command DEBUG Invoked command in '/home/nvidia/DS10_Modbus/build/ds10_driver' returned '0': AMENT_PREFIX_PATH=/home/nvidia/DS10_Modbus/install/ds10_interfaces:${AMENT_PREFIX_PATH} CMAKE_PREFIX_PATH=/home/nvidia/DS10_Modbus/install/ds10_interfaces:/opt/ros/humble LD_LIBRARY_PATH=/home/nvidia/DS10_Modbus/install/ds10_interfaces/lib:/opt/ros/humble/opt/rviz_ogre_vendor/lib:/opt/ros/humble/lib/aarch64-linux-gnu:/opt/ros/humble/lib:/usr/local/lib:/usr/local/cuda-12.6/lib64 PYTHONPATH=/home/nvidia/DS10_Modbus/install/ds10_interfaces/local/lib/python3.10/dist-packages:${PYTHONPATH} /usr/bin/cmake --build /home/nvidia/DS10_Modbus/build/ds10_driver -- -j6 -l6
+[36.812s] colcon.colcon_core.event_handler.log_command DEBUG Invoking command in '/home/nvidia/DS10_Modbus/build/ds10_driver': AMENT_PREFIX_PATH=/home/nvidia/DS10_Modbus/install/ds10_interfaces:${AMENT_PREFIX_PATH} CMAKE_PREFIX_PATH=/home/nvidia/DS10_Modbus/install/ds10_interfaces:/opt/ros/humble LD_LIBRARY_PATH=/home/nvidia/DS10_Modbus/install/ds10_interfaces/lib:/opt/ros/humble/opt/rviz_ogre_vendor/lib:/opt/ros/humble/lib/aarch64-linux-gnu:/opt/ros/humble/lib:/usr/local/lib:/usr/local/cuda-12.6/lib64 PYTHONPATH=/home/nvidia/DS10_Modbus/install/ds10_interfaces/local/lib/python3.10/dist-packages:${PYTHONPATH} /usr/bin/cmake --install /home/nvidia/DS10_Modbus/build/ds10_driver
+[36.855s] colcon.colcon_core.environment Level 1 create_environment_scripts_only(ds10_driver)
+[36.856s] colcon.colcon_core.environment Level 1 checking '/home/nvidia/DS10_Modbus/install/ds10_driver' for CMake module files
+[36.857s] colcon.colcon_core.event_handler.log_command DEBUG Invoked command in '/home/nvidia/DS10_Modbus/build/ds10_driver' returned '0': AMENT_PREFIX_PATH=/home/nvidia/DS10_Modbus/install/ds10_interfaces:${AMENT_PREFIX_PATH} CMAKE_PREFIX_PATH=/home/nvidia/DS10_Modbus/install/ds10_interfaces:/opt/ros/humble LD_LIBRARY_PATH=/home/nvidia/DS10_Modbus/install/ds10_interfaces/lib:/opt/ros/humble/opt/rviz_ogre_vendor/lib:/opt/ros/humble/lib/aarch64-linux-gnu:/opt/ros/humble/lib:/usr/local/lib:/usr/local/cuda-12.6/lib64 PYTHONPATH=/home/nvidia/DS10_Modbus/install/ds10_interfaces/local/lib/python3.10/dist-packages:${PYTHONPATH} /usr/bin/cmake --install /home/nvidia/DS10_Modbus/build/ds10_driver
+[36.859s] colcon.colcon_core.environment Level 1 checking '/home/nvidia/DS10_Modbus/install/ds10_driver' for CMake config files
+[36.859s] colcon.colcon_core.shell Level 1 create_environment_hook('ds10_driver', 'cmake_prefix_path')
+[36.860s] colcon.colcon_core.shell INFO Creating environment hook '/home/nvidia/DS10_Modbus/install/ds10_driver/share/ds10_driver/hook/cmake_prefix_path.ps1'
+[36.862s] colcon.colcon_core.shell INFO Creating environment descriptor '/home/nvidia/DS10_Modbus/install/ds10_driver/share/ds10_driver/hook/cmake_prefix_path.dsv'
+[36.863s] colcon.colcon_core.shell INFO Creating environment hook '/home/nvidia/DS10_Modbus/install/ds10_driver/share/ds10_driver/hook/cmake_prefix_path.sh'
+[36.865s] colcon.colcon_core.environment Level 1 checking '/home/nvidia/DS10_Modbus/install/ds10_driver/lib'
+[36.865s] colcon.colcon_core.shell Level 1 create_environment_hook('ds10_driver', 'ld_library_path_lib')
+[36.866s] colcon.colcon_core.shell INFO Creating environment hook '/home/nvidia/DS10_Modbus/install/ds10_driver/share/ds10_driver/hook/ld_library_path_lib.ps1'
+[36.868s] colcon.colcon_core.shell INFO Creating environment descriptor '/home/nvidia/DS10_Modbus/install/ds10_driver/share/ds10_driver/hook/ld_library_path_lib.dsv'
+[36.869s] colcon.colcon_core.shell INFO Creating environment hook '/home/nvidia/DS10_Modbus/install/ds10_driver/share/ds10_driver/hook/ld_library_path_lib.sh'
+[36.870s] colcon.colcon_core.environment Level 1 checking '/home/nvidia/DS10_Modbus/install/ds10_driver/bin'
+[36.871s] colcon.colcon_core.environment Level 1 checking '/home/nvidia/DS10_Modbus/install/ds10_driver/lib/pkgconfig/ds10_driver.pc'
+[36.871s] colcon.colcon_core.environment Level 1 checking '/home/nvidia/DS10_Modbus/install/ds10_driver/lib/python3.10/site-packages'
+[36.873s] colcon.colcon_core.environment Level 1 checking '/home/nvidia/DS10_Modbus/install/ds10_driver/bin'
+[36.874s] colcon.colcon_core.shell INFO Creating package script '/home/nvidia/DS10_Modbus/install/ds10_driver/share/ds10_driver/package.ps1'
+[36.876s] colcon.colcon_core.shell INFO Creating package descriptor '/home/nvidia/DS10_Modbus/install/ds10_driver/share/ds10_driver/package.dsv'
+[36.878s] colcon.colcon_core.shell INFO Creating package script '/home/nvidia/DS10_Modbus/install/ds10_driver/share/ds10_driver/package.sh'
+[36.880s] colcon.colcon_core.shell INFO Creating package script '/home/nvidia/DS10_Modbus/install/ds10_driver/share/ds10_driver/package.bash'
+[36.881s] colcon.colcon_core.shell INFO Creating package script '/home/nvidia/DS10_Modbus/install/ds10_driver/share/ds10_driver/package.zsh'
+[36.882s] colcon.colcon_core.environment Level 1 create_file_with_runtime_dependencies(/home/nvidia/DS10_Modbus/install/ds10_driver/share/colcon-core/packages/ds10_driver)
+[36.884s] colcon.colcon_core.environment Level 1 create_environment_scripts_only(ds10_driver)
+[36.885s] colcon.colcon_core.environment Level 1 checking '/home/nvidia/DS10_Modbus/install/ds10_driver' for CMake module files
+[36.887s] colcon.colcon_core.environment Level 1 checking '/home/nvidia/DS10_Modbus/install/ds10_driver' for CMake config files
+[36.888s] colcon.colcon_core.shell Level 1 create_environment_hook('ds10_driver', 'cmake_prefix_path')
+[36.888s] colcon.colcon_core.shell INFO Creating environment hook '/home/nvidia/DS10_Modbus/install/ds10_driver/share/ds10_driver/hook/cmake_prefix_path.ps1'
+[36.890s] colcon.colcon_core.shell INFO Creating environment descriptor '/home/nvidia/DS10_Modbus/install/ds10_driver/share/ds10_driver/hook/cmake_prefix_path.dsv'
+[36.891s] colcon.colcon_core.shell INFO Creating environment hook '/home/nvidia/DS10_Modbus/install/ds10_driver/share/ds10_driver/hook/cmake_prefix_path.sh'
+[36.893s] colcon.colcon_core.environment Level 1 checking '/home/nvidia/DS10_Modbus/install/ds10_driver/lib'
+[36.894s] colcon.colcon_core.shell Level 1 create_environment_hook('ds10_driver', 'ld_library_path_lib')
+[36.894s] colcon.colcon_core.shell INFO Creating environment hook '/home/nvidia/DS10_Modbus/install/ds10_driver/share/ds10_driver/hook/ld_library_path_lib.ps1'
+[36.896s] colcon.colcon_core.shell INFO Creating environment descriptor '/home/nvidia/DS10_Modbus/install/ds10_driver/share/ds10_driver/hook/ld_library_path_lib.dsv'
+[36.897s] colcon.colcon_core.shell INFO Creating environment hook '/home/nvidia/DS10_Modbus/install/ds10_driver/share/ds10_driver/hook/ld_library_path_lib.sh'
+[36.898s] colcon.colcon_core.environment Level 1 checking '/home/nvidia/DS10_Modbus/install/ds10_driver/bin'
+[36.899s] colcon.colcon_core.environment Level 1 checking '/home/nvidia/DS10_Modbus/install/ds10_driver/lib/pkgconfig/ds10_driver.pc'
+[36.899s] colcon.colcon_core.environment Level 1 checking '/home/nvidia/DS10_Modbus/install/ds10_driver/lib/python3.10/site-packages'
+[36.901s] colcon.colcon_core.environment Level 1 checking '/home/nvidia/DS10_Modbus/install/ds10_driver/bin'
+[36.902s] colcon.colcon_core.shell INFO Creating package script '/home/nvidia/DS10_Modbus/install/ds10_driver/share/ds10_driver/package.ps1'
+[36.904s] colcon.colcon_core.shell INFO Creating package descriptor '/home/nvidia/DS10_Modbus/install/ds10_driver/share/ds10_driver/package.dsv'
+[36.906s] colcon.colcon_core.shell INFO Creating package script '/home/nvidia/DS10_Modbus/install/ds10_driver/share/ds10_driver/package.sh'
+[36.907s] colcon.colcon_core.shell INFO Creating package script '/home/nvidia/DS10_Modbus/install/ds10_driver/share/ds10_driver/package.bash'
+[36.908s] colcon.colcon_core.shell INFO Creating package script '/home/nvidia/DS10_Modbus/install/ds10_driver/share/ds10_driver/package.zsh'
+[36.910s] colcon.colcon_core.environment Level 1 create_file_with_runtime_dependencies(/home/nvidia/DS10_Modbus/install/ds10_driver/share/colcon-core/packages/ds10_driver)
+[36.910s] colcon.colcon_parallel_executor.executor.parallel DEBUG closing loop
+[36.911s] colcon.colcon_parallel_executor.executor.parallel DEBUG loop closed
+[36.911s] colcon.colcon_parallel_executor.executor.parallel DEBUG run_until_complete finished with '0'
+[36.912s] colcon.colcon_core.event_reactor DEBUG joining thread
+[36.913s] colcon.colcon_core.event_reactor DEBUG joined thread
+[36.914s] colcon.colcon_core.shell INFO Creating prefix script '/home/nvidia/DS10_Modbus/install/local_setup.ps1'
+[36.917s] colcon.colcon_core.shell INFO Creating prefix util module '/home/nvidia/DS10_Modbus/install/_local_setup_util_ps1.py'
+[36.921s] colcon.colcon_core.shell INFO Creating prefix chain script '/home/nvidia/DS10_Modbus/install/setup.ps1'
+[36.924s] colcon.colcon_core.shell INFO Creating prefix script '/home/nvidia/DS10_Modbus/install/local_setup.sh'
+[36.926s] colcon.colcon_core.shell INFO Creating prefix util module '/home/nvidia/DS10_Modbus/install/_local_setup_util_sh.py'
+[36.928s] colcon.colcon_core.shell INFO Creating prefix chain script '/home/nvidia/DS10_Modbus/install/setup.sh'
+[36.931s] colcon.colcon_core.shell INFO Creating prefix script '/home/nvidia/DS10_Modbus/install/local_setup.bash'
+[36.932s] colcon.colcon_core.shell INFO Creating prefix chain script '/home/nvidia/DS10_Modbus/install/setup.bash'
+[36.935s] colcon.colcon_core.shell INFO Creating prefix script '/home/nvidia/DS10_Modbus/install/local_setup.zsh'
+[36.937s] colcon.colcon_core.shell INFO Creating prefix chain script '/home/nvidia/DS10_Modbus/install/setup.zsh'

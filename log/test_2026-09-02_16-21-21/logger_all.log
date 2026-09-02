@@ -1,0 +1,147 @@
+[0.321s] colcon DEBUG Command line arguments: ['/usr/bin/colcon', 'test', '--packages-select', 'ds10_protocol']
+[0.321s] colcon DEBUG Parsed command line arguments: Namespace(log_base=None, log_level=None, verb_name='test', build_base='build', install_base='install', merge_install=False, test_result_base=None, retest_until_fail=0, retest_until_pass=0, abort_on_error=False, return_code_on_test_failure=False, executor='parallel', parallel_workers=6, event_handlers=None, ignore_user_meta=False, metas=['./colcon.meta'], base_paths=['.'], packages_ignore=None, packages_ignore_regex=None, paths=None, packages_up_to=None, packages_up_to_regex=None, packages_above=None, packages_above_and_dependencies=None, packages_above_depth=None, packages_select_by_dep=None, packages_skip_by_dep=None, packages_skip_up_to=None, packages_select_build_failed=False, packages_skip_build_finished=False, packages_select_test_failures=False, packages_skip_test_passed=False, packages_select=['ds10_protocol'], packages_skip=None, packages_select_regex=None, packages_skip_regex=None, packages_start=None, packages_end=None, allow_overriding=[], ctest_args=None, python_testing=None, pytest_args=None, pytest_with_coverage=False, unittest_args=None, verb_parser=<colcon_defaults.argument_parser.defaults.DefaultArgumentsDecorator object at 0xffffa90fd360>, verb_extension=<colcon_core.verb.test.TestVerb object at 0xffffa920e440>, main=<bound method TestVerb.main of <colcon_core.verb.test.TestVerb object at 0xffffa920e440>>)
+[0.391s] colcon.colcon_core.package_discovery Level 1 discover_packages(colcon_meta) check parameters
+[0.391s] colcon.colcon_core.package_discovery Level 1 discover_packages(recursive) check parameters
+[0.391s] colcon.colcon_core.package_discovery Level 1 discover_packages(ignore) check parameters
+[0.392s] colcon.colcon_core.package_discovery Level 1 discover_packages(path) check parameters
+[0.392s] colcon.colcon_core.package_discovery Level 1 discover_packages(colcon_meta) discover
+[0.392s] colcon.colcon_core.package_discovery Level 1 discover_packages(recursive) discover
+[0.392s] colcon.colcon_core.package_discovery INFO Crawling recursively for packages in '/home/nvidia/DS10_Modbus'
+[0.392s] colcon.colcon_core.package_identification Level 1 _identify(.) by extensions ['ignore', 'ignore_ament_install']
+[0.392s] colcon.colcon_core.package_identification Level 1 _identify(.) by extension 'ignore'
+[0.392s] colcon.colcon_core.package_identification Level 1 _identify(.) by extension 'ignore_ament_install'
+[0.393s] colcon.colcon_core.package_identification Level 1 _identify(.) by extensions ['colcon_pkg']
+[0.393s] colcon.colcon_core.package_identification Level 1 _identify(.) by extension 'colcon_pkg'
+[0.393s] colcon.colcon_core.package_identification Level 1 _identify(.) by extensions ['colcon_meta']
+[0.393s] colcon.colcon_core.package_identification Level 1 _identify(.) by extension 'colcon_meta'
+[0.393s] colcon.colcon_core.package_identification Level 1 _identify(.) by extensions ['ros']
+[0.393s] colcon.colcon_core.package_identification Level 1 _identify(.) by extension 'ros'
+[0.417s] colcon.colcon_core.package_identification Level 1 _identify(.) by extensions ['cmake', 'python']
+[0.417s] colcon.colcon_core.package_identification Level 1 _identify(.) by extension 'cmake'
+[0.417s] colcon.colcon_core.package_identification Level 1 _identify(.) by extension 'python'
+[0.417s] colcon.colcon_core.package_identification Level 1 _identify(.) by extensions ['python_setup_py']
+[0.417s] colcon.colcon_core.package_identification Level 1 _identify(.) by extension 'python_setup_py'
+[0.417s] colcon.colcon_core.package_identification Level 1 _identify(__pycache__) by extensions ['ignore', 'ignore_ament_install']
+[0.418s] colcon.colcon_core.package_identification Level 1 _identify(__pycache__) by extension 'ignore'
+[0.418s] colcon.colcon_core.package_identification Level 1 _identify(__pycache__) by extension 'ignore_ament_install'
+[0.418s] colcon.colcon_core.package_identification Level 1 _identify(__pycache__) by extensions ['colcon_pkg']
+[0.418s] colcon.colcon_core.package_identification Level 1 _identify(__pycache__) by extension 'colcon_pkg'
+[0.418s] colcon.colcon_core.package_identification Level 1 _identify(__pycache__) by extensions ['colcon_meta']
+[0.418s] colcon.colcon_core.package_identification Level 1 _identify(__pycache__) by extension 'colcon_meta'
+[0.418s] colcon.colcon_core.package_identification Level 1 _identify(__pycache__) by extensions ['ros']
+[0.418s] colcon.colcon_core.package_identification Level 1 _identify(__pycache__) by extension 'ros'
+[0.418s] colcon.colcon_core.package_identification Level 1 _identify(__pycache__) by extensions ['cmake', 'python']
+[0.418s] colcon.colcon_core.package_identification Level 1 _identify(__pycache__) by extension 'cmake'
+[0.419s] colcon.colcon_core.package_identification Level 1 _identify(__pycache__) by extension 'python'
+[0.419s] colcon.colcon_core.package_identification Level 1 _identify(__pycache__) by extensions ['python_setup_py']
+[0.419s] colcon.colcon_core.package_identification Level 1 _identify(__pycache__) by extension 'python_setup_py'
+[0.419s] colcon.colcon_core.package_identification Level 1 _identify(build) by extensions ['ignore', 'ignore_ament_install']
+[0.419s] colcon.colcon_core.package_identification Level 1 _identify(build) by extension 'ignore'
+[0.419s] colcon.colcon_core.package_identification Level 1 _identify(build) ignored
+[0.419s] colcon.colcon_core.package_identification Level 1 _identify(docs) by extensions ['ignore', 'ignore_ament_install']
+[0.420s] colcon.colcon_core.package_identification Level 1 _identify(docs) by extension 'ignore'
+[0.420s] colcon.colcon_core.package_identification Level 1 _identify(docs) by extension 'ignore_ament_install'
+[0.420s] colcon.colcon_core.package_identification Level 1 _identify(docs) by extensions ['colcon_pkg']
+[0.420s] colcon.colcon_core.package_identification Level 1 _identify(docs) by extension 'colcon_pkg'
+[0.420s] colcon.colcon_core.package_identification Level 1 _identify(docs) by extensions ['colcon_meta']
+[0.420s] colcon.colcon_core.package_identification Level 1 _identify(docs) by extension 'colcon_meta'
+[0.420s] colcon.colcon_core.package_identification Level 1 _identify(docs) by extensions ['ros']
+[0.420s] colcon.colcon_core.package_identification Level 1 _identify(docs) by extension 'ros'
+[0.420s] colcon.colcon_core.package_identification Level 1 _identify(docs) by extensions ['cmake', 'python']
+[0.420s] colcon.colcon_core.package_identification Level 1 _identify(docs) by extension 'cmake'
+[0.420s] colcon.colcon_core.package_identification Level 1 _identify(docs) by extension 'python'
+[0.420s] colcon.colcon_core.package_identification Level 1 _identify(docs) by extensions ['python_setup_py']
+[0.421s] colcon.colcon_core.package_identification Level 1 _identify(docs) by extension 'python_setup_py'
+[0.421s] colcon.colcon_core.package_identification Level 1 _identify(install) by extensions ['ignore', 'ignore_ament_install']
+[0.421s] colcon.colcon_core.package_identification Level 1 _identify(install) by extension 'ignore'
+[0.421s] colcon.colcon_core.package_identification Level 1 _identify(install) ignored
+[0.421s] colcon.colcon_core.package_identification Level 1 _identify(issues) by extensions ['ignore', 'ignore_ament_install']
+[0.421s] colcon.colcon_core.package_identification Level 1 _identify(issues) by extension 'ignore'
+[0.421s] colcon.colcon_core.package_identification Level 1 _identify(issues) by extension 'ignore_ament_install'
+[0.421s] colcon.colcon_core.package_identification Level 1 _identify(issues) by extensions ['colcon_pkg']
+[0.422s] colcon.colcon_core.package_identification Level 1 _identify(issues) by extension 'colcon_pkg'
+[0.422s] colcon.colcon_core.package_identification Level 1 _identify(issues) by extensions ['colcon_meta']
+[0.422s] colcon.colcon_core.package_identification Level 1 _identify(issues) by extension 'colcon_meta'
+[0.422s] colcon.colcon_core.package_identification Level 1 _identify(issues) by extensions ['ros']
+[0.422s] colcon.colcon_core.package_identification Level 1 _identify(issues) by extension 'ros'
+[0.422s] colcon.colcon_core.package_identification Level 1 _identify(issues) by extensions ['cmake', 'python']
+[0.422s] colcon.colcon_core.package_identification Level 1 _identify(issues) by extension 'cmake'
+[0.422s] colcon.colcon_core.package_identification Level 1 _identify(issues) by extension 'python'
+[0.422s] colcon.colcon_core.package_identification Level 1 _identify(issues) by extensions ['python_setup_py']
+[0.422s] colcon.colcon_core.package_identification Level 1 _identify(issues) by extension 'python_setup_py'
+[0.423s] colcon.colcon_core.package_identification Level 1 _identify(log) by extensions ['ignore', 'ignore_ament_install']
+[0.423s] colcon.colcon_core.package_identification Level 1 _identify(log) by extension 'ignore'
+[0.423s] colcon.colcon_core.package_identification Level 1 _identify(log) ignored
+[0.423s] colcon.colcon_core.package_identification Level 1 _identify(src) by extensions ['ignore', 'ignore_ament_install']
+[0.423s] colcon.colcon_core.package_identification Level 1 _identify(src) by extension 'ignore'
+[0.423s] colcon.colcon_core.package_identification Level 1 _identify(src) by extension 'ignore_ament_install'
+[0.423s] colcon.colcon_core.package_identification Level 1 _identify(src) by extensions ['colcon_pkg']
+[0.423s] colcon.colcon_core.package_identification Level 1 _identify(src) by extension 'colcon_pkg'
+[0.423s] colcon.colcon_core.package_identification Level 1 _identify(src) by extensions ['colcon_meta']
+[0.423s] colcon.colcon_core.package_identification Level 1 _identify(src) by extension 'colcon_meta'
+[0.424s] colcon.colcon_core.package_identification Level 1 _identify(src) by extensions ['ros']
+[0.424s] colcon.colcon_core.package_identification Level 1 _identify(src) by extension 'ros'
+[0.424s] colcon.colcon_core.package_identification Level 1 _identify(src) by extensions ['cmake', 'python']
+[0.424s] colcon.colcon_core.package_identification Level 1 _identify(src) by extension 'cmake'
+[0.424s] colcon.colcon_core.package_identification Level 1 _identify(src) by extension 'python'
+[0.424s] colcon.colcon_core.package_identification Level 1 _identify(src) by extensions ['python_setup_py']
+[0.424s] colcon.colcon_core.package_identification Level 1 _identify(src) by extension 'python_setup_py'
+[0.424s] colcon.colcon_core.package_identification Level 1 _identify(src/ds10_driver) by extensions ['ignore', 'ignore_ament_install']
+[0.424s] colcon.colcon_core.package_identification Level 1 _identify(src/ds10_driver) by extension 'ignore'
+[0.424s] colcon.colcon_core.package_identification Level 1 _identify(src/ds10_driver) by extension 'ignore_ament_install'
+[0.425s] colcon.colcon_core.package_identification Level 1 _identify(src/ds10_driver) by extensions ['colcon_pkg']
+[0.425s] colcon.colcon_core.package_identification Level 1 _identify(src/ds10_driver) by extension 'colcon_pkg'
+[0.425s] colcon.colcon_core.package_identification Level 1 _identify(src/ds10_driver) by extensions ['colcon_meta']
+[0.425s] colcon.colcon_core.package_identification Level 1 _identify(src/ds10_driver) by extension 'colcon_meta'
+[0.425s] colcon.colcon_core.package_identification Level 1 _identify(src/ds10_driver) by extensions ['ros']
+[0.425s] colcon.colcon_core.package_identification Level 1 _identify(src/ds10_driver) by extension 'ros'
+[0.430s] colcon.colcon_core.package_identification DEBUG Package 'src/ds10_driver' with type 'ros.ament_cmake' and name 'ds10_driver'
+[0.430s] colcon.colcon_core.package_identification Level 1 _identify(src/ds10_interfaces) by extensions ['ignore', 'ignore_ament_install']
+[0.430s] colcon.colcon_core.package_identification Level 1 _identify(src/ds10_interfaces) by extension 'ignore'
+[0.430s] colcon.colcon_core.package_identification Level 1 _identify(src/ds10_interfaces) by extension 'ignore_ament_install'
+[0.430s] colcon.colcon_core.package_identification Level 1 _identify(src/ds10_interfaces) by extensions ['colcon_pkg']
+[0.430s] colcon.colcon_core.package_identification Level 1 _identify(src/ds10_interfaces) by extension 'colcon_pkg'
+[0.430s] colcon.colcon_core.package_identification Level 1 _identify(src/ds10_interfaces) by extensions ['colcon_meta']
+[0.431s] colcon.colcon_core.package_identification Level 1 _identify(src/ds10_interfaces) by extension 'colcon_meta'
+[0.431s] colcon.colcon_core.package_identification Level 1 _identify(src/ds10_interfaces) by extensions ['ros']
+[0.431s] colcon.colcon_core.package_identification Level 1 _identify(src/ds10_interfaces) by extension 'ros'
+[0.434s] colcon.colcon_core.package_identification DEBUG Package 'src/ds10_interfaces' with type 'ros.ament_cmake' and name 'ds10_interfaces'
+[0.434s] colcon.colcon_core.package_identification Level 1 _identify(src/ds10_protocol) by extensions ['ignore', 'ignore_ament_install']
+[0.434s] colcon.colcon_core.package_identification Level 1 _identify(src/ds10_protocol) by extension 'ignore'
+[0.435s] colcon.colcon_core.package_identification Level 1 _identify(src/ds10_protocol) by extension 'ignore_ament_install'
+[0.435s] colcon.colcon_core.package_identification Level 1 _identify(src/ds10_protocol) by extensions ['colcon_pkg']
+[0.435s] colcon.colcon_core.package_identification Level 1 _identify(src/ds10_protocol) by extension 'colcon_pkg'
+[0.435s] colcon.colcon_core.package_identification Level 1 _identify(src/ds10_protocol) by extensions ['colcon_meta']
+[0.435s] colcon.colcon_core.package_identification Level 1 _identify(src/ds10_protocol) by extension 'colcon_meta'
+[0.435s] colcon.colcon_core.package_identification Level 1 _identify(src/ds10_protocol) by extensions ['ros']
+[0.435s] colcon.colcon_core.package_identification Level 1 _identify(src/ds10_protocol) by extension 'ros'
+[0.436s] colcon.colcon_core.package_identification DEBUG Package 'src/ds10_protocol' with type 'ros.ament_cmake' and name 'ds10_protocol'
+[0.436s] colcon.colcon_core.package_discovery Level 1 discover_packages(recursive) using defaults
+[0.437s] colcon.colcon_core.package_discovery Level 1 discover_packages(ignore) discover
+[0.437s] colcon.colcon_core.package_discovery Level 1 discover_packages(ignore) using defaults
+[0.437s] colcon.colcon_core.package_discovery Level 1 discover_packages(path) discover
+[0.437s] colcon.colcon_core.package_discovery Level 1 discover_packages(path) using defaults
+[0.441s] colcon.colcon_core.package_selection INFO Skipping not selected package 'ds10_interfaces' in 'src/ds10_interfaces'
+[0.441s] colcon.colcon_core.package_selection INFO Skipping not selected package 'ds10_driver' in 'src/ds10_driver'
+[0.442s] colcon.colcon_core.verb Level 5 set package 'ds10_protocol' test argument 'ctest_args' from command line to 'None'
+[0.442s] colcon.colcon_core.verb Level 5 set package 'ds10_protocol' test argument 'python_testing' from command line to 'None'
+[0.442s] colcon.colcon_core.verb Level 5 set package 'ds10_protocol' test argument 'pytest_args' from command line to 'None'
+[0.442s] colcon.colcon_core.verb Level 5 set package 'ds10_protocol' test argument 'pytest_with_coverage' from command line to 'False'
+[0.442s] colcon.colcon_core.verb Level 5 set package 'ds10_protocol' test argument 'unittest_args' from command line to 'None'
+[0.442s] colcon.colcon_core.verb Level 5 set package 'ds10_protocol' test argument 'retest_until_pass' from command line to '0'
+[0.442s] colcon.colcon_core.verb Level 5 set package 'ds10_protocol' test argument 'retest_until_fail' from command line to '0'
+[0.442s] colcon.colcon_core.verb.test DEBUG Testing package 'ds10_protocol' with the following arguments: {'build_base': '/home/nvidia/DS10_Modbus/build/ds10_protocol', 'ctest_args': None, 'install_base': '/home/nvidia/DS10_Modbus/install/ds10_protocol', 'path': '/home/nvidia/DS10_Modbus/src/ds10_protocol', 'pytest_args': None, 'pytest_with_coverage': False, 'python_testing': None, 'retest_until_fail': 0, 'retest_until_pass': 0, 'test_result_base': None, 'unittest_args': None}
+[0.442s] colcon.colcon_core.executor INFO Executing jobs using 'parallel' executor
+[0.475s] colcon.colcon_parallel_executor.executor.parallel DEBUG run_until_complete
+[0.475s] colcon.colcon_ros.task.ament_cmake.test INFO Testing ROS package in '/home/nvidia/DS10_Modbus/src/ds10_protocol' with build type 'ament_cmake'
+[0.476s] colcon.colcon_cmake.task.cmake.test INFO Testing CMake package in '/home/nvidia/DS10_Modbus/src/ds10_protocol'
+[0.479s] colcon.colcon_core.plugin_system INFO Skipping extension 'colcon_core.shell.bat': Not used on non-Windows systems
+[0.480s] colcon.colcon_core.shell INFO Skip shell extension 'powershell' for command environment: Not usable outside of PowerShell
+[0.480s] colcon.colcon_core.shell DEBUG Skip shell extension 'dsv' for command environment
+[0.516s] colcon.colcon_core.event_handler.log_command DEBUG Invoking command in '/home/nvidia/DS10_Modbus/build/ds10_protocol': AMENT_PREFIX_PATH=/home/nvidia/DS10_Modbus/install/ds10_protocol:/home/nvidia/DS10_Modbus/install/ds10_interfaces:${AMENT_PREFIX_PATH} CMAKE_PREFIX_PATH=/home/nvidia/DS10_Modbus/install/ds10_protocol:/home/nvidia/DS10_Modbus/install/ds10_interfaces LD_LIBRARY_PATH=/home/nvidia/DS10_Modbus/install/ds10_protocol/lib:/home/nvidia/DS10_Modbus/install/ds10_interfaces/lib:/opt/ros/humble/opt/rviz_ogre_vendor/lib:/opt/ros/humble/lib/aarch64-linux-gnu:/opt/ros/humble/lib:/usr/local/lib:/usr/local/cuda-12.6/lib64 PYTHONPATH=/home/nvidia/DS10_Modbus/install/ds10_interfaces/local/lib/python3.10/dist-packages:${PYTHONPATH} /usr/bin/ctest -C Release -D ExperimentalTest --no-compress-output -V --force-new-ctest-process
+[10.310s] colcon.colcon_parallel_executor.executor.parallel DEBUG closing loop
+[10.311s] colcon.colcon_parallel_executor.executor.parallel DEBUG loop closed
+[10.312s] colcon.colcon_core.event_handler.log_command DEBUG Invoked command in '/home/nvidia/DS10_Modbus/build/ds10_protocol' returned '0': AMENT_PREFIX_PATH=/home/nvidia/DS10_Modbus/install/ds10_protocol:/home/nvidia/DS10_Modbus/install/ds10_interfaces:${AMENT_PREFIX_PATH} CMAKE_PREFIX_PATH=/home/nvidia/DS10_Modbus/install/ds10_protocol:/home/nvidia/DS10_Modbus/install/ds10_interfaces LD_LIBRARY_PATH=/home/nvidia/DS10_Modbus/install/ds10_protocol/lib:/home/nvidia/DS10_Modbus/install/ds10_interfaces/lib:/opt/ros/humble/opt/rviz_ogre_vendor/lib:/opt/ros/humble/lib/aarch64-linux-gnu:/opt/ros/humble/lib:/usr/local/lib:/usr/local/cuda-12.6/lib64 PYTHONPATH=/home/nvidia/DS10_Modbus/install/ds10_interfaces/local/lib/python3.10/dist-packages:${PYTHONPATH} /usr/bin/ctest -C Release -D ExperimentalTest --no-compress-output -V --force-new-ctest-process
+[10.312s] colcon.colcon_parallel_executor.executor.parallel DEBUG run_until_complete finished with '0'
+[10.312s] colcon.colcon_core.event_reactor DEBUG joining thread
+[10.314s] colcon.colcon_core.event_reactor DEBUG joined thread

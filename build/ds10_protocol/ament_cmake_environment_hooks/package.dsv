@@ -1,0 +1,4 @@
+source;share/ds10_protocol/local_setup.bash
+source;share/ds10_protocol/local_setup.dsv
+source;share/ds10_protocol/local_setup.sh
+source;share/ds10_protocol/local_setup.zsh

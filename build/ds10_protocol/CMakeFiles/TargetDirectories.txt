@@ -1,0 +1,9 @@
+/home/nvidia/DS10_Modbus/build/ds10_protocol/CMakeFiles/uninstall.dir
+/home/nvidia/DS10_Modbus/build/ds10_protocol/CMakeFiles/ds10_protocol_uninstall.dir
+/home/nvidia/DS10_Modbus/build/ds10_protocol/CMakeFiles/test.dir
+/home/nvidia/DS10_Modbus/build/ds10_protocol/CMakeFiles/edit_cache.dir
+/home/nvidia/DS10_Modbus/build/ds10_protocol/CMakeFiles/rebuild_cache.dir
+/home/nvidia/DS10_Modbus/build/ds10_protocol/CMakeFiles/list_install_components.dir
+/home/nvidia/DS10_Modbus/build/ds10_protocol/CMakeFiles/install.dir
+/home/nvidia/DS10_Modbus/build/ds10_protocol/CMakeFiles/install/local.dir
+/home/nvidia/DS10_Modbus/build/ds10_protocol/CMakeFiles/install/strip.dir

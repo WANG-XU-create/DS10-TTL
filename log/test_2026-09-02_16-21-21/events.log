@@ -1,0 +1,167 @@
+[0.000000] (-) TimerEvent: {}
+[0.000289] (ds10_protocol) JobQueued: {'identifier': 'ds10_protocol', 'dependencies': OrderedDict([('ds10_interfaces', '/home/nvidia/DS10_Modbus/install/ds10_interfaces'), ('ds10_protocol', '/home/nvidia/DS10_Modbus/install/ds10_protocol')])}
+[0.001163] (ds10_protocol) JobStarted: {'identifier': 'ds10_protocol'}
+[0.039103] (ds10_protocol) Command: {'cmd': ['/usr/bin/ctest', '-C', 'Release', '-D', 'ExperimentalTest', '--no-compress-output', '-V', '--force-new-ctest-process'], 'cwd': '/home/nvidia/DS10_Modbus/build/ds10_protocol', 'env': OrderedDict([('LESSOPEN', '| /usr/bin/lesspipe %s'), ('VSCODE_CWD', '/home/nvidia'), ('VSCODE_ESM_ENTRYPOINT', 'vs/workbench/api/node/extensionHostProcess'), ('AI_AGENT', 'claude-code_2-1-215_agent'), ('LANGUAGE', 'zh_CN:zh'), ('CODEX_HOME', '/home/nvidia/.codex'), ('USER', 'nvidia'), ('SSH_CLIENT', '192.168.130.26 53912 22'), ('CLAUDE_CODE_ENTRYPOINT', 'claude-vscode'), ('VSCODE_NLS_CONFIG', '{"userLocale":"zh-cn","osLocale":"zh-cn","resolvedLanguage":"zh-cn","defaultMessagesFile":"/home/nvidia/.vscode-server/cli/servers/Stable-e4c7e7b1d6d060162f4aa7f8225271b67ce1df75/server/out/nls.messages.json","languagePack":{"translationsConfigFile":"/home/nvidia/.vscode-server/data/clp/4c1d03004af65f9b16ba94f4936a2bd5.zh-cn/tcf.json","messagesFile":"/home/nvidia/.vscode-server/data/clp/4c1d03004af65f9b16ba94f4936a2bd5.zh-cn/e4c7e7b1d6d060162f4aa7f8225271b67ce1df75/nls.messages.json","corruptMarkerFile":"/home/nvidia/.vscode-server/data/clp/4c1d03004af65f9b16ba94f4936a2bd5.zh-cn/corrupted.info"},"locale":"zh-cn","availableLanguages":{"*":"zh-cn"},"_languagePackId":"4c1d03004af65f9b16ba94f4936a2bd5.zh-cn","_languagePackSupport":true,"_translationsConfigFile":"/home/nvidia/.vscode-server/data/clp/4c1d03004af65f9b16ba94f4936a2bd5.zh-cn/tcf.json","_cacheRoot":"/home/nvidia/.vscode-server/data/clp/4c1d03004af65f9b16ba94f4936a2bd5.zh-cn","_resolvedLanguagePackCoreLocation":"/home/nvidia/.vscode-server/data/clp/4c1d03004af65f9b16ba94f4936a2bd5.zh-cn/e4c7e7b1d6d060162f4aa7f8225271b67ce1df75","_corruptedFile":"/home/nvidia/.vscode-server/data/clp/4c1d03004af65f9b16ba94f4936a2bd5.zh-cn/corrupted.info"}'), ('GIT_EDITOR', 'true'), ('VSCODE_HANDLES_UNCAUGHT_ERRORS', 'true'), ('XDG_SESSION_TYPE', 'tty'), ('CLAUDE_AGENT_SDK_VERSION', '0.3.215'), ('SHLVL', '1'), ('LD_LIBRARY_PATH', '/home/nvidia/DS10_Modbus/install/ds10_protocol/lib:/home/nvidia/DS10_Modbus/install/ds10_interfaces/lib:/opt/ros/humble/opt/rviz_ogre_vendor/lib:/opt/ros/humble/lib/aarch64-linux-gnu:/opt/ros/humble/lib:/usr/local/lib:/usr/local/cuda-12.6/lib64'), ('BROWSER', '/home/nvidia/.vscode-server/cli/servers/Stable-e4c7e7b1d6d060162f4aa7f8225271b67ce1df75/server/bin/helpers/browser.sh'), ('MOTD_SHOWN', 'pam'), ('HOME', '/home/nvidia'), ('VSCODE_RECONNECTION_GRACE_TIME', '10800000'), ('VSCODE_IPC_HOOK_CLI', '/run/user/1000/vscode-ipc-cbab77fc-0245-4c37-9b38-e12c9c3d6c08.sock'), ('JETSON_L4T', '36.4.7'), ('ROS_PYTHON_VERSION', '3'), ('JETSON_MODEL', 'NVIDIA Jetson Orin Nano Engineering Reference Developer Kit Super'), ('CLAUDE_CODE_CHILD_SESSION', '1'), ('DBUS_SESSION_BUS_ADDRESS', 'unix:path=/run/user/1000/bus'), ('VSCODE_L10N_BUNDLE_LOCATION', 'vscode-local:/c%3A/Users/wx123/.vscode/extensions/ms-ceintl.vscode-language-pack-zh-hans-1.131.2026082318/translations/extensions/vscode.json-language-features.i18n.json'), ('ROS_DISTRO', 'humble'), ('LOGNAME', 'nvidia'), ('JETSON_MODULE', 'NVIDIA Jetson Orin Nano (8GB ram)'), ('JETSON_SERIAL_NUMBER', '1421126024259'), ('VSCODE_HANDLES_SIGPIPE', 'true'), ('_', '/usr/bin/colcon'), ('ROS_VERSION', '2'), ('XDG_SESSION_CLASS', 'user'), ('ANTHROPIC_BASE_URL', 'http://192.168.50.76:3000'), ('XDG_SESSION_ID', '115'), ('VSCODE_CLI_REQUIRE_TOKEN', '8d405820-5269-480d-8ae4-41df12244dbf'), ('ROS_LOCALHOST_ONLY', '0'), ('MCP_CONNECTION_NONBLOCKING', 'true'), ('PATH', '/home/nvidia/.local/bin:/home/nvidia/.cargo/bin:/home/nvidia/.npm-global/bin:/usr/local/cuda-12.6/bin:/home/nvidia/.vscode-server/cli/servers/Stable-e4c7e7b1d6d060162f4aa7f8225271b67ce1df75/server/bin/remote-cli:/home/nvidia/.local/bin:/home/nvidia/.cargo/bin:/home/nvidia/.cargo/bin:/home/nvidia/.npm-global/bin:/opt/ros/humble/bin:/usr/local/cuda-12.6/bin:/usr/local/sbin:/usr/local/bin:/usr/sbin:/usr/bin:/sbin:/bin:/usr/games:/usr/local/games:/snap/bin:/home/nvidia/.claude/plugins/cache/mattpocock/mattpocock-skills/1.2.3/bin'), ('VSCODE_AGENT_FOLDER', '/home/nvidia/.vscode-server'), ('COREPACK_ENABLE_AUTO_PIN', '0'), ('XDG_RUNTIME_DIR', '/run/user/1000'), ('CLAUDE_EFFORT', 'high'), ('CLAUDE_PID', '60988'), ('NoDefaultCurrentDirectoryInExePath', '1'), ('LANG', 'zh_CN.UTF-8'), ('LS_COLORS', ''), ('JETSON_SOC', 'tegra234'), ('AMENT_PREFIX_PATH', '/home/nvidia/DS10_Modbus/install/ds10_protocol:/home/nvidia/DS10_Modbus/install/ds10_interfaces:/opt/ros/humble'), ('SHELL', '/bin/bash'), ('ANTHROPIC_AUTH_TOKEN', 'sk-KbQCT02wki7cd9dT5QZFvDBjR4eJM6qxv9W1Omqat9gyQEhR'), ('ELECTRON_RUN_AS_NODE', '1'), ('CLAUDE_CODE_ENABLE_SDK_FILE_CHECKPOINTING', 'true'), ('CLAUDE_CODE_SESSION_ID', '0090d8cf-002c-4d6f-a924-8ba92f238736'), ('LESSCLOSE', '/usr/bin/lesspipe %s %s'), ('CLAUDECODE', '1'), ('JETSON_CUDA_ARCH_BIN', '8.7'), ('PWD', '/home/nvidia/DS10_Modbus/build/ds10_protocol'), ('CODEWHALE_TUI_BIN', '/home/nvidia/.npm-global/bin/codewhale-tui'), ('SSH_CONNECTION', '192.168.130.26 53912 192.168.130.180 22'), ('XDG_DATA_DIRS', '/usr/share/gnome:/usr/local/share:/usr/share:/var/lib/snapd/desktop'), ('CLAUDE_CODE_EXECPATH', '/home/nvidia/.vscode-server/extensions/anthropic.claude-code-2.1.215-linux-arm64/resources/native-binary/claude'), ('PYTHONPATH', '/home/nvidia/DS10_Modbus/install/ds10_interfaces/local/lib/python3.10/dist-packages:/opt/ros/humble/lib/python3.10/site-packages:/opt/ros/humble/local/lib/python3.10/dist-packages:/usr/local/lib/python3.10/site-packages/:'), ('CLAUDE_CODE_ENABLE_TASKS', '0'), ('COLCON', '1'), ('JETSON_JETPACK', ''), ('JETSON_P_NUMBER', 'p3767-0003'), ('CMAKE_PREFIX_PATH', '/home/nvidia/DS10_Modbus/install/ds10_protocol:/home/nvidia/DS10_Modbus/install/ds10_interfaces')]), 'shell': False}
+[0.054251] (ds10_protocol) StdoutLine: {'line': b'UpdateCTestConfiguration  from :/home/nvidia/DS10_Modbus/build/ds10_protocol/CTestConfiguration.ini\n'}
+[0.055109] (ds10_protocol) StdoutLine: {'line': b'Parse Config file:/home/nvidia/DS10_Modbus/build/ds10_protocol/CTestConfiguration.ini\n'}
+[0.055302] (ds10_protocol) StdoutLine: {'line': b'   Site: nvidia-desktop\n'}
+[0.055537] (ds10_protocol) StdoutLine: {'line': b'   Build name: (empty)\n'}
+[0.056231] (ds10_protocol) StdoutLine: {'line': b' Add coverage exclude regular expressions.\n'}
+[0.056427] (ds10_protocol) StdoutLine: {'line': b'Create new tag: 20260902-0821 - Experimental\n'}
+[0.056584] (ds10_protocol) StdoutLine: {'line': b'UpdateCTestConfiguration  from :/home/nvidia/DS10_Modbus/build/ds10_protocol/CTestConfiguration.ini\n'}
+[0.056729] (ds10_protocol) StdoutLine: {'line': b'Parse Config file:/home/nvidia/DS10_Modbus/build/ds10_protocol/CTestConfiguration.ini\n'}
+[0.056869] (ds10_protocol) StdoutLine: {'line': b'Test project /home/nvidia/DS10_Modbus/build/ds10_protocol\n'}
+[0.057006] (ds10_protocol) StdoutLine: {'line': b'Constructing a list of tests\n'}
+[0.057143] (ds10_protocol) StdoutLine: {'line': b'Done constructing a list of tests\n'}
+[0.057274] (ds10_protocol) StdoutLine: {'line': b'Updating test list for fixtures\n'}
+[0.057401] (ds10_protocol) StdoutLine: {'line': b'Added 0 tests to meet fixture requirements\n'}
+[0.057532] (ds10_protocol) StdoutLine: {'line': b'Checking test dependency graph...\n'}
+[0.057658] (ds10_protocol) StdoutLine: {'line': b'Checking test dependency graph end\n'}
+[0.057784] (ds10_protocol) StdoutLine: {'line': b'test 1\n'}
+[0.057923] (ds10_protocol) StdoutLine: {'line': b'    Start 1: copyright\n'}
+[0.058222] (ds10_protocol) StdoutLine: {'line': b'\n'}
+[0.058372] (ds10_protocol) StdoutLine: {'line': b'1: Test command: /usr/bin/python3 "-u" "/opt/ros/humble/share/ament_cmake_test/cmake/run_test.py" "/home/nvidia/DS10_Modbus/build/ds10_protocol/test_results/ds10_protocol/copyright.xunit.xml" "--package-name" "ds10_protocol" "--output-file" "/home/nvidia/DS10_Modbus/build/ds10_protocol/ament_copyright/copyright.txt" "--command" "/opt/ros/humble/bin/ament_copyright" "--xunit-file" "/home/nvidia/DS10_Modbus/build/ds10_protocol/test_results/ds10_protocol/copyright.xunit.xml"\n'}
+[0.058577] (ds10_protocol) StdoutLine: {'line': b'1: Test timeout computed to be: 200\n'}
+[0.069033] (-) TimerEvent: {}
+[0.169330] (-) TimerEvent: {}
+[0.171006] (ds10_protocol) StdoutLine: {'line': b"1: -- run_test.py: invoking following command in '/home/nvidia/DS10_Modbus/src/ds10_protocol':\n"}
+[0.171394] (ds10_protocol) StdoutLine: {'line': b'1:  - /opt/ros/humble/bin/ament_copyright --xunit-file /home/nvidia/DS10_Modbus/build/ds10_protocol/test_results/ds10_protocol/copyright.xunit.xml\n'}
+[0.269465] (-) TimerEvent: {}
+[0.363774] (ds10_protocol) StdoutLine: {'line': b'1: No repository roots and files found\n'}
+[0.364145] (ds10_protocol) StdoutLine: {'line': b'1: No problems found, checked 0 files\n'}
+[0.369587] (-) TimerEvent: {}
+[0.388607] (ds10_protocol) StdoutLine: {'line': b'1: -- run_test.py: return code 0\n'}
+[0.388959] (ds10_protocol) StdoutLine: {'line': b"1: -- run_test.py: verify result file '/home/nvidia/DS10_Modbus/build/ds10_protocol/test_results/ds10_protocol/copyright.xunit.xml'\n"}
+[0.411772] (ds10_protocol) StdoutLine: {'line': b'1/3 Test #1: copyright ........................   Passed    0.35 sec\n'}
+[0.412301] (ds10_protocol) StdoutLine: {'line': b'test 2\n'}
+[0.412877] (ds10_protocol) StdoutLine: {'line': b'    Start 2: lint_cmake\n'}
+[0.413207] (ds10_protocol) StdoutLine: {'line': b'\n'}
+[0.413470] (ds10_protocol) StdoutLine: {'line': b'2: Test command: /usr/bin/python3 "-u" "/opt/ros/humble/share/ament_cmake_test/cmake/run_test.py" "/home/nvidia/DS10_Modbus/build/ds10_protocol/test_results/ds10_protocol/lint_cmake.xunit.xml" "--package-name" "ds10_protocol" "--output-file" "/home/nvidia/DS10_Modbus/build/ds10_protocol/ament_lint_cmake/lint_cmake.txt" "--command" "/opt/ros/humble/bin/ament_lint_cmake" "--xunit-file" "/home/nvidia/DS10_Modbus/build/ds10_protocol/test_results/ds10_protocol/lint_cmake.xunit.xml"\n'}
+[0.413753] (ds10_protocol) StdoutLine: {'line': b'2: Test timeout computed to be: 60\n'}
+[0.469739] (-) TimerEvent: {}
+[0.524054] (ds10_protocol) StdoutLine: {'line': b"2: -- run_test.py: invoking following command in '/home/nvidia/DS10_Modbus/src/ds10_protocol':\n"}
+[0.524416] (ds10_protocol) StdoutLine: {'line': b'2:  - /opt/ros/humble/bin/ament_lint_cmake --xunit-file /home/nvidia/DS10_Modbus/build/ds10_protocol/test_results/ds10_protocol/lint_cmake.xunit.xml\n'}
+[0.569878] (-) TimerEvent: {}
+[0.645656] (ds10_protocol) StdoutLine: {'line': b'2: \n'}
+[0.646018] (ds10_protocol) StdoutLine: {'line': b'2: No problems found\n'}
+[0.668280] (ds10_protocol) StdoutLine: {'line': b'2: -- run_test.py: return code 0\n'}
+[0.668660] (ds10_protocol) StdoutLine: {'line': b"2: -- run_test.py: verify result file '/home/nvidia/DS10_Modbus/build/ds10_protocol/test_results/ds10_protocol/lint_cmake.xunit.xml'\n"}
+[0.669935] (-) TimerEvent: {}
+[0.690514] (ds10_protocol) StdoutLine: {'line': b'2/3 Test #2: lint_cmake .......................   Passed    0.28 sec\n'}
+[0.691135] (ds10_protocol) StdoutLine: {'line': b'test 3\n'}
+[0.691435] (ds10_protocol) StdoutLine: {'line': b'    Start 3: xmllint\n'}
+[0.692054] (ds10_protocol) StdoutLine: {'line': b'\n'}
+[0.692291] (ds10_protocol) StdoutLine: {'line': b'3: Test command: /usr/bin/python3 "-u" "/opt/ros/humble/share/ament_cmake_test/cmake/run_test.py" "/home/nvidia/DS10_Modbus/build/ds10_protocol/test_results/ds10_protocol/xmllint.xunit.xml" "--package-name" "ds10_protocol" "--output-file" "/home/nvidia/DS10_Modbus/build/ds10_protocol/ament_xmllint/xmllint.txt" "--command" "/opt/ros/humble/bin/ament_xmllint" "--xunit-file" "/home/nvidia/DS10_Modbus/build/ds10_protocol/test_results/ds10_protocol/xmllint.xunit.xml"\n'}
+[0.692511] (ds10_protocol) StdoutLine: {'line': b'3: Test timeout computed to be: 60\n'}
+[0.770102] (-) TimerEvent: {}
+[0.800991] (ds10_protocol) StdoutLine: {'line': b"3: -- run_test.py: invoking following command in '/home/nvidia/DS10_Modbus/src/ds10_protocol':\n"}
+[0.801365] (ds10_protocol) StdoutLine: {'line': b'3:  - /opt/ros/humble/bin/ament_xmllint --xunit-file /home/nvidia/DS10_Modbus/build/ds10_protocol/test_results/ds10_protocol/xmllint.xunit.xml\n'}
+[0.870240] (-) TimerEvent: {}
+[0.970607] (-) TimerEvent: {}
+[1.070968] (-) TimerEvent: {}
+[1.171323] (-) TimerEvent: {}
+[1.271708] (-) TimerEvent: {}
+[1.372005] (-) TimerEvent: {}
+[1.472311] (-) TimerEvent: {}
+[1.572591] (-) TimerEvent: {}
+[1.672861] (-) TimerEvent: {}
+[1.773135] (-) TimerEvent: {}
+[1.873399] (-) TimerEvent: {}
+[1.973675] (-) TimerEvent: {}
+[2.073985] (-) TimerEvent: {}
+[2.174311] (-) TimerEvent: {}
+[2.274630] (-) TimerEvent: {}
+[2.374955] (-) TimerEvent: {}
+[2.475286] (-) TimerEvent: {}
+[2.575647] (-) TimerEvent: {}
+[2.675911] (-) TimerEvent: {}
+[2.776158] (-) TimerEvent: {}
+[2.876407] (-) TimerEvent: {}
+[2.976679] (-) TimerEvent: {}
+[3.076977] (-) TimerEvent: {}
+[3.177326] (-) TimerEvent: {}
+[3.277723] (-) TimerEvent: {}
+[3.378053] (-) TimerEvent: {}
+[3.478416] (-) TimerEvent: {}
+[3.578778] (-) TimerEvent: {}
+[3.679075] (-) TimerEvent: {}
+[3.779354] (-) TimerEvent: {}
+[3.879637] (-) TimerEvent: {}
+[3.979966] (-) TimerEvent: {}
+[4.080439] (-) TimerEvent: {}
+[4.180932] (-) TimerEvent: {}
+[4.281417] (-) TimerEvent: {}
+[4.381906] (-) TimerEvent: {}
+[4.482413] (-) TimerEvent: {}
+[4.582825] (-) TimerEvent: {}
+[4.683171] (-) TimerEvent: {}
+[4.783540] (-) TimerEvent: {}
+[4.883920] (-) TimerEvent: {}
+[4.984304] (-) TimerEvent: {}
+[5.084665] (-) TimerEvent: {}
+[5.185030] (-) TimerEvent: {}
+[5.285387] (-) TimerEvent: {}
+[5.385730] (-) TimerEvent: {}
+[5.486076] (-) TimerEvent: {}
+[5.586446] (-) TimerEvent: {}
+[5.686797] (-) TimerEvent: {}
+[5.787109] (-) TimerEvent: {}
+[5.887413] (-) TimerEvent: {}
+[5.987732] (-) TimerEvent: {}
+[6.088071] (-) TimerEvent: {}
+[6.188408] (-) TimerEvent: {}
+[6.288741] (-) TimerEvent: {}
+[6.389057] (-) TimerEvent: {}
+[6.489377] (-) TimerEvent: {}
+[6.589718] (-) TimerEvent: {}
+[6.690059] (-) TimerEvent: {}
+[6.790575] (-) TimerEvent: {}
+[6.890877] (-) TimerEvent: {}
+[6.991171] (-) TimerEvent: {}
+[7.091520] (-) TimerEvent: {}
+[7.191843] (-) TimerEvent: {}
+[7.292166] (-) TimerEvent: {}
+[7.392473] (-) TimerEvent: {}
+[7.492795] (-) TimerEvent: {}
+[7.593128] (-) TimerEvent: {}
+[7.693444] (-) TimerEvent: {}
+[7.793755] (-) TimerEvent: {}
+[7.894053] (-) TimerEvent: {}
+[7.994345] (-) TimerEvent: {}
+[8.094688] (-) TimerEvent: {}
+[8.195027] (-) TimerEvent: {}
+[8.295367] (-) TimerEvent: {}
+[8.395729] (-) TimerEvent: {}
+[8.496049] (-) TimerEvent: {}
+[8.596379] (-) TimerEvent: {}
+[8.696907] (-) TimerEvent: {}
+[8.797415] (-) TimerEvent: {}
+[8.897756] (-) TimerEvent: {}
+[8.998152] (-) TimerEvent: {}
+[9.098517] (-) TimerEvent: {}
+[9.198950] (-) TimerEvent: {}
+[9.299459] (-) TimerEvent: {}
+[9.400007] (-) TimerEvent: {}
+[9.500538] (-) TimerEvent: {}
+[9.601022] (-) TimerEvent: {}
+[9.701419] (-) TimerEvent: {}
+[9.776823] (ds10_protocol) StdoutLine: {'line': b"3: File 'package.xml' is valid\n"}
+[9.777200] (ds10_protocol) StdoutLine: {'line': b'3: \n'}
+[9.777361] (ds10_protocol) StdoutLine: {'line': b'3: No problems found\n'}
+[9.801554] (-) TimerEvent: {}
+[9.804742] (ds10_protocol) StdoutLine: {'line': b'3: -- run_test.py: return code 0\n'}
+[9.805093] (ds10_protocol) StdoutLine: {'line': b"3: -- run_test.py: verify result file '/home/nvidia/DS10_Modbus/build/ds10_protocol/test_results/ds10_protocol/xmllint.xunit.xml'\n"}
+[9.828438] (ds10_protocol) StdoutLine: {'line': b'3/3 Test #3: xmllint ..........................   Passed    9.14 sec\n'}
+[9.829450] (ds10_protocol) StdoutLine: {'line': b'\n'}
+[9.829768] (ds10_protocol) StdoutLine: {'line': b'100% tests passed, 0 tests failed out of 3\n'}
+[9.830048] (ds10_protocol) StdoutLine: {'line': b'\n'}
+[9.830312] (ds10_protocol) StdoutLine: {'line': b'Label Time Summary:\n'}
+[9.830574] (ds10_protocol) StdoutLine: {'line': b'copyright     =   0.35 sec*proc (1 test)\n'}
+[9.830824] (ds10_protocol) StdoutLine: {'line': b'lint_cmake    =   0.28 sec*proc (1 test)\n'}
+[9.831132] (ds10_protocol) StdoutLine: {'line': b'linter        =   9.77 sec*proc (3 tests)\n'}
+[9.831408] (ds10_protocol) StdoutLine: {'line': b'xmllint       =   9.14 sec*proc (1 test)\n'}
+[9.831703] (ds10_protocol) StdoutLine: {'line': b'\n'}
+[9.831958] (ds10_protocol) StdoutLine: {'line': b'Total Test time (real) =   9.77 sec\n'}
+[9.835812] (ds10_protocol) CommandEnded: {'returncode': 0}
+[9.837598] (ds10_protocol) JobEnded: {'identifier': 'ds10_protocol', 'rc': 0}
+[9.839077] (-) EventReactorShutdown: {}

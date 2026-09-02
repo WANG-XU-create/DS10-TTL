@@ -1,0 +1,76 @@
+Start testing: Sep 02 16:21 CST
+----------------------------------------------------------
+1/3 Testing: copyright
+1/3 Test: copyright
+Command: "/usr/bin/python3" "-u" "/opt/ros/humble/share/ament_cmake_test/cmake/run_test.py" "/home/nvidia/DS10_Modbus/build/ds10_protocol/test_results/ds10_protocol/copyright.xunit.xml" "--package-name" "ds10_protocol" "--output-file" "/home/nvidia/DS10_Modbus/build/ds10_protocol/ament_copyright/copyright.txt" "--command" "/opt/ros/humble/bin/ament_copyright" "--xunit-file" "/home/nvidia/DS10_Modbus/build/ds10_protocol/test_results/ds10_protocol/copyright.xunit.xml"
+Directory: /home/nvidia/DS10_Modbus/src/ds10_protocol
+"copyright" start time: Sep 02 16:21 CST
+Output:
+----------------------------------------------------------
+-- run_test.py: invoking following command in '/home/nvidia/DS10_Modbus/src/ds10_protocol':
+ - /opt/ros/humble/bin/ament_copyright --xunit-file /home/nvidia/DS10_Modbus/build/ds10_protocol/test_results/ds10_protocol/copyright.xunit.xml
+No repository roots and files found
+No problems found, checked 0 files
+-- run_test.py: return code 0
+-- run_test.py: verify result file '/home/nvidia/DS10_Modbus/build/ds10_protocol/test_results/ds10_protocol/copyright.xunit.xml'
+<end of output>
+Test time =   0.35 sec
+----------------------------------------------------------
+Test Passed.
+"copyright" end time: Sep 02 16:21 CST
+"copyright" time elapsed: 00:00:00
+----------------------------------------------------------
+
+2/3 Testing: lint_cmake
+2/3 Test: lint_cmake
+Command: "/usr/bin/python3" "-u" "/opt/ros/humble/share/ament_cmake_test/cmake/run_test.py" "/home/nvidia/DS10_Modbus/build/ds10_protocol/test_results/ds10_protocol/lint_cmake.xunit.xml" "--package-name" "ds10_protocol" "--output-file" "/home/nvidia/DS10_Modbus/build/ds10_protocol/ament_lint_cmake/lint_cmake.txt" "--command" "/opt/ros/humble/bin/ament_lint_cmake" "--xunit-file" "/home/nvidia/DS10_Modbus/build/ds10_protocol/test_results/ds10_protocol/lint_cmake.xunit.xml"
+Directory: /home/nvidia/DS10_Modbus/src/ds10_protocol
+"lint_cmake" start time: Sep 02 16:21 CST
+Output:
+----------------------------------------------------------
+-- run_test.py: invoking following command in '/home/nvidia/DS10_Modbus/src/ds10_protocol':
+ - /opt/ros/humble/bin/ament_lint_cmake --xunit-file /home/nvidia/DS10_Modbus/build/ds10_protocol/test_results/ds10_protocol/lint_cmake.xunit.xml
+
+No problems found
+-- run_test.py: return code 0
+-- run_test.py: verify result file '/home/nvidia/DS10_Modbus/build/ds10_protocol/test_results/ds10_protocol/lint_cmake.xunit.xml'
+<end of output>
+Test time =   0.28 sec
+----------------------------------------------------------
+Test Passed.
+"lint_cmake" end time: Sep 02 16:21 CST
+"lint_cmake" time elapsed: 00:00:00
+----------------------------------------------------------
+
+3/3 Testing: xmllint
+3/3 Test: xmllint
+Command: "/usr/bin/python3" "-u" "/opt/ros/humble/share/ament_cmake_test/cmake/run_test.py" "/home/nvidia/DS10_Modbus/build/ds10_protocol/test_results/ds10_protocol/xmllint.xunit.xml" "--package-name" "ds10_protocol" "--output-file" "/home/nvidia/DS10_Modbus/build/ds10_protocol/ament_xmllint/xmllint.txt" "--command" "/opt/ros/humble/bin/ament_xmllint" "--xunit-file" "/home/nvidia/DS10_Modbus/build/ds10_protocol/test_results/ds10_protocol/xmllint.xunit.xml"
+Directory: /home/nvidia/DS10_Modbus/src/ds10_protocol
+"xmllint" start time: Sep 02 16:21 CST
+Output:
+----------------------------------------------------------
+-- run_test.py: invoking following command in '/home/nvidia/DS10_Modbus/src/ds10_protocol':
+ - /opt/ros/humble/bin/ament_xmllint --xunit-file /home/nvidia/DS10_Modbus/build/ds10_protocol/test_results/ds10_protocol/xmllint.xunit.xml
+File 'package.xml' is valid
+
+No problems found
+-- run_test.py: return code 0
+-- run_test.py: verify result file '/home/nvidia/DS10_Modbus/build/ds10_protocol/test_results/ds10_protocol/xmllint.xunit.xml'
+<end of output>
+Test time =   9.14 sec
+----------------------------------------------------------
+Test Passed.
+"xmllint" end time: Sep 02 16:21 CST
+"xmllint" time elapsed: 00:00:09
+----------------------------------------------------------
+
+End testing: Sep 02 16:21 CST
+
+copyright =   0.35 sec*proc
+
+lint_cmake =   0.28 sec*proc
+
+linter =   9.77 sec*proc
+
+xmllint =   9.14 sec*proc
+

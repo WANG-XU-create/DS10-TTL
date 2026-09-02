@@ -1,0 +1,12 @@
+# DS10 driver — slave role example parameters.
+# Load with:  ros2 run ds10_driver ds10_node --ros-args --params-file <this>
+/**:
+  ros__parameters:
+    port: /dev/ttyUSB1
+    baud: 115200
+    role: slave
+    station_id: 1             # this slave's Modbus station id (1..247), required
+    frame_timeout_ms: 20      # burst-end silence threshold (ticket 02 calibrated)
+    max_frame_bytes: 4095     # single-frame cap; tx rejects larger (ticket 04)
+    tx_topic: "~/tx"
+    rx_topic: "~/rx"

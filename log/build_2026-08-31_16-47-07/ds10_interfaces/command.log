@@ -1,0 +1,6 @@
+Invoking command in '/home/nvidia/DS10_Modbus/build/ds10_interfaces': CMAKE_PREFIX_PATH=/opt/ros/humble /usr/bin/cmake /home/nvidia/DS10_Modbus/src/ds10_interfaces -DCMAKE_INSTALL_PREFIX=/home/nvidia/DS10_Modbus/install/ds10_interfaces
+Invoked command in '/home/nvidia/DS10_Modbus/build/ds10_interfaces' returned '0': CMAKE_PREFIX_PATH=/opt/ros/humble /usr/bin/cmake /home/nvidia/DS10_Modbus/src/ds10_interfaces -DCMAKE_INSTALL_PREFIX=/home/nvidia/DS10_Modbus/install/ds10_interfaces
+Invoking command in '/home/nvidia/DS10_Modbus/build/ds10_interfaces': CMAKE_PREFIX_PATH=/opt/ros/humble /usr/bin/cmake --build /home/nvidia/DS10_Modbus/build/ds10_interfaces -- -j6 -l6
+Invoked command in '/home/nvidia/DS10_Modbus/build/ds10_interfaces' returned '0': CMAKE_PREFIX_PATH=/opt/ros/humble /usr/bin/cmake --build /home/nvidia/DS10_Modbus/build/ds10_interfaces -- -j6 -l6
+Invoking command in '/home/nvidia/DS10_Modbus/build/ds10_interfaces': CMAKE_PREFIX_PATH=/opt/ros/humble /usr/bin/cmake --install /home/nvidia/DS10_Modbus/build/ds10_interfaces
+Invoked command in '/home/nvidia/DS10_Modbus/build/ds10_interfaces' returned '0': CMAKE_PREFIX_PATH=/opt/ros/humble /usr/bin/cmake --install /home/nvidia/DS10_Modbus/build/ds10_interfaces

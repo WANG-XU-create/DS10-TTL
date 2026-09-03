@@ -149,6 +149,20 @@ case FUNC_ACK: {
 | 回波导致帧数断言失败 | 是 | 改为断言"至少发生一次" |
 | 场景间序号不连续导致假 gap | 是 | 每个场景前重置追踪器位置 |
 
+## 0x00 解码器修复后的复测(2026-09-03)
+
+修复提交后在同一硬件上复跑,5/5 全部 PASS。主机日志:
+
+```
+[INFO] [master_bridge]: Decoded 0x00: acked_seq=0, acked_function_code=0x12
+```
+
+`Unknown or unimplemented function_code=0x00` 出现次数:**0**(修复前每次 ACK 一条)。
+
+**顺带验证了 ACK 风暴防护**:本次从机因回波发出 42 个 ACK 帧,主机全部解码,
+**未回复任何一个**。若 `flags_of()` 把 `acked_seq` 低字节当作 flags 读,这 42 帧
+会触发无限互 ACK 并打满链路。这是该防护在真实硬件上的负面证据。
+
 ## 结论
 
 **MVP 功能验证通过。** 全部 5 个场景在真实无线链路上 PASS。

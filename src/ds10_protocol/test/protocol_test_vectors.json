@@ -1,0 +1,88 @@
+{
+  "_comment": [
+    "Wire-format test vectors for application_protocol_v1.md, loaded by both",
+    "the C++ gtest (test_protocol_vectors.cpp) and pytest (test_protocol_codec.py).",
+    "",
+    "Neither implementation generated these bytes. Each expected_bytes was",
+    "derived by hand from the spec's field layout and IEEE-754, then both",
+    "implementations were run against it. Vectors produced by running one codec",
+    "would only prove the two agree -- including when they agree on something",
+    "wrong, which is the case this file exists to catch.",
+    "",
+    "reading is a JSON number for finite values and one of the strings 'inf',",
+    "'-inf', 'nan' otherwise: those three have no JSON number form. Python's",
+    "json module emits bare Infinity/NaN, which is not valid JSON and which",
+    "nlohmann rejects, so the strings keep this file parseable by both sides.",
+    "",
+    "Maximum-length params (4089 B) is exercised in the round-trip tests rather",
+    "than here -- 8 KB of hex would bury the vectors that show a layout."
+  ],
+  "vectors": [
+    {
+      "name": "0x12 typical: ack requested, two param bytes",
+      "type": "0x12",
+      "input": {"flags": 1, "cmd_id": 5, "params": "AABB"},
+      "expected_bytes": "0105AABB"
+    },
+    {
+      "name": "0x12 empty params: the two-byte floor",
+      "type": "0x12",
+      "input": {"flags": 0, "cmd_id": 0, "params": ""},
+      "expected_bytes": "0000"
+    },
+    {
+      "name": "0x12 all bits set: no field is masked or clamped",
+      "type": "0x12",
+      "input": {"flags": 255, "cmd_id": 254, "params": "00"},
+      "expected_bytes": "FFFE00"
+    },
+    {
+      "name": "0x12 params are opaque bytes, not text",
+      "type": "0x12",
+      "input": {"flags": 2, "cmd_id": 16, "params": "00FF7F80"},
+      "expected_bytes": "021000FF7F80"
+    },
+    {
+      "name": "0x10 typical: 23.5 = 0x41BC0000",
+      "type": "0x10",
+      "input": {"flags": 0, "seq": 42, "sensor_id": 3, "reading": 23.5},
+      "expected_bytes": "002A00030000BC41"
+    },
+    {
+      "name": "0x10 seq=256 catches a byte-swapped u16: 0001, not 0100",
+      "type": "0x10",
+      "input": {"flags": 0, "seq": 256, "sensor_id": 1, "reading": 1.0},
+      "expected_bytes": "000001010000803F"
+    },
+    {
+      "name": "0x10 seq at the uint16 ceiling, reading 0.0",
+      "type": "0x10",
+      "input": {"flags": 1, "seq": 65535, "sensor_id": 255, "reading": 0.0},
+      "expected_bytes": "01FFFFFF00000000"
+    },
+    {
+      "name": "0x10 negative reading: -1.0 = 0xBF800000",
+      "type": "0x10",
+      "input": {"flags": 0, "seq": 0, "sensor_id": 1, "reading": -1.0},
+      "expected_bytes": "00000001000080BF"
+    },
+    {
+      "name": "0x10 positive infinity = 0x7F800000",
+      "type": "0x10",
+      "input": {"flags": 0, "seq": 7, "sensor_id": 2, "reading": "inf"},
+      "expected_bytes": "000700020000807F"
+    },
+    {
+      "name": "0x10 negative infinity = 0xFF800000",
+      "type": "0x10",
+      "input": {"flags": 0, "seq": 8, "sensor_id": 2, "reading": "-inf"},
+      "expected_bytes": "00080002000080FF"
+    },
+    {
+      "name": "0x10 quiet NaN = 0x7FC00000",
+      "type": "0x10",
+      "input": {"flags": 0, "seq": 9, "sensor_id": 2, "reading": "nan"},
+      "expected_bytes": "000900020000C07F"
+    }
+  ]
+}

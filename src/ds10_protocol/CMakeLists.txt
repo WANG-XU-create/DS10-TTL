@@ -76,6 +76,25 @@ if(BUILD_TESTING)
   )
   target_link_libraries(test_seq_tracker ${PROJECT_NAME}_lib)
 
+  # Cross-language wire-format check: this and the Python reference codec
+  # both validate against test/protocol_test_vectors.json, so the two
+  # implementations cannot drift apart without one of them failing.
+  find_package(nlohmann_json REQUIRED)
+  ament_add_gtest(test_protocol_vectors test/test_protocol_vectors.cpp)
+  target_include_directories(test_protocol_vectors PUBLIC
+    $<BUILD_INTERFACE:${CMAKE_CURRENT_SOURCE_DIR}/include>
+    $<INSTALL_INTERFACE:include>
+  )
+  target_link_libraries(test_protocol_vectors ${PROJECT_NAME}_lib nlohmann_json::nlohmann_json)
+  # Absolute path, so the test does not depend on its working directory.
+  set_tests_properties(test_protocol_vectors PROPERTIES
+    ENVIRONMENT
+    "DS10_PROTOCOL_TEST_VECTORS=${CMAKE_CURRENT_SOURCE_DIR}/test/protocol_test_vectors.json")
+
+  # Python reference codec: round trips plus the same shared vectors.
+  find_package(ament_cmake_pytest REQUIRED)
+  ament_add_pytest_test(test_protocol_codec test/test_protocol_codec.py)
+
   # Node-level end-to-end test over real ROS topics.
   find_package(launch_testing_ament_cmake REQUIRED)
   add_launch_test(test/test_protocol_bridge.launch.py)

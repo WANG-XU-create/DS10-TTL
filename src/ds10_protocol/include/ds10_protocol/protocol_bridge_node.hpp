@@ -1,0 +1,59 @@
+// Copyright 2026 wangxu
+//
+// Licensed under the Apache License, Version 2.0 (the "License");
+// you may not use this file except in compliance with the License.
+// You may obtain a copy of the License at
+//
+//     http://www.apache.org/licenses/LICENSE-2.0
+//
+// Unless required by applicable law or agreed to in writing, software
+// distributed under the License is distributed on an "AS IS" BASIS,
+// WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
+// See the License for the specific language governing permissions and
+// limitations under the License.
+
+#ifndef DS10_PROTOCOL__PROTOCOL_BRIDGE_NODE_HPP_
+#define DS10_PROTOCOL__PROTOCOL_BRIDGE_NODE_HPP_
+
+#include <string>
+
+#include "ds10_interfaces/msg/frame.hpp"
+#include "rclcpp/rclcpp.hpp"
+
+namespace ds10_protocol
+{
+
+/// Application-protocol bridge sitting between ds10_driver and business nodes.
+///
+/// In this first version the node is a transparent proxy: it forwards Frames
+/// in both directions without inspecting `Frame.data`. Its purpose is to
+/// establish the topic plumbing (and the place where protocol logic will live)
+/// so later tickets can add decode, sequence tracking and auto-ACK without
+/// touching the driver.
+///
+///   driver_rx_topic  --> [bridge] --> protocol_rx_topic   (device to app)
+///   protocol_tx_topic --> [bridge] --> driver_tx_topic    (app to device)
+class ProtocolBridgeNode : public rclcpp::Node
+{
+public:
+  explicit ProtocolBridgeNode(const rclcpp::NodeOptions & options);
+
+private:
+  void on_driver_rx(const ds10_interfaces::msg::Frame::SharedPtr msg);
+  void on_protocol_tx(const ds10_interfaces::msg::Frame::SharedPtr msg);
+
+  // Topic names (resolved in the constructor, immutable afterwards).
+  std::string driver_rx_topic_;
+  std::string driver_tx_topic_;
+  std::string protocol_rx_topic_;
+  std::string protocol_tx_topic_;
+
+  rclcpp::Subscription<ds10_interfaces::msg::Frame>::SharedPtr driver_rx_sub_;
+  rclcpp::Subscription<ds10_interfaces::msg::Frame>::SharedPtr protocol_tx_sub_;
+  rclcpp::Publisher<ds10_interfaces::msg::Frame>::SharedPtr protocol_rx_pub_;
+  rclcpp::Publisher<ds10_interfaces::msg::Frame>::SharedPtr driver_tx_pub_;
+};
+
+}  // namespace ds10_protocol
+
+#endif  // DS10_PROTOCOL__PROTOCOL_BRIDGE_NODE_HPP_

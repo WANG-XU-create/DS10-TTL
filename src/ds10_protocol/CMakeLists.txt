@@ -15,12 +15,20 @@ find_package(ament_cmake REQUIRED)
 find_package(rclcpp REQUIRED)
 find_package(ds10_interfaces REQUIRED)
 
-# Codec library
-add_library(${PROJECT_NAME}_lib src/codec.cpp)
+# Codec + node library
+add_library(${PROJECT_NAME}_lib
+  src/codec.cpp
+  src/protocol_bridge_node.cpp
+)
 target_include_directories(${PROJECT_NAME}_lib PUBLIC
   $<BUILD_INTERFACE:${CMAKE_CURRENT_SOURCE_DIR}/include>
   $<INSTALL_INTERFACE:include>
 )
+ament_target_dependencies(${PROJECT_NAME}_lib rclcpp ds10_interfaces)
+
+add_executable(protocol_bridge src/protocol_bridge_main.cpp)
+target_link_libraries(protocol_bridge ${PROJECT_NAME}_lib)
+ament_target_dependencies(protocol_bridge rclcpp)
 
 if(BUILD_TESTING)
   find_package(ament_lint_auto REQUIRED)
@@ -59,10 +67,18 @@ if(BUILD_TESTING)
     $<INSTALL_INTERFACE:include>
   )
   target_link_libraries(test_codec_ack ${PROJECT_NAME}_lib)
+
+  # Node-level end-to-end test over real ROS topics.
+  find_package(launch_testing_ament_cmake REQUIRED)
+  add_launch_test(test/test_protocol_bridge.launch.py)
 endif()
 
 install(DIRECTORY include/
   DESTINATION include
+)
+
+install(DIRECTORY launch
+  DESTINATION share/${PROJECT_NAME}
 )
 
 install(TARGETS ${PROJECT_NAME}_lib
@@ -70,6 +86,10 @@ install(TARGETS ${PROJECT_NAME}_lib
   ARCHIVE DESTINATION lib
   LIBRARY DESTINATION lib
   RUNTIME DESTINATION bin
+)
+
+install(TARGETS protocol_bridge
+  DESTINATION lib/${PROJECT_NAME}
 )
 
 ament_export_include_directories(include)

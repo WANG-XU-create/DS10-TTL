@@ -25,11 +25,11 @@ namespace ds10_protocol
 
 /// Application-protocol bridge sitting between ds10_driver and business nodes.
 ///
-/// In this first version the node is a transparent proxy: it forwards Frames
-/// in both directions without inspecting `Frame.data`. Its purpose is to
-/// establish the topic plumbing (and the place where protocol logic will live)
-/// so later tickets can add decode, sequence tracking and auto-ACK without
-/// touching the driver.
+/// Frames are forwarded in both directions unchanged. On the device-to-app
+/// path the node additionally decodes `Frame.data` and logs the fields, but
+/// decoding never gates forwarding: malformed and unknown frames still reach
+/// subscribers, so applications that parse `data` themselves keep working.
+/// Later tickets turn the decoded values into sequence tracking and auto-ACK.
 ///
 ///   driver_rx_topic  --> [bridge] --> protocol_rx_topic   (device to app)
 ///   protocol_tx_topic --> [bridge] --> driver_tx_topic    (app to device)
@@ -41,6 +41,11 @@ public:
 private:
   void on_driver_rx(const ds10_interfaces::msg::Frame::SharedPtr msg);
   void on_protocol_tx(const ds10_interfaces::msg::Frame::SharedPtr msg);
+
+  /// Decode `msg.data` according to its function code and log the result.
+  /// Logs at WARN for function codes with no decoder and at ERROR when a
+  /// known function code carries a payload that will not decode.
+  void log_decoded_frame(const ds10_interfaces::msg::Frame & msg);
 
   // Topic names (resolved in the constructor, immutable afterwards).
   std::string driver_rx_topic_;

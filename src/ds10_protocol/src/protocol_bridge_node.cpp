@@ -16,6 +16,9 @@
 
 #include <string>
 
+#include "ds10_protocol/codec.hpp"
+#include "ds10_protocol/protocol_constants.hpp"
+
 namespace ds10_protocol
 {
 
@@ -23,6 +26,11 @@ namespace
 {
 // Matches the depth ds10_driver uses on its own tx/rx topics.
 constexpr int kQueueDepth = 10;
+
+// Smallest payload each decoder accepts, reported when one rejects a frame.
+constexpr size_t kMinControlCommandSize = SIZEOF_FLAGS + SIZEOF_CMD_ID;
+constexpr size_t kMinSensorDataSize =
+  SIZEOF_FLAGS + SIZEOF_SEQ + SIZEOF_SENSOR_ID + SIZEOF_READING;
 }  // namespace
 
 ProtocolBridgeNode::ProtocolBridgeNode(const rclcpp::NodeOptions & options)
@@ -59,8 +67,54 @@ ProtocolBridgeNode::ProtocolBridgeNode(const rclcpp::NodeOptions & options)
 
 void ProtocolBridgeNode::on_driver_rx(const ds10_interfaces::msg::Frame::SharedPtr msg)
 {
-  // Transparent for now; ticket 06 decodes Frame.data here.
+  log_decoded_frame(*msg);
+
+  // Forward regardless of what decoding found: subscribers that parse `data`
+  // themselves must keep receiving every frame the driver delivered.
   protocol_rx_pub_->publish(*msg);
+}
+
+void ProtocolBridgeNode::log_decoded_frame(const ds10_interfaces::msg::Frame & msg)
+{
+  switch (msg.function_code) {
+    case FUNC_CONTROL_CMD: {
+        const auto cmd = decode_control_command(msg.data);
+        if (!cmd) {
+          RCLCPP_ERROR(
+            get_logger(),
+            "Failed to decode function_code=0x%02X: data size=%zu (expected >=%zu)",
+            msg.function_code, msg.data.size(), kMinControlCommandSize);
+          return;
+        }
+        RCLCPP_INFO(
+          get_logger(), "Decoded 0x%02X: flags=%u, cmd_id=%u, params_len=%zu",
+          msg.function_code, cmd->flags, cmd->cmd_id, cmd->params.size());
+        return;
+      }
+
+    case FUNC_SENSOR_DATA: {
+        const auto sensor = decode_sensor_data(msg.data);
+        if (!sensor) {
+          RCLCPP_ERROR(
+            get_logger(),
+            "Failed to decode function_code=0x%02X: data size=%zu (expected >=%zu)",
+            msg.function_code, msg.data.size(), kMinSensorDataSize);
+          return;
+        }
+        RCLCPP_INFO(
+          get_logger(), "Decoded 0x%02X: flags=%u, seq=%u, sensor_id=%u, reading=%f",
+          msg.function_code, sensor->flags, sensor->seq, sensor->sensor_id, sensor->reading);
+        return;
+      }
+
+    default:
+      // Includes codes this version has no decoder for (0x00 ACK, 0x11 log,
+      // 0x80 fragment) as well as genuinely unknown ones.
+      RCLCPP_WARN(
+        get_logger(), "Unknown or unimplemented function_code=0x%02X from station=%u",
+        msg.function_code, msg.station_id);
+      return;
+  }
 }
 
 void ProtocolBridgeNode::on_protocol_tx(const ds10_interfaces::msg::Frame::SharedPtr msg)

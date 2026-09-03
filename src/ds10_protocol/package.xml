@@ -18,8 +18,6 @@
   <depend>rclcpp</depend>
   <depend>ds10_interfaces</depend>
 
-  <test_depend>nlohmann-json-dev</test_depend>
-
   <test_depend>ament_cmake_gtest</test_depend>
   <test_depend>ament_cmake_pytest</test_depend>
   <test_depend>ament_lint_auto</test_depend>
@@ -28,6 +26,7 @@
   <test_depend>launch_ros</test_depend>
   <test_depend>launch_testing</test_depend>
   <test_depend>launch_testing_ament_cmake</test_depend>
+  <test_depend>nlohmann-json-dev</test_depend>
 
   <export>
     <build_type>ament_cmake</build_type>

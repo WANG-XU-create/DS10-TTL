@@ -93,7 +93,11 @@ def _float32_bits(value):
     biased_exponent = exponent + 127
 
     if biased_exponent >= 255:
-        return sign | 0x7F800000  # overflowed float32 range
+        # struct.pack('<f', 1e39) raises rather than saturating to infinity.
+        # The oracle must not be more permissive than the thing it checks:
+        # silently returning inf here would let a vector claiming 1e39 encodes
+        # to 0x7F800000 pass, when no conformant encoder produces that.
+        raise OverflowError(f'{value!r} is outside float32 range')
     if biased_exponent <= 0:
         subnormal = int(round(magnitude / (2.0 ** -149)))
         return sign | subnormal
@@ -319,6 +323,13 @@ def test_the_oracle_encodes_nan():
     packed = struct.unpack('<I', struct.pack('<f', math.nan))[0]
 
     assert _float32_bits(math.nan) == packed
+
+
+def test_the_oracle_raises_on_out_of_range():
+    """Values outside float32 range must raise, not silently saturate."""
+    for value in [1e39, -1e39, 1e50, 3.5e38]:
+        with pytest.raises(OverflowError, match='outside float32 range'):
+            _float32_bits(value)
 
 
 def test_vector_file_covers_both_message_types():

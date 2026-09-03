@@ -20,7 +20,7 @@ python3 -m pytest src/ds10_protocol/test/test_protocol_codec.py -v
 colcon test --packages-select ds10_protocol
 ```
 
-80 个 pytest 用例覆盖：两种消息类型的编解码、往返、边界值、inf/nan、负零、长度不足拒绝、尾部字节忽略、向量一致性。
+97 个 pytest 用例覆盖：两种消息类型的编解码、往返、边界值、inf/nan、负零、长度不足拒绝、尾部字节忽略、向量一致性，以及 IEEE-754 浮点预言机自检。
 
 ## 局限
 

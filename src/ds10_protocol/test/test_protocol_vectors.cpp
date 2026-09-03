@@ -28,6 +28,8 @@
 #include <cstdint>
 #include <cstdlib>
 #include <fstream>
+#include <limits>
+#include <stdexcept>
 #include <string>
 #include <vector>
 
@@ -45,10 +47,19 @@ const char * vectors_path()
   return from_env != nullptr ? from_env : "protocol_test_vectors.json";
 }
 
+// The helpers below throw rather than EXPECT_ on bad input. EXPECT_ does not
+// return, so a helper that used it would carry on and hand back a garbage
+// value -- an unopened file yields a null json whose .at() then throws
+// something unrelated, and an unrecognised reading name would silently become
+// NaN, which the NaN branch of the decode test would accept. Throwing puts
+// the diagnosis in the failure message where it belongs.
+
 nlohmann::json load_vectors()
 {
   std::ifstream file(vectors_path());
-  EXPECT_TRUE(file.is_open()) << "cannot open vector file: " << vectors_path();
+  if (!file.is_open()) {
+    throw std::runtime_error(std::string("cannot open vector file: ") + vectors_path());
+  }
   nlohmann::json doc;
   file >> doc;
   return doc.at("vectors");
@@ -57,7 +68,9 @@ nlohmann::json load_vectors()
 /// "0105AABB" -> {0x01, 0x05, 0xAA, 0xBB}.
 std::vector<uint8_t> from_hex(const std::string & hex)
 {
-  EXPECT_EQ(hex.size() % 2, 0u) << "hex string has an odd length: " << hex;
+  if (hex.size() % 2 != 0) {
+    throw std::runtime_error("hex string has an odd length: " + hex);
+  }
   std::vector<uint8_t> bytes;
   bytes.reserve(hex.size() / 2);
   for (size_t i = 0; i + 1 < hex.size(); i += 2) {
@@ -92,8 +105,10 @@ float reading_of(const nlohmann::json & value)
   if (name == "-inf") {
     return -std::numeric_limits<float>::infinity();
   }
-  EXPECT_EQ(name, "nan") << "unknown special reading: " << name;
-  return std::numeric_limits<float>::quiet_NaN();
+  if (name == "nan") {
+    return std::numeric_limits<float>::quiet_NaN();
+  }
+  throw std::runtime_error("unknown special reading: " + name);
 }
 
 }  // namespace
@@ -154,15 +169,25 @@ TEST(ProtocolVectors, DecodingRecoversTheOriginalFields) {
     const auto & input = vector.at("input");
     const auto bytes = from_hex(vector.at("expected_bytes").get<std::string>());
 
+    // `continue` rather than ASSERT_ on the has_value checks: ASSERT_ returns
+    // from the whole TEST, so one undecodable vector would hide every vector
+    // after it. Skipping to the next keeps the run reporting all of them,
+    // which is the reason to iterate here in the first place.
     if (vector.at("type") == "0x12") {
       const auto decoded = ds10_protocol::decode_control_command(bytes);
-      ASSERT_TRUE(decoded.has_value()) << "vector: " << name;
+      EXPECT_TRUE(decoded.has_value()) << "vector: " << name;
+      if (!decoded) {
+        continue;
+      }
       EXPECT_EQ(decoded->flags, input.at("flags").get<uint8_t>()) << name;
       EXPECT_EQ(decoded->cmd_id, input.at("cmd_id").get<uint8_t>()) << name;
       EXPECT_EQ(decoded->params, from_hex(input.at("params").get<std::string>())) << name;
     } else {
       const auto decoded = ds10_protocol::decode_sensor_data(bytes);
-      ASSERT_TRUE(decoded.has_value()) << "vector: " << name;
+      EXPECT_TRUE(decoded.has_value()) << "vector: " << name;
+      if (!decoded) {
+        continue;
+      }
       EXPECT_EQ(decoded->flags, input.at("flags").get<uint8_t>()) << name;
       EXPECT_EQ(decoded->seq, input.at("seq").get<uint16_t>()) << name;
       EXPECT_EQ(decoded->sensor_id, input.at("sensor_id").get<uint8_t>()) << name;

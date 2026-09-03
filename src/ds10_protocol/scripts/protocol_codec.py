@@ -37,6 +37,7 @@ requires senders to zero them and receivers to ignore them
 """
 
 import struct
+from typing import Optional
 
 # Wire layouts, as struct format strings. '<' is little-endian throughout.
 _SENSOR_DATA_FORMAT = '<BHBf'          # flags, seq, sensor_id, reading
@@ -44,7 +45,7 @@ SENSOR_DATA_SIZE = struct.calcsize(_SENSOR_DATA_FORMAT)   # 8
 CONTROL_COMMAND_MIN_SIZE = 2           # flags + cmd_id; params may be empty
 
 
-def encode_control_command(flags, cmd_id, params=b''):
+def encode_control_command(flags: int, cmd_id: int, params: bytes = b'') -> bytes:
     """
     Encode a 0x12 control command.
 
@@ -60,7 +61,7 @@ def encode_control_command(flags, cmd_id, params=b''):
     return bytes([flags, cmd_id]) + bytes(params)
 
 
-def decode_control_command(data):
+def decode_control_command(data: bytes) -> Optional[dict]:
     """
     Decode a 0x12 control command.
 
@@ -77,7 +78,8 @@ def decode_control_command(data):
     }
 
 
-def encode_sensor_data(flags, seq, sensor_id, reading):
+def encode_sensor_data(flags: int, seq: int, sensor_id: int,
+                       reading: float) -> bytes:
     """
     Encode a 0x10 sensor report.
 
@@ -95,7 +97,7 @@ def encode_sensor_data(flags, seq, sensor_id, reading):
     return struct.pack(_SENSOR_DATA_FORMAT, flags, seq, sensor_id, reading)
 
 
-def decode_sensor_data(data):
+def decode_sensor_data(data: bytes) -> Optional[dict]:
     """
     Decode a 0x10 sensor report.
 

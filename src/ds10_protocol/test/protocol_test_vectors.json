@@ -31,7 +31,7 @@
       "expected_bytes": "0000"
     },
     {
-      "name": "0x12 all bits set: no field is masked or clamped",
+      "name": "0x12 all bits set: reserved flags pass through unmasked (decoder tolerance, not a legal frame to send -- §flags 字段 requires bit2-7 zero)",
       "type": "0x12",
       "input": {"flags": 255, "cmd_id": 254, "params": "00"},
       "expected_bytes": "FFFE00"

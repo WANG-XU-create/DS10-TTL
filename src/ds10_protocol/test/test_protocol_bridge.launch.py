@@ -160,6 +160,24 @@ class TestProtocolBridge(unittest.TestCase):
             rclpy.spin_once(self.node, timeout_sec=0.05)
         return received
 
+    def _assert_no_gap_reported(self, proc_output, bridge_process, expected, got, station):
+        """
+        Fail if the bridge reported this specific gap.
+
+        `proc_output[process]` only exposes part of the stream, so scanning it
+        for "any gap mentioning this station" silently matches nothing. Wait
+        for the exact message a regression would emit instead: the caller
+        names the seq pair that the buggy path would produce, so the assertion
+        fails loudly if that path is ever taken.
+        """
+        message = (
+            f'Gap detected: expected seq={expected}, got seq={got} '
+            f'(station={station}, function_code=0x10)'
+        )
+        with self.assertRaises(AssertionError, msg=f'bridge wrongly reported: {message}'):
+            proc_output.assertWaitFor(
+                expected_output=message, process=bridge_process, timeout=0.5)
+
     @staticmethod
     def _sample_frame():
         msg = Frame()
@@ -357,12 +375,12 @@ class TestProtocolBridge(unittest.TestCase):
         got = self._collect(received, 4)
         self.assertEqual(len(got), 4, f'expected 4 frames through, got {len(got)}')
 
-        # No gap may be reported for this station. Other stations warn freely,
-        # so the assertion is scoped by station id.
-        with self.assertRaises(AssertionError):
-            proc_output.assertWaitFor(
-                expected_output=f'Gap detected: expected seq=0, got seq=0 (station={station}',
-                process=bridge_process, timeout=0.5)
+        # With modular arithmetic 65535 -> 0 is an ordinary increment. A
+        # tracker that compared magnitudes reports a gap at that step, with
+        # expected and got both reading 0 -- verified by mutating the tracker
+        # and observing the message it emits. Assert on exactly that.
+        self._assert_no_gap_reported(
+            proc_output, bridge_process, expected=0, got=0, station=station)
 
     def test_stations_are_tracked_independently(self, proc_output, bridge_process):
         """A gap on one station does not implicate another."""
@@ -384,12 +402,11 @@ class TestProtocolBridge(unittest.TestCase):
             expected_output=f'Gap detected: expected seq=2, got seq=3 (station={gappy}',
             process=bridge_process, timeout=LOG_TIMEOUT)
 
-        # The clean station shares the function code but must keep its own
-        # expectation, so it must not be named in any gap warning.
-        with self.assertRaises(AssertionError):
-            proc_output.assertWaitFor(
-                expected_output=f'(station={clean}, function_code=0x10)',
-                process=bridge_process, timeout=0.5)
+        # A shared tracker would let station 24's jump to seq=3 set the
+        # expectation station 25 is judged against, reporting a gap at its
+        # seq=2. Assert on exactly that message.
+        self._assert_no_gap_reported(
+            proc_output, bridge_process, expected=4, got=2, station=clean)
 
         got = self._collect(received, 4)
         self.assertEqual(len(got), 4, f'expected 4 frames through, got {len(got)}')

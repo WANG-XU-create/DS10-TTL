@@ -212,21 +212,34 @@ data = [分片ID: u32][总片数: u16][当前片号: u16, 从0开始][payload: b
 协议节点为每个 **(station_id, function_code)** 对维护一个序号追踪器:
 
 ```cpp
-struct SeqTracker {
-    uint16_t expected_seq;  // 期望的下一个序号
-    bool initialized;       // 是否已收到第一帧
+struct StreamId {                 // 具名,避免两个 uint8 参数传反
+    uint8_t station_id;
+    uint8_t function_code;
 };
-std::map<std::pair<uint8_t, uint8_t>, SeqTracker> trackers_;  // key=(station, func)
+
+class SeqTracker {
+    uint16_t expected_;           // 期望的下一个序号
+    uint16_t newest_seen_;        // 已接受的最新序号,重复判定的基准
+    bool initialised_;
+};
+std::map<StreamId, SeqTracker> trackers_;
 ```
 
-**行为**:
+**判据**:决定是否丢弃的问题只有一个——**这个序号已经交付过吗?** 只有交付过才是重复帧。仅仅"离期望值很远"不构成丢弃理由:那样的帧同样没被应用收到过。
+
+因此追踪器记录**已接受的最新序号** `newest_seen`,而不是只记 `expected`:
+
 1. 收到带 seq 字段的帧(0x10/0x11):
-   - 若 `!initialized`: 记录 `expected_seq = seq + 1`, `initialized = true`
-   - 若 `seq == expected_seq`: 正常,`expected_seq++`(处理回绕:若 expected 溢出则归 0)
-   - 若 `seq != expected_seq`:
-     - 若 `seq > expected_seq`: 日志 WARN`"Gap detected: expected seq={expected}, got seq={seq} (station={station}, function_code=0x{func:02X})"`,发布诊断事件,更新 `expected_seq = seq + 1`
-     - 若 `seq < expected_seq` 且差值很大(如 expected=100, seq=5): 可能回绕,更新 expected
-     - 若 `seq < expected_seq` 且差值很小: 重复帧,日志 INFO`"Duplicate seq={seq} (station={station})"`,**丢弃不转发**,诊断计数++。级别高于其它序号事件:这是唯一会扣留帧的情况,而被扣留的帧在别处不留任何痕迹,DEBUG 会让它在默认配置下不可见。
+   - 若尚未初始化: 记为流的基准,不比较,不告警
+   - 若 `(newest_seen - seq)` 按 uint16 取模落在 `[0, 64)`: **重复帧**,日志 INFO`"Duplicate seq={seq} (station={station})"`,**丢弃不转发**,诊断计数++,`newest_seen`/`expected` 不变
+   - 否则该序号从未交付过,一律接受并重同步(`newest_seen = seq`, `expected = seq + 1`):
+     - 若 `seq == expected`: 正常,不记录
+     - 否则: 日志 WARN`"Gap detected: expected seq={expected}, got seq={seq} (station={station}, function_code=0x{func:02X})"`,发布诊断事件
+
+**为什么是模运算而不是比大小**:序号是 uint16 且会回绕,`65535 -> 0` 与任何 `n -> n+1` 完全等价,按大小比较会把它误判成"倒退 65535"。模运算让回绕自然成立,无需特判。
+
+**为什么窗口是 64 而不是半空间**:窗口是唯一能导致丢帧的判据,取值越宽,越多的前向跳跃会被误认成陈旧帧而丢弃。本链路的重复来自重传与乱序,量级是个位数帧;取半空间会让"超前 40000"与"落后 25536"无法区分——早期实现正是因此丢弃过从未交付的帧。窄了最多多交付一次,宽了会丢数据。
+
 2. 除重复帧外一律转发,包括检测到 gap 的帧:应用可能容忍丢帧(传感器数据),由应用决定是否处理。完整去留规则见 §帧去留清单。
 
 ### 错误处理(Error Handling)
@@ -241,12 +254,14 @@ std::map<std::pair<uint8_t, uint8_t>, SeqTracker> trackers_;  // key=(station, f
 | 2 | 未知或未实现功能码(0x00 / 0x11 / 0x80 / 其它) | **转发** | WARN | 未知功能码计数 |
 | 3 | data 长度不足,解码器拒绝 | **转发** | ERROR | 解码失败计数 |
 | 4 | 序号跳变(gap,疑似链路丢帧) | **转发** | WARN | 丢帧计数 |
-| 5 | 序号回绕(uint16 溢出后重新计数) | **转发** | DEBUG | — |
+| 5 | 序号回绕(uint16 溢出后重新计数) | **转发** | 不记录 | — |
 | 6 | **重复帧**(同一 `(station, function_code)` 收到已处理过的 seq) | **丢弃** | INFO | 重复帧计数 |
 
 **判据:第一版只丢弃第 6 种。**
 
 第 2–5 种转发的理由一致:协议层解码只是**附加的观察**,不是准入门槛。这一版的应用可以自行解析 `data`(见 §上层节点接口形态,第一版是透明代理),协议层看不懂的帧对应用未必看不懂;而且调试期出现"帧去哪了"的黑洞,比多收几条无用帧代价更高。
+
+第 5 种不记录日志,因为它不是异常:回绕是 uint16 计数器的正常行为,序号跟踪用模运算处理,`65535 -> 0` 与任何一次 `n -> n+1` 没有区别,实现中它就归入第 1 种(`kInOrder`)。单列一行只为说明"回绕不会被误报成第 4 种 gap";若为它单独记日志,高频传感器流每 10 分钟就会产生一条无信息的记录。
 
 第 6 种丢弃的理由不同,是唯一的例外:转发重复帧会让应用**把同一读数处理两次**——这是主动造成错误,而不是仅仅没提供信息。协议层既然已经识别出它是重复的,就有责任不把它递出去。
 

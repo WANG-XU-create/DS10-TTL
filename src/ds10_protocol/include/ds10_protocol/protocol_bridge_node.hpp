@@ -84,6 +84,11 @@ private:
   rclcpp::Publisher<ds10_interfaces::msg::Frame>::SharedPtr driver_tx_pub_;
 
   /// Expected sequence number per (station_id, function_code) stream.
+  ///
+  /// Entries are never evicted. The key space is bounded by the deployment --
+  /// at most 15 slaves times a handful of numbered message types -- so the
+  /// table stays tiny over an arbitrarily long run. It would only need
+  /// eviction if station ids became transient.
   SeqTrackerTable seq_trackers_;
 };
 

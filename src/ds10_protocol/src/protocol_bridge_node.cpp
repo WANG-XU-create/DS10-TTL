@@ -94,14 +94,15 @@ bool ProtocolBridgeNode::track_sequence(
     return true;
   }
 
-  const auto classification =
-    seq_trackers_.classify(msg.station_id, msg.function_code, sensor->seq);
+  const StreamId stream{msg.station_id, msg.function_code};
+  const uint16_t seq = sensor->seq;
+  const auto classification = seq_trackers_.classify(stream, seq);
 
   switch (classification.verdict) {
     case SeqVerdict::kFirst:
       RCLCPP_DEBUG(
         get_logger(), "Initialized seq tracker for station=%u, seq=%u",
-        msg.station_id, sensor->seq);
+        stream.station_id, seq);
       return true;
 
     case SeqVerdict::kInOrder:
@@ -111,7 +112,7 @@ bool ProtocolBridgeNode::track_sequence(
       RCLCPP_WARN(
         get_logger(),
         "Gap detected: expected seq=%u, got seq=%u (station=%u, function_code=0x%02X)",
-        classification.expected, sensor->seq, msg.station_id, msg.function_code);
+        classification.expected, seq, stream.station_id, stream.function_code);
       return true;
 
     case SeqVerdict::kDuplicate:
@@ -119,7 +120,7 @@ bool ProtocolBridgeNode::track_sequence(
       // withheld, and a withheld frame leaves no other trace. At DEBUG the
       // drop would be invisible under the default configuration.
       RCLCPP_INFO(
-        get_logger(), "Duplicate seq=%u (station=%u)", sensor->seq, msg.station_id);
+        get_logger(), "Duplicate seq=%u (station=%u)", seq, stream.station_id);
       return false;
   }
 

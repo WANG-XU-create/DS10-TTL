@@ -13,6 +13,7 @@
 // limitations under the License.
 
 #include <gtest/gtest.h>
+#include "ds10_protocol/protocol_constants.hpp"
 #include "ds10_protocol/seq_tracker.hpp"
 
 // The first sequence number seen on a stream establishes the baseline; there
@@ -174,20 +175,27 @@ TEST(SeqTrackerTest, TrackersAreIndependentPerStream)
   ds10_protocol::SeqTrackerTable table;
 
   // Two stations on the same function code must not share an expectation.
-  EXPECT_EQ(table.classify(2, 0x10, 1).verdict, ds10_protocol::SeqVerdict::kFirst);
-  EXPECT_EQ(table.classify(3, 0x10, 1).verdict, ds10_protocol::SeqVerdict::kFirst);
+  const ds10_protocol::StreamId slave_2{2, ds10_protocol::FUNC_SENSOR_DATA};
+  const ds10_protocol::StreamId slave_3{3, ds10_protocol::FUNC_SENSOR_DATA};
 
-  EXPECT_EQ(table.classify(2, 0x10, 3).verdict, ds10_protocol::SeqVerdict::kGap);
-  EXPECT_EQ(table.classify(3, 0x10, 2).verdict, ds10_protocol::SeqVerdict::kInOrder);
+  EXPECT_EQ(table.classify(slave_2, 1).verdict, ds10_protocol::SeqVerdict::kFirst);
+  EXPECT_EQ(table.classify(slave_3, 1).verdict, ds10_protocol::SeqVerdict::kFirst);
+
+  // Slave 2 skips a frame; slave 3 continues cleanly and must not be blamed.
+  EXPECT_EQ(table.classify(slave_2, 3).verdict, ds10_protocol::SeqVerdict::kGap);
+  EXPECT_EQ(table.classify(slave_3, 2).verdict, ds10_protocol::SeqVerdict::kInOrder);
 }
 
 TEST(SeqTrackerTest, SameStationDifferentFunctionCodesAreIndependent)
 {
   ds10_protocol::SeqTrackerTable table;
 
-  EXPECT_EQ(table.classify(2, 0x10, 1).verdict, ds10_protocol::SeqVerdict::kFirst);
-  EXPECT_EQ(table.classify(2, 0x11, 1).verdict, ds10_protocol::SeqVerdict::kFirst);
+  const ds10_protocol::StreamId sensors{2, ds10_protocol::FUNC_SENSOR_DATA};
+  const ds10_protocol::StreamId logs{2, ds10_protocol::FUNC_LOG};
 
-  EXPECT_EQ(table.classify(2, 0x10, 2).verdict, ds10_protocol::SeqVerdict::kInOrder);
-  EXPECT_EQ(table.classify(2, 0x11, 2).verdict, ds10_protocol::SeqVerdict::kInOrder);
+  EXPECT_EQ(table.classify(sensors, 1).verdict, ds10_protocol::SeqVerdict::kFirst);
+  EXPECT_EQ(table.classify(logs, 1).verdict, ds10_protocol::SeqVerdict::kFirst);
+
+  EXPECT_EQ(table.classify(sensors, 2).verdict, ds10_protocol::SeqVerdict::kInOrder);
+  EXPECT_EQ(table.classify(logs, 2).verdict, ds10_protocol::SeqVerdict::kInOrder);
 }

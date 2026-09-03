@@ -17,6 +17,7 @@
 
 #include <cstdint>
 #include <map>
+#include <tuple>
 #include <utility>
 
 namespace ds10_protocol
@@ -114,20 +115,39 @@ private:
   bool initialised_ = false;
 };
 
-/// A `SeqTracker` per (station_id, function_code) stream.
+/// Identifies one numbered message stream.
+///
+/// Sequence numbers are only comparable within a stream: slave 2's sensor
+/// readings and slave 3's are independent counters, as are two message types
+/// from the same slave. Naming the pair keeps callers from passing the two
+/// ids in the wrong order, which a bare `pair<uint8_t, uint8_t>` invites.
+struct StreamId
+{
+  uint8_t station_id;
+  uint8_t function_code;
+
+  friend bool operator<(const StreamId & a, const StreamId & b)
+  {
+    return std::tie(a.station_id, a.function_code) <
+           std::tie(b.station_id, b.function_code);
+  }
+};
+
+/// A `SeqTracker` per stream.
 ///
 /// One slave's dropped sensor frame must not look like a gap on another
 /// slave's stream, nor on a different message type from the same slave.
 class SeqTrackerTable
 {
 public:
-  SeqClassification classify(uint8_t station_id, uint8_t function_code, uint16_t seq)
+  /// Classify `seq` within its stream, creating a tracker on first sight.
+  SeqClassification classify(StreamId stream, uint16_t seq)
   {
-    return trackers_[{station_id, function_code}].classify(seq);
+    return trackers_[stream].classify(seq);
   }
 
 private:
-  std::map<std::pair<uint8_t, uint8_t>, SeqTracker> trackers_;
+  std::map<StreamId, SeqTracker> trackers_;
 };
 
 }  // namespace ds10_protocol

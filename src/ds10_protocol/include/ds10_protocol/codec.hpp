@@ -39,6 +39,13 @@ struct SensorData
   float reading;                   ///< Sensor reading (float32, little-endian)
 };
 
+/// @brief Decoded ACK message (function code 0x00)
+struct AckMessage
+{
+  uint16_t acked_seq;              ///< Acknowledged sequence number (0 if acked message has none)
+  uint8_t acked_function_code;     ///< Acknowledged function code
+};
+
 /// @brief Encode a control command message (function code 0x12)
 /// @param cmd ControlCommand structure containing flags, cmd_id, and params
 /// @return Encoded data = [flags 1B][cmd_id 1B][params...]
@@ -58,6 +65,20 @@ std::vector<uint8_t> encode_sensor_data(const SensorData & sensor);
 /// @param data Encoded data, expected: [flags 1B][seq u16 LE][sensor_id 1B][reading float32 LE]
 /// @return Decoded SensorData, or nullopt if data.size() < 8
 std::optional<SensorData> decode_sensor_data(const std::vector<uint8_t> & data);
+
+/// @brief Encode an ACK message (function code 0x00)
+/// @param ack AckMessage structure containing acked_seq and acked_function_code
+/// @return Encoded data = [acked_seq u16 LE][acked_function_code 1B], 3 bytes
+/// @note Unlike 0x10/0x11/0x12, the ACK payload has no leading flags byte.
+/// @note For acknowledged messages that carry no sequence number (e.g. 0x12
+///       control commands), set acked_seq to 0. See application_protocol_v1.md
+///       §功能码 0x00.
+std::vector<uint8_t> encode_ack(const AckMessage & ack);
+
+/// @brief Decode an ACK message (function code 0x00)
+/// @param data Encoded data, expected: [acked_seq u16 LE][acked_function_code 1B]
+/// @return Decoded AckMessage, or nullopt if data.size() < 3
+std::optional<AckMessage> decode_ack(const std::vector<uint8_t> & data);
 
 }  // namespace ds10_protocol
 

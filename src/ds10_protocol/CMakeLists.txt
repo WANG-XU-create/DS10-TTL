@@ -51,6 +51,14 @@ if(BUILD_TESTING)
     $<INSTALL_INTERFACE:include>
   )
   target_link_libraries(test_codec_sensor_data ${PROJECT_NAME}_lib)
+
+  # Unit test for ACK codec (0x00)
+  ament_add_gtest(test_codec_ack test/test_codec_ack.cpp)
+  target_include_directories(test_codec_ack PUBLIC
+    $<BUILD_INTERFACE:${CMAKE_CURRENT_SOURCE_DIR}/include>
+    $<INSTALL_INTERFACE:include>
+  )
+  target_link_libraries(test_codec_ack ${PROJECT_NAME}_lib)
 endif()
 
 install(DIRECTORY include/

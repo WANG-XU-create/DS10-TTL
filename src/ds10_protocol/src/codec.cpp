@@ -102,4 +102,33 @@ std::optional<SensorData> decode_sensor_data(const std::vector<uint8_t> & data)
   return sensor;
 }
 
+std::vector<uint8_t> encode_ack(const AckMessage & ack)
+{
+  std::vector<uint8_t> data(3);  // Fixed size: 2 + 1 = 3 bytes
+
+  // acked_seq: uint16_t little-endian
+  data[0] = static_cast<uint8_t>(ack.acked_seq & 0xFF);
+  data[1] = static_cast<uint8_t>((ack.acked_seq >> 8) & 0xFF);
+
+  data[2] = ack.acked_function_code;
+
+  return data;
+}
+
+std::optional<AckMessage> decode_ack(const std::vector<uint8_t> & data)
+{
+  // Minimum size: acked_seq(2B) + acked_function_code(1B) = 3 bytes
+  constexpr size_t ACK_MESSAGE_SIZE = 3;
+  if (data.size() < ACK_MESSAGE_SIZE) {
+    return std::nullopt;
+  }
+
+  AckMessage ack;
+  // acked_seq: uint16_t little-endian
+  ack.acked_seq = static_cast<uint16_t>(data[0]) | (static_cast<uint16_t>(data[1]) << 8);
+  ack.acked_function_code = data[2];
+
+  return ack;
+}
+
 }  // namespace ds10_protocol

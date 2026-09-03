@@ -146,7 +146,7 @@ TEST(CodecSensorDataTest, FlagsVariations)
     EXPECT_EQ(decoded->flags, 0x00);
   }
 
-  // flags = 0x01 (REQUEST_ACK set, unusual but valid)
+  // flags = 0x01 (error flag set)
   {
     ds10_protocol::SensorData sensor{0x01, 100, 0x01, 25.0f};
     auto encoded = ds10_protocol::encode_sensor_data(sensor);

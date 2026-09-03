@@ -25,7 +25,7 @@ namespace ds10_protocol
 /// @brief Decoded control command message (function code 0x12)
 struct ControlCommand
 {
-  uint8_t flags;                   ///< Flags byte (bit0=REQUEST_ACK, bit1-7=reserved)
+  uint8_t flags;                   ///< Flags byte (bit0=error flag, bit1-7=reserved)
   uint8_t cmd_id;                  ///< Command identifier
   std::vector<uint8_t> params;     ///< Command parameters (variable length, may be empty)
 };
@@ -33,7 +33,7 @@ struct ControlCommand
 /// @brief Decoded sensor data message (function code 0x10)
 struct SensorData
 {
-  uint8_t flags;                   ///< Flags byte (bit0=REQUEST_ACK, bit1-7=reserved)
+  uint8_t flags;                   ///< Flags byte (bit0=error flag, bit1-7=reserved)
   uint16_t seq;                    ///< Sequence number (little-endian)
   uint8_t sensor_id;               ///< Sensor identifier
   float reading;                   ///< Sensor reading (float32, little-endian)

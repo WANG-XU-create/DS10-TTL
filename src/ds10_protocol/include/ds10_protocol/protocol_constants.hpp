@@ -119,6 +119,25 @@ constexpr size_t SIZEOF_CMD_ID = 1;
 /// Size of log_level field in 0x11 Log Message (1 byte)
 constexpr size_t SIZEOF_LOG_LEVEL = 1;
 
+// ============================================================================
+// Frame Size Limits (bytes)
+// ============================================================================
+
+/// Maximum DS10 frame size (Modbus RTU constraint)
+/// Frame structure: [station 1B][function_code 1B][data ...][CRC 2B]
+/// Total frame <= 4095B
+constexpr size_t MAX_FRAME_SIZE = 4095;
+
+/// Maximum data field size in a DS10 frame
+/// data_max = MAX_FRAME_SIZE - station - function_code - CRC
+/// data_max = 4095 - 1 - 1 - 2 = 4091B
+constexpr size_t MAX_DATA_SIZE = MAX_FRAME_SIZE - 1 - 1 - 2;
+
+/// Maximum params size for 0x12 Control Command
+/// For 0x12: data = [flags 1B][cmd_id 1B][params ...]
+/// params_max = MAX_DATA_SIZE - flags - cmd_id = 4091 - 2 = 4089B
+constexpr size_t MAX_CONTROL_PARAMS_SIZE = MAX_DATA_SIZE - SIZEOF_FLAGS - SIZEOF_CMD_ID;
+
 }  // namespace ds10_protocol
 
 #endif  // DS10_PROTOCOL__PROTOCOL_CONSTANTS_HPP_

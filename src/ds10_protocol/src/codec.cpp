@@ -18,17 +18,14 @@
 namespace ds10_protocol
 {
 
-std::vector<uint8_t> encode_control_command(
-  uint8_t flags,
-  uint8_t cmd_id,
-  const std::vector<uint8_t> & params)
+std::vector<uint8_t> encode_control_command(const ControlCommand & cmd)
 {
   std::vector<uint8_t> data;
-  data.reserve(SIZEOF_FLAGS + SIZEOF_CMD_ID + params.size());
+  data.reserve(SIZEOF_FLAGS + SIZEOF_CMD_ID + cmd.params.size());
 
-  data.push_back(flags);
-  data.push_back(cmd_id);
-  data.insert(data.end(), params.begin(), params.end());
+  data.push_back(cmd.flags);
+  data.push_back(cmd.cmd_id);
+  data.insert(data.end(), cmd.params.begin(), cmd.params.end());
 
   return data;
 }

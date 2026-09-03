@@ -31,14 +31,9 @@ struct ControlCommand
 };
 
 /// @brief Encode a control command message (function code 0x12)
-/// @param flags Flags byte (bit0=REQUEST_ACK)
-/// @param cmd_id Command identifier
-/// @param params Command parameters (may be empty)
+/// @param cmd ControlCommand structure containing flags, cmd_id, and params
 /// @return Encoded data = [flags 1B][cmd_id 1B][params...]
-std::vector<uint8_t> encode_control_command(
-  uint8_t flags,
-  uint8_t cmd_id,
-  const std::vector<uint8_t> & params);
+std::vector<uint8_t> encode_control_command(const ControlCommand & cmd);
 
 /// @brief Decode a control command message (function code 0x12)
 /// @param data Encoded data, expected: [flags 1B][cmd_id 1B][params...]

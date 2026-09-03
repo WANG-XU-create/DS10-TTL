@@ -16,7 +16,7 @@ find_package(rclcpp REQUIRED)
 find_package(ds10_interfaces REQUIRED)
 
 # Codec + node library
-add_library(${PROJECT_NAME}_lib
+add_library(${PROJECT_NAME}_lib SHARED
   src/codec.cpp
   src/protocol_bridge_node.cpp
 )

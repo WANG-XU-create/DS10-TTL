@@ -14,29 +14,38 @@
 """
 Launch the application-protocol bridge.
 
-Defaults assume a driver node publishing on /ds10_driver/rx and subscribing on
-/ds10_driver/tx. Point the bridge at a differently-named driver instance by
-overriding the topic arguments, for example:
+The driver publishes and subscribes on private topics, so its node name decides
+the absolute topic names the bridge must attach to: a driver launched as
+`ds10_master` owns /ds10_master/rx and /ds10_master/tx. Pass `driver_name` to
+follow it, which defaults to the master launch file's node name:
 
-  ros2 launch ds10_protocol protocol_bridge.launch.py driver_rx_topic:=/ds10_master/rx
+  ros2 launch ds10_protocol protocol_bridge.launch.py driver_name:=ds10_slave
+
+Override `driver_rx_topic` / `driver_tx_topic` directly if the topics do not
+follow that convention.
 """
 
 from launch import LaunchDescription
 from launch.actions import DeclareLaunchArgument
-from launch.substitutions import LaunchConfiguration
+from launch.substitutions import LaunchConfiguration, PathJoinSubstitution
 from launch_ros.actions import Node
 
 
 def generate_launch_description():
+    driver_name = LaunchConfiguration('driver_name')
     driver_rx_topic = LaunchConfiguration('driver_rx_topic')
     driver_tx_topic = LaunchConfiguration('driver_tx_topic')
     protocol_rx_topic = LaunchConfiguration('protocol_rx_topic')
     protocol_tx_topic = LaunchConfiguration('protocol_tx_topic')
 
     return LaunchDescription([
-        DeclareLaunchArgument('driver_rx_topic', default_value='/ds10_driver/rx',
+        DeclareLaunchArgument('driver_name', default_value='ds10_master',
+                              description='Node name of the driver to attach to'),
+        DeclareLaunchArgument('driver_rx_topic',
+                              default_value=PathJoinSubstitution(['/', driver_name, 'rx']),
                               description='Driver topic the bridge reads device frames from'),
-        DeclareLaunchArgument('driver_tx_topic', default_value='/ds10_driver/tx',
+        DeclareLaunchArgument('driver_tx_topic',
+                              default_value=PathJoinSubstitution(['/', driver_name, 'tx']),
                               description='Driver topic the bridge writes device frames to'),
         DeclareLaunchArgument('protocol_rx_topic', default_value='/protocol/rx',
                               description='Topic the bridge publishes frames to applications on'),

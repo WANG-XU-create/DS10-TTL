@@ -28,6 +28,10 @@ constexpr int kQueueDepth = 10;
 ProtocolBridgeNode::ProtocolBridgeNode(const rclcpp::NodeOptions & options)
 : rclcpp::Node("protocol_bridge", options)
 {
+  // Defaults follow the spec. Note the driver owns *private* topics, so its
+  // node name decides the real names (a driver launched as `ds10_master`
+  // publishes /ds10_master/rx). protocol_bridge.launch.py derives these from a
+  // `driver_name` argument; set the parameters directly when launching by hand.
   driver_rx_topic_ = declare_parameter<std::string>("driver_rx_topic", "/ds10_driver/rx");
   driver_tx_topic_ = declare_parameter<std::string>("driver_tx_topic", "/ds10_driver/tx");
   protocol_rx_topic_ = declare_parameter<std::string>("protocol_rx_topic", "/protocol/rx");

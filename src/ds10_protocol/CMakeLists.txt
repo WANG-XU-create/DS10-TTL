@@ -43,6 +43,14 @@ if(BUILD_TESTING)
     $<INSTALL_INTERFACE:include>
   )
   target_link_libraries(test_codec_control_command ${PROJECT_NAME}_lib)
+
+  # Unit test for sensor data codec (0x10)
+  ament_add_gtest(test_codec_sensor_data test/test_codec_sensor_data.cpp)
+  target_include_directories(test_codec_sensor_data PUBLIC
+    $<BUILD_INTERFACE:${CMAKE_CURRENT_SOURCE_DIR}/include>
+    $<INSTALL_INTERFACE:include>
+  )
+  target_link_libraries(test_codec_sensor_data ${PROJECT_NAME}_lib)
 endif()
 
 install(DIRECTORY include/

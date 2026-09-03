@@ -21,6 +21,7 @@
 
 #include "ds10_interfaces/msg/frame.hpp"
 #include "ds10_protocol/codec.hpp"
+#include "ds10_protocol/seq_tracker.hpp"
 #include "rclcpp/rclcpp.hpp"
 
 namespace ds10_protocol
@@ -35,14 +36,13 @@ using DecodedPayload = std::variant<ControlCommand, SensorData>;
 
 /// Application-protocol bridge sitting between ds10_driver and business nodes.
 ///
-/// Frames are forwarded in both directions unchanged. On the device-to-app
-/// path the node additionally decodes `Frame.data` and logs the fields, but
-/// decoding never gates forwarding: malformed and unknown frames still reach
-/// subscribers, so applications that parse `data` themselves keep working.
-/// application_protocol_v1.md §帧去留清单 is the authoritative table of which
-/// frames are forwarded and which are dropped -- duplicate frames (ticket 07)
-/// are the only planned drop. Later tickets consume the decoded payload for
-/// sequence tracking and auto-ACK.
+/// Frames are forwarded in both directions unchanged, with one exception:
+/// duplicate sequence numbers on a sensor stream are dropped, because handing
+/// the same reading to an application twice is actively wrong rather than
+/// merely uninformative. Everything else -- malformed payloads, unknown
+/// function codes, detected gaps -- is logged and still forwarded, so
+/// applications that parse `data` themselves keep working.
+/// application_protocol_v1.md §帧去留清单 is the authoritative table.
 ///
 ///   driver_rx_topic  --> [bridge] --> protocol_rx_topic   (device to app)
 ///   protocol_tx_topic --> [bridge] --> driver_tx_topic    (app to device)
@@ -65,6 +65,13 @@ private:
   /// Log an already-decoded payload at INFO.
   void log_payload(const ds10_interfaces::msg::Frame & msg, const DecodedPayload & payload);
 
+  /// Run sequence tracking for payloads that carry a sequence number.
+  ///
+  /// @return false when the frame is a duplicate and must not be forwarded.
+  ///         Payloads without a sequence number always return true.
+  bool track_sequence(
+    const ds10_interfaces::msg::Frame & msg, const DecodedPayload & payload);
+
   // Topic names (resolved in the constructor, immutable afterwards).
   std::string driver_rx_topic_;
   std::string driver_tx_topic_;
@@ -75,6 +82,9 @@ private:
   rclcpp::Subscription<ds10_interfaces::msg::Frame>::SharedPtr protocol_tx_sub_;
   rclcpp::Publisher<ds10_interfaces::msg::Frame>::SharedPtr protocol_rx_pub_;
   rclcpp::Publisher<ds10_interfaces::msg::Frame>::SharedPtr driver_tx_pub_;
+
+  /// Expected sequence number per (station_id, function_code) stream.
+  SeqTrackerTable seq_trackers_;
 };
 
 }  // namespace ds10_protocol

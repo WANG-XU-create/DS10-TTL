@@ -52,6 +52,9 @@ def generate_test_description():
         executable='protocol_bridge',
         name='protocol_bridge',
         output='screen',
+        # Duplicate detection and tracker initialisation log at DEBUG, which
+        # the default level suppresses; the tests assert on those lines.
+        arguments=['--ros-args', '--log-level', 'protocol_bridge:=debug'],
         parameters=[{
             'driver_rx_topic': DRIVER_RX,
             'driver_tx_topic': DRIVER_TX,
@@ -120,6 +123,42 @@ class TestProtocolBridge(unittest.TestCase):
                 continue
 
         self.fail(f'bridge never logged {expected_log!r}')
+
+    @staticmethod
+    def _sensor_frame(station, seq, sensor_id=7, reading=1.0, flags=0x00):
+        """Build a 0x10 frame: [flags 1B][seq u16 LE][sensor_id 1B][reading f32 LE]."""
+        msg = Frame()
+        msg.station_id = station
+        msg.function_code = 0x10
+        msg.data = list(struct.pack('<BHBf', flags, seq, sensor_id, reading))
+        return msg
+
+    def _send_sequence(self, pub, frames, settle=0.15):
+        """
+        Publish each frame exactly once, in order.
+
+        Sequence tracking is stateful, so the retry loop used elsewhere would
+        corrupt the very thing under test -- a republished frame is a genuine
+        duplicate as far as the bridge is concerned. Publish once and give the
+        bridge time to process before the next one.
+        """
+        for msg in frames:
+            pub.publish(msg)
+            end = time.time() + settle
+            while time.time() < end:
+                rclpy.spin_once(self.node, timeout_sec=0.02)
+
+    def _collect(self, received, expected_count, timeout=2.0):
+        """
+        Spin until `expected_count` messages arrive or the timeout expires.
+
+        Returns whatever arrived; callers assert on the count so that both
+        "too few" and "too many" fail.
+        """
+        end = time.time() + timeout
+        while time.time() < end and len(received) < expected_count:
+            rclpy.spin_once(self.node, timeout_sec=0.05)
+        return received
 
     @staticmethod
     def _sample_frame():
@@ -257,6 +296,122 @@ class TestProtocolBridge(unittest.TestCase):
             rclpy.spin_once(self.node, timeout_sec=0.1)
         self.assertTrue(received, 'undecodable frame was not forwarded')
         self._assert_same_frame(received[0], sent)
+
+    def test_sequence_gaps_are_warned_but_forwarded(self, proc_output, bridge_process):
+        """Sequence 1,3,5 reports two gaps, and all three frames still arrive."""
+        received = []
+        self.node.create_subscription(
+            Frame, PROTOCOL_RX, lambda m: received.append(m), 10)
+        pub = self.node.create_publisher(Frame, DRIVER_RX, 10)
+        self._await_subscriber(pub)
+
+        station = 21
+        self._send_sequence(pub, [self._sensor_frame(station, s) for s in (1, 3, 5)])
+
+        proc_output.assertWaitFor(
+            expected_output=f'Gap detected: expected seq=2, got seq=3 (station={station}',
+            process=bridge_process, timeout=LOG_TIMEOUT)
+        proc_output.assertWaitFor(
+            expected_output=f'Gap detected: expected seq=4, got seq=5 (station={station}',
+            process=bridge_process, timeout=LOG_TIMEOUT)
+
+        # A gap means frames were lost on the link, not that the ones that
+        # made it are suspect -- all three must reach the application.
+        got = self._collect(received, 3)
+        self.assertEqual(len(got), 3, f'expected 3 frames through, got {len(got)}')
+
+    def test_duplicate_sequence_is_dropped(self, proc_output, bridge_process):
+        """Sequence 1,1,2 delivers only two frames; the repeat is withheld."""
+        received = []
+        self.node.create_subscription(
+            Frame, PROTOCOL_RX, lambda m: received.append(m), 10)
+        pub = self.node.create_publisher(Frame, DRIVER_RX, 10)
+        self._await_subscriber(pub)
+
+        station = 22
+        self._send_sequence(pub, [self._sensor_frame(station, s) for s in (1, 1, 2)])
+
+        proc_output.assertWaitFor(
+            expected_output=f'Duplicate seq=1 (station={station})',
+            process=bridge_process, timeout=LOG_TIMEOUT)
+
+        # Wait for the two legitimate frames, then confirm a third never shows
+        # up -- the drop is the whole point of the test.
+        got = self._collect(received, 2)
+        self.assertEqual(len(got), 2, f'expected 2 frames through, got {len(got)}')
+        self._collect(received, 3, timeout=0.5)
+        self.assertEqual(len(received), 2, 'duplicate frame was forwarded')
+
+    def test_sequence_wraparound_is_not_a_gap(self, proc_output, bridge_process):
+        """65534,65535,0,1 crosses the uint16 boundary without warning."""
+        received = []
+        self.node.create_subscription(
+            Frame, PROTOCOL_RX, lambda m: received.append(m), 10)
+        pub = self.node.create_publisher(Frame, DRIVER_RX, 10)
+        self._await_subscriber(pub)
+
+        station = 23
+        self._send_sequence(
+            pub, [self._sensor_frame(station, s) for s in (65534, 65535, 0, 1)])
+
+        got = self._collect(received, 4)
+        self.assertEqual(len(got), 4, f'expected 4 frames through, got {len(got)}')
+
+        # No gap may be reported for this station. Other stations warn freely,
+        # so the assertion is scoped by station id.
+        with self.assertRaises(AssertionError):
+            proc_output.assertWaitFor(
+                expected_output=f'Gap detected: expected seq=0, got seq=0 (station={station}',
+                process=bridge_process, timeout=0.5)
+
+    def test_stations_are_tracked_independently(self, proc_output, bridge_process):
+        """A gap on one station does not implicate another."""
+        received = []
+        self.node.create_subscription(
+            Frame, PROTOCOL_RX, lambda m: received.append(m), 10)
+        pub = self.node.create_publisher(Frame, DRIVER_RX, 10)
+        self._await_subscriber(pub)
+
+        gappy, clean = 24, 25
+        self._send_sequence(pub, [
+            self._sensor_frame(gappy, 1),
+            self._sensor_frame(clean, 1),
+            self._sensor_frame(gappy, 3),   # skips 2
+            self._sensor_frame(clean, 2),   # consecutive
+        ])
+
+        proc_output.assertWaitFor(
+            expected_output=f'Gap detected: expected seq=2, got seq=3 (station={gappy}',
+            process=bridge_process, timeout=LOG_TIMEOUT)
+
+        # The clean station shares the function code but must keep its own
+        # expectation, so it must not be named in any gap warning.
+        with self.assertRaises(AssertionError):
+            proc_output.assertWaitFor(
+                expected_output=f'(station={clean}, function_code=0x10)',
+                process=bridge_process, timeout=0.5)
+
+        got = self._collect(received, 4)
+        self.assertEqual(len(got), 4, f'expected 4 frames through, got {len(got)}')
+
+    def test_control_commands_bypass_sequence_tracking(self, proc_output, bridge_process):
+        """0x12 carries no seq, so repeats are not duplicates."""
+        received = []
+        self.node.create_subscription(
+            Frame, PROTOCOL_RX, lambda m: received.append(m), 10)
+        pub = self.node.create_publisher(Frame, DRIVER_RX, 10)
+        self._await_subscriber(pub)
+
+        cmd = Frame()
+        cmd.station_id = 26
+        cmd.function_code = 0x12
+        cmd.data = [0x00, 0x05]
+
+        # The same command three times over is three legitimate commands.
+        self._send_sequence(pub, [cmd, cmd, cmd])
+
+        got = self._collect(received, 3)
+        self.assertEqual(len(got), 3, f'expected 3 frames through, got {len(got)}')
 
 
 @launch_testing.post_shutdown_test()

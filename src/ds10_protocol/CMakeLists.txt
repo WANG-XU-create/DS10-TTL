@@ -68,6 +68,14 @@ if(BUILD_TESTING)
   )
   target_link_libraries(test_codec_ack ${PROJECT_NAME}_lib)
 
+  # Unit test for sequence tracking (wraparound, gaps, duplicates)
+  ament_add_gtest(test_seq_tracker test/test_seq_tracker.cpp)
+  target_include_directories(test_seq_tracker PUBLIC
+    $<BUILD_INTERFACE:${CMAKE_CURRENT_SOURCE_DIR}/include>
+    $<INSTALL_INTERFACE:include>
+  )
+  target_link_libraries(test_seq_tracker ${PROJECT_NAME}_lib)
+
   # Node-level end-to-end test over real ROS topics.
   find_package(launch_testing_ament_cmake REQUIRED)
   add_launch_test(test/test_protocol_bridge.launch.py)

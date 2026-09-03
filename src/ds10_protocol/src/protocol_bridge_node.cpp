@@ -73,12 +73,54 @@ void ProtocolBridgeNode::on_driver_rx(const ds10_interfaces::msg::Frame::SharedP
   const auto payload = decode_frame(*msg);
   if (payload) {
     log_payload(*msg, *payload);
+    if (!track_sequence(*msg, *payload)) {
+      return;  // Duplicate: the only frame this version withholds.
+    }
   }
 
-  // Forward regardless of what decoding found: subscribers that parse `data`
-  // themselves must keep receiving every frame the driver delivered.
+  // Everything else is forwarded even when decoding failed: subscribers that
+  // parse `data` themselves must keep receiving what the driver delivered.
   // See application_protocol_v1.md §帧去留清单.
   protocol_rx_pub_->publish(*msg);
+}
+
+bool ProtocolBridgeNode::track_sequence(
+  const ds10_interfaces::msg::Frame & msg, const DecodedPayload & payload)
+{
+  // Only sensor data carries a sequence number; control commands are
+  // infrequent and deliberately unnumbered, so there is nothing to track.
+  const auto * sensor = std::get_if<SensorData>(&payload);
+  if (sensor == nullptr) {
+    return true;
+  }
+
+  const auto classification =
+    seq_trackers_.classify(msg.station_id, msg.function_code, sensor->seq);
+
+  switch (classification.verdict) {
+    case SeqVerdict::kFirst:
+      RCLCPP_DEBUG(
+        get_logger(), "Initialized seq tracker for station=%u, seq=%u",
+        msg.station_id, sensor->seq);
+      return true;
+
+    case SeqVerdict::kInOrder:
+      return true;
+
+    case SeqVerdict::kGap:
+      RCLCPP_WARN(
+        get_logger(),
+        "Gap detected: expected seq=%u, got seq=%u (station=%u, function_code=0x%02X)",
+        classification.expected, sensor->seq, msg.station_id, msg.function_code);
+      return true;
+
+    case SeqVerdict::kDuplicate:
+      RCLCPP_DEBUG(
+        get_logger(), "Duplicate seq=%u (station=%u)", sensor->seq, msg.station_id);
+      return false;
+  }
+
+  return true;
 }
 
 std::optional<DecodedPayload> ProtocolBridgeNode::decode_frame(

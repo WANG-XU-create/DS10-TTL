@@ -77,7 +77,7 @@ void ProtocolBridgeNode::on_driver_rx(const ds10_interfaces::msg::Frame::SharedP
 
   // Forward regardless of what decoding found: subscribers that parse `data`
   // themselves must keep receiving every frame the driver delivered.
-  // See application_protocol_v1.md §错误处理.
+  // See application_protocol_v1.md §帧去留清单.
   protocol_rx_pub_->publish(*msg);
 }
 

@@ -38,9 +38,11 @@ using DecodedPayload = std::variant<ControlCommand, SensorData>;
 /// Frames are forwarded in both directions unchanged. On the device-to-app
 /// path the node additionally decodes `Frame.data` and logs the fields, but
 /// decoding never gates forwarding: malformed and unknown frames still reach
-/// subscribers, so applications that parse `data` themselves keep working
-/// (see application_protocol_v1.md §错误处理). Later tickets consume the
-/// decoded payload for sequence tracking and auto-ACK.
+/// subscribers, so applications that parse `data` themselves keep working.
+/// application_protocol_v1.md §帧去留清单 is the authoritative table of which
+/// frames are forwarded and which are dropped -- duplicate frames (ticket 07)
+/// are the only planned drop. Later tickets consume the decoded payload for
+/// sequence tracking and auto-ACK.
 ///
 ///   driver_rx_topic  --> [bridge] --> protocol_rx_topic   (device to app)
 ///   protocol_tx_topic --> [bridge] --> driver_tx_topic    (app to device)

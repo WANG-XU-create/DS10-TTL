@@ -87,45 +87,61 @@ TEST(SeqTrackerTest, GapAcrossWrapPoint)
   EXPECT_EQ(tracker.classify(3).verdict, ds10_protocol::SeqVerdict::kInOrder);
 }
 
-// Half the uint16 space is the boundary between "a large forward gap" and
-// "an old frame arriving late". Anything at or beyond it reads as backwards.
-TEST(SeqTrackerTest, LargeForwardJumpIsAGap)
+// No forward distance makes a frame a duplicate: dropping is reserved for
+// sequence numbers we have actually seen (§帧去留清单 row 6), and a frame
+// ahead of the expectation has not been seen at any distance. Resynchronising
+// loses nothing; withholding a live frame would silently starve the
+// application. Sampled across the range rather than at one point, because an
+// earlier version got exactly this wrong beyond half the space.
+TEST(SeqTrackerTest, ForwardJumpIsAGapAtEveryDistance)
 {
-  ds10_protocol::SeqTracker tracker;
+  for (const uint16_t jump : {uint16_t{2}, uint16_t{1000}, uint16_t{32767},
+      uint16_t{32768}, uint16_t{40000}, uint16_t{65000}})
+  {
+    ds10_protocol::SeqTracker tracker;
+    tracker.classify(10);  // expecting 11
 
-  tracker.classify(0);
-  // 32767 ahead: still within the forward half, so a gap.
-  EXPECT_EQ(tracker.classify(32767).verdict, ds10_protocol::SeqVerdict::kGap);
+    const uint16_t target = static_cast<uint16_t>(11 + jump);
+    EXPECT_EQ(tracker.classify(target).verdict, ds10_protocol::SeqVerdict::kGap)
+      << "jump of " << jump << " ahead (seq " << target << ") was not a gap";
+
+    // And it resynchronises, so the stream continues from what arrived.
+    EXPECT_EQ(
+      tracker.classify(static_cast<uint16_t>(target + 1)).verdict,
+      ds10_protocol::SeqVerdict::kInOrder) << "did not resync after a jump of " << jump;
+  }
 }
 
-// A jump beyond half the space is ambiguous -- it could be a huge burst of
-// loss or a very late frame. It must not be dropped: dropping is reserved for
-// sequence numbers we have actually seen (§帧去留清单 row 6), and this one we
-// have not. Resynchronising loses nothing, whereas withholding a live frame
-// would silently starve the application.
-TEST(SeqTrackerTest, HugeForwardJumpIsAGapNotADuplicate)
+// The stale window is the only thing standing between a frame and being
+// dropped, so its exact edge is pinned. 63 back is the last value treated as
+// already delivered; 64 back is far enough that a restart is likelier than a
+// repeat, so the frame is forwarded.
+TEST(SeqTrackerTest, StaleWindowEdge)
 {
-  ds10_protocol::SeqTracker tracker;
-
-  tracker.classify(10);  // expecting 11
-  const auto verdict = tracker.classify(40000).verdict;
-  EXPECT_EQ(verdict, ds10_protocol::SeqVerdict::kGap);
-  EXPECT_NE(verdict, ds10_protocol::SeqVerdict::kDuplicate);
-
-  // And it resynchronises, so the stream continues from what arrived.
-  EXPECT_EQ(tracker.classify(40001).verdict, ds10_protocol::SeqVerdict::kInOrder);
+  {
+    ds10_protocol::SeqTracker tracker;
+    tracker.classify(1000);
+    EXPECT_EQ(
+      tracker.classify(1000 - 63).verdict,
+      ds10_protocol::SeqVerdict::kDuplicate) << "63 back should still be a duplicate";
+  }
+  {
+    ds10_protocol::SeqTracker tracker;
+    tracker.classify(1000);
+    EXPECT_EQ(
+      tracker.classify(1000 - 64).verdict,
+      ds10_protocol::SeqVerdict::kGap) << "64 back should be forwarded, not dropped";
+  }
 }
 
-// The exact boundary, pinned so a future refactor cannot quietly move it.
-TEST(SeqTrackerTest, ForwardJumpAtHalfSpaceBoundaryIsAGap)
+// The window is measured modulo 2^16, so it still recognises a repeat that
+// straddles the wrap point.
+TEST(SeqTrackerTest, StaleWindowWrapsBackwardsPastZero)
 {
   ds10_protocol::SeqTracker tracker;
 
-  tracker.classify(10);  // expecting 11
-  // 11 + 32768: exactly half the space ahead.
-  EXPECT_EQ(
-    tracker.classify(static_cast<uint16_t>(11 + 32768)).verdict,
-    ds10_protocol::SeqVerdict::kGap);
+  tracker.classify(2);
+  EXPECT_EQ(tracker.classify(65535).verdict, ds10_protocol::SeqVerdict::kDuplicate);
 }
 
 // Only sequence numbers at or before the newest one already accepted count as

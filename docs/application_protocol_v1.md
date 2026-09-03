@@ -224,9 +224,9 @@ std::map<std::pair<uint8_t, uint8_t>, SeqTracker> trackers_;  // key=(station, f
    - 若 `!initialized`: 记录 `expected_seq = seq + 1`, `initialized = true`
    - 若 `seq == expected_seq`: 正常,`expected_seq++`(处理回绕:若 expected 溢出则归 0)
    - 若 `seq != expected_seq`:
-     - 若 `seq > expected_seq`: 日志 WARN"gap detected: expected={expected}, got={seq}, station={station}, function_code={func}",发布诊断事件,更新 `expected_seq = seq + 1`
+     - 若 `seq > expected_seq`: 日志 WARN`"Gap detected: expected seq={expected}, got seq={seq} (station={station}, function_code=0x{func:02X})"`,发布诊断事件,更新 `expected_seq = seq + 1`
      - 若 `seq < expected_seq` 且差值很大(如 expected=100, seq=5): 可能回绕,更新 expected
-     - 若 `seq < expected_seq` 且差值很小: 重复帧,日志 DEBUG"duplicate seq={seq}",**丢弃不转发**,诊断计数++
+     - 若 `seq < expected_seq` 且差值很小: 重复帧,日志 INFO`"Duplicate seq={seq} (station={station})"`,**丢弃不转发**,诊断计数++。级别高于其它序号事件:这是唯一会扣留帧的情况,而被扣留的帧在别处不留任何痕迹,DEBUG 会让它在默认配置下不可见。
 2. 除重复帧外一律转发,包括检测到 gap 的帧:应用可能容忍丢帧(传感器数据),由应用决定是否处理。完整去留规则见 §帧去留清单。
 
 ### 错误处理(Error Handling)
@@ -242,7 +242,7 @@ std::map<std::pair<uint8_t, uint8_t>, SeqTracker> trackers_;  // key=(station, f
 | 3 | data 长度不足,解码器拒绝 | **转发** | ERROR | 解码失败计数 |
 | 4 | 序号跳变(gap,疑似链路丢帧) | **转发** | WARN | 丢帧计数 |
 | 5 | 序号回绕(uint16 溢出后重新计数) | **转发** | DEBUG | — |
-| 6 | **重复帧**(同一 `(station, function_code)` 收到已处理过的 seq) | **丢弃** | DEBUG | 重复帧计数 |
+| 6 | **重复帧**(同一 `(station, function_code)` 收到已处理过的 seq) | **丢弃** | INFO | 重复帧计数 |
 
 **判据:第一版只丢弃第 6 种。**
 

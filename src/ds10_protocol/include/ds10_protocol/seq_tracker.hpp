@@ -37,7 +37,10 @@ enum class SeqVerdict
 struct SeqClassification
 {
   SeqVerdict verdict;
-  uint16_t expected;  ///< Meaningless when verdict is kFirst.
+
+  /// What the stream was waiting for when `seq` arrived. For `kFirst` there
+  /// was no prior expectation, so this echoes the sequence number itself.
+  uint16_t expected;
 };
 
 /// Tracks the expected sequence number of one message stream.

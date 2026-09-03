@@ -115,7 +115,10 @@ bool ProtocolBridgeNode::track_sequence(
       return true;
 
     case SeqVerdict::kDuplicate:
-      RCLCPP_DEBUG(
+      // INFO rather than DEBUG: this is the one case where a frame is
+      // withheld, and a withheld frame leaves no other trace. At DEBUG the
+      // drop would be invisible under the default configuration.
+      RCLCPP_INFO(
         get_logger(), "Duplicate seq=%u (station=%u)", sensor->seq, msg.station_id);
       return false;
   }

@@ -52,9 +52,6 @@ def generate_test_description():
         executable='protocol_bridge',
         name='protocol_bridge',
         output='screen',
-        # Duplicate detection and tracker initialisation log at DEBUG, which
-        # the default level suppresses; the tests assert on those lines.
-        arguments=['--ros-args', '--log-level', 'protocol_bridge:=debug'],
         parameters=[{
             'driver_rx_topic': DRIVER_RX,
             'driver_tx_topic': DRIVER_TX,
@@ -148,6 +145,20 @@ class TestProtocolBridge(unittest.TestCase):
             while time.time() < end:
                 rclpy.spin_once(self.node, timeout_sec=0.02)
 
+    def _wire_up(self, sub_topic=PROTOCOL_RX, pub_topic=DRIVER_RX):
+        """
+        Subscribe, publish and wait for the bridge to match.
+
+        Returns (received_list, publisher). The list is appended to by the
+        subscription callback, so callers spin and then assert on its length.
+        """
+        received = []
+        self.node.create_subscription(
+            Frame, sub_topic, lambda m: received.append(m), 10)
+        pub = self.node.create_publisher(Frame, pub_topic, 10)
+        self._await_subscriber(pub)
+        return received, pub
+
     def _collect(self, received, expected_count, timeout=2.0):
         """
         Spin until `expected_count` messages arrive or the timeout expires.
@@ -193,11 +204,7 @@ class TestProtocolBridge(unittest.TestCase):
 
     def test_driver_rx_forwarded_to_protocol_rx(self):
         """A Frame from the driver side reaches the application side intact."""
-        received = []
-        self.node.create_subscription(
-            Frame, PROTOCOL_RX, lambda m: received.append(m), 10)
-        pub = self.node.create_publisher(Frame, DRIVER_RX, 10)
-        self._await_subscriber(pub)
+        received, pub = self._wire_up()
 
         sent = self._sample_frame()
         self._pump_until(received, pub, sent)
@@ -224,11 +231,7 @@ class TestProtocolBridge(unittest.TestCase):
 
     def test_empty_payload_survives_round_trip(self):
         """An empty data field is forwarded, not dropped or padded."""
-        received = []
-        self.node.create_subscription(
-            Frame, PROTOCOL_RX, lambda m: received.append(m), 10)
-        pub = self.node.create_publisher(Frame, DRIVER_RX, 10)
-        self._await_subscriber(pub)
+        received, pub = self._wire_up()
 
         sent = Frame()
         sent.station_id = 1
@@ -317,11 +320,7 @@ class TestProtocolBridge(unittest.TestCase):
 
     def test_sequence_gaps_are_warned_but_forwarded(self, proc_output, bridge_process):
         """Sequence 1,3,5 reports two gaps, and all three frames still arrive."""
-        received = []
-        self.node.create_subscription(
-            Frame, PROTOCOL_RX, lambda m: received.append(m), 10)
-        pub = self.node.create_publisher(Frame, DRIVER_RX, 10)
-        self._await_subscriber(pub)
+        received, pub = self._wire_up()
 
         station = 21
         self._send_sequence(pub, [self._sensor_frame(station, s) for s in (1, 3, 5)])
@@ -340,11 +339,7 @@ class TestProtocolBridge(unittest.TestCase):
 
     def test_duplicate_sequence_is_dropped(self, proc_output, bridge_process):
         """Sequence 1,1,2 delivers only two frames; the repeat is withheld."""
-        received = []
-        self.node.create_subscription(
-            Frame, PROTOCOL_RX, lambda m: received.append(m), 10)
-        pub = self.node.create_publisher(Frame, DRIVER_RX, 10)
-        self._await_subscriber(pub)
+        received, pub = self._wire_up()
 
         station = 22
         self._send_sequence(pub, [self._sensor_frame(station, s) for s in (1, 1, 2)])
@@ -362,11 +357,7 @@ class TestProtocolBridge(unittest.TestCase):
 
     def test_sequence_wraparound_is_not_a_gap(self, proc_output, bridge_process):
         """65534,65535,0,1 crosses the uint16 boundary without warning."""
-        received = []
-        self.node.create_subscription(
-            Frame, PROTOCOL_RX, lambda m: received.append(m), 10)
-        pub = self.node.create_publisher(Frame, DRIVER_RX, 10)
-        self._await_subscriber(pub)
+        received, pub = self._wire_up()
 
         station = 23
         self._send_sequence(
@@ -384,11 +375,7 @@ class TestProtocolBridge(unittest.TestCase):
 
     def test_stations_are_tracked_independently(self, proc_output, bridge_process):
         """A gap on one station does not implicate another."""
-        received = []
-        self.node.create_subscription(
-            Frame, PROTOCOL_RX, lambda m: received.append(m), 10)
-        pub = self.node.create_publisher(Frame, DRIVER_RX, 10)
-        self._await_subscriber(pub)
+        received, pub = self._wire_up()
 
         gappy, clean = 24, 25
         self._send_sequence(pub, [
@@ -413,11 +400,7 @@ class TestProtocolBridge(unittest.TestCase):
 
     def test_control_commands_bypass_sequence_tracking(self, proc_output, bridge_process):
         """0x12 carries no seq, so repeats are not duplicates."""
-        received = []
-        self.node.create_subscription(
-            Frame, PROTOCOL_RX, lambda m: received.append(m), 10)
-        pub = self.node.create_publisher(Frame, DRIVER_RX, 10)
-        self._await_subscriber(pub)
+        received, pub = self._wire_up()
 
         cmd = Frame()
         cmd.station_id = 26

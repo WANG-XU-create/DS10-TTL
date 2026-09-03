@@ -72,6 +72,15 @@ private:
   bool track_sequence(
     const ds10_interfaces::msg::Frame & msg, const DecodedPayload & payload);
 
+  /// Reply with a 0x00 ACK when the payload asked for one.
+  ///
+  /// Only decoded payloads reach here: on an unknown function code the byte
+  /// at the flags offset means nothing, and answering it would invent a
+  /// request the peer never made.
+  void maybe_reply_ack(
+    const ds10_interfaces::msg::Frame & msg, const DecodedPayload & payload);
+
+
   // Topic names (resolved in the constructor, immutable afterwards).
   std::string driver_rx_topic_;
   std::string driver_tx_topic_;

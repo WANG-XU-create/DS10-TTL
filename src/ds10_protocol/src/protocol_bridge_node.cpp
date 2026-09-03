@@ -73,6 +73,12 @@ void ProtocolBridgeNode::on_driver_rx(const ds10_interfaces::msg::Frame::SharedP
   const auto payload = decode_frame(*msg);
   if (payload) {
     log_payload(*msg, *payload);
+    // Answer before the duplicate check, not after. The likeliest reason a
+    // peer repeats itself is that our previous ACK never arrived; recognising
+    // the repeat and then staying silent would leave it retransmitting
+    // forever. Acknowledging receipt and deciding whether the application
+    // needs a second copy are separate questions.
+    maybe_reply_ack(*msg, *payload);
     if (!track_sequence(*msg, *payload)) {
       return;  // Duplicate: the only frame this version withholds.
     }
@@ -83,6 +89,33 @@ void ProtocolBridgeNode::on_driver_rx(const ds10_interfaces::msg::Frame::SharedP
   // See application_protocol_v1.md §帧去留清单.
   protocol_rx_pub_->publish(*msg);
 }
+
+void ProtocolBridgeNode::maybe_reply_ack(
+  const ds10_interfaces::msg::Frame & msg, const DecodedPayload & payload)
+{
+  // 0x12 carries no sequence number, so its ACK names seq 0 by convention
+  // (application_protocol_v1.md §功能码 0x00).
+  const uint8_t flags = std::visit([](const auto & p) {return p.flags;}, payload);
+  const auto * sensor = std::get_if<SensorData>(&payload);
+  const uint16_t seq = sensor != nullptr ? sensor->seq : 0;
+
+  if ((flags & FLAGS_REQUEST_ACK) == 0) {
+    return;
+  }
+
+  ds10_interfaces::msg::Frame ack;
+  // Back to whoever sent it. On a slave the driver overwrites station_id with
+  // its own configured address, which is the same value either way.
+  ack.station_id = msg.station_id;
+  ack.function_code = FUNC_ACK;
+  ack.data = encode_ack(AckMessage{seq, msg.function_code});
+  driver_tx_pub_->publish(ack);
+
+  RCLCPP_INFO(
+    get_logger(), "Auto-replied ACK to station=%u for function_code=0x%02X, seq=%u",
+    msg.station_id, msg.function_code, seq);
+}
+
 
 bool ProtocolBridgeNode::track_sequence(
   const ds10_interfaces::msg::Frame & msg, const DecodedPayload & payload)

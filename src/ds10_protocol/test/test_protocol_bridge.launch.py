@@ -95,6 +95,16 @@ class TestProtocolBridge(unittest.TestCase):
             pub.get_subscription_count(), 1,
             f'bridge did not subscribe to {pub.topic_name}')
 
+    def _await_publisher(self, topic):
+        """Block until the bridge is publishing on `topic`, or fail."""
+        end = time.time() + DISCOVERY_TIMEOUT
+        while time.time() < end and self.node.count_publishers(topic) < 1:
+            rclpy.spin_once(self.node, timeout_sec=0.1)
+            time.sleep(0.05)
+        self.assertGreaterEqual(
+            self.node.count_publishers(topic), 1,
+            f'bridge did not publish on {topic}')
+
     def _pump_until(self, received, pub, msg):
         """Republish until a message arrives or the timeout expires."""
         end = time.time() + DELIVERY_TIMEOUT
@@ -129,6 +139,32 @@ class TestProtocolBridge(unittest.TestCase):
         msg.function_code = 0x10
         msg.data = list(struct.pack('<BHBf', flags, seq, sensor_id, reading))
         return msg
+
+    @staticmethod
+    def _control_frame(station, cmd_id=0x05, params=b'\xAA', flags=0x00):
+        """Build a 0x12 frame: [flags 1B][cmd_id 1B][params...]."""
+        msg = Frame()
+        msg.station_id = station
+        msg.function_code = 0x12
+        msg.data = list(struct.pack('<BB', flags, cmd_id) + params)
+        return msg
+
+    def _wire_up_ack(self):
+        """
+        Set up an ACK test: watch the driver tx topic, feed the driver rx topic.
+
+        Both directions are awaited. The reply is emitted during the very
+        callback our publish triggers, so a subscription that has not matched
+        the bridge's publisher yet would miss it -- and the test would read as
+        "no ACK sent" rather than "not connected".
+        """
+        received = []
+        self.node.create_subscription(
+            Frame, DRIVER_TX, lambda m: received.append(m), 10)
+        self._await_publisher(DRIVER_TX)
+        pub = self.node.create_publisher(Frame, DRIVER_RX, 10)
+        self._await_subscriber(pub)
+        return received, pub
 
     def _send_sequence(self, pub, frames, settle=0.15):
         """
@@ -397,6 +433,104 @@ class TestProtocolBridge(unittest.TestCase):
 
         got = self._collect(received, 4)
         self.assertEqual(len(got), 4, f'expected 4 frames through, got {len(got)}')
+
+    def test_control_command_requesting_ack_is_answered(self):
+        """A 0x12 frame with flags.bit0=1 draws a 0x00 reply to its sender."""
+        received, pub = self._wire_up_ack()
+
+        station = 30
+        self._send_sequence(pub, [self._control_frame(station, flags=0x01)])
+
+        got = self._collect(received, 1)
+        self.assertEqual(len(got), 1, f'expected one ACK, got {len(got)}')
+        self.assertEqual(got[0].station_id, station, 'ACK went to the wrong station')
+        self.assertEqual(got[0].function_code, 0x00)
+        # 0x12 carries no sequence number, so acked_seq is 0 by convention.
+        self.assertEqual(bytes(got[0].data), struct.pack('<HB', 0, 0x12))
+
+    def test_sensor_data_ack_carries_the_frame_sequence(self):
+        """A 0x10 ACK names the seq it acknowledges, not a placeholder."""
+        received, pub = self._wire_up_ack()
+
+        station = 31
+        self._send_sequence(pub, [self._sensor_frame(station, seq=42, flags=0x01)])
+
+        got = self._collect(received, 1)
+        self.assertEqual(len(got), 1, f'expected one ACK, got {len(got)}')
+        self.assertEqual(bytes(got[0].data), struct.pack('<HB', 42, 0x10))
+
+    def test_no_ack_when_not_requested(self, proc_output, bridge_process):
+        """flags.bit0=0 means silence: no reply frame, no reply log."""
+        received, pub = self._wire_up_ack()
+
+        station = 32
+        self._send_sequence(pub, [self._sensor_frame(station, seq=7, flags=0x00)])
+
+        # Give an unwanted ACK time to show up before declaring it absent.
+        self._collect(received, 1, timeout=1.0)
+        self.assertEqual(len(received), 0, f'unrequested ACK sent: {received}')
+
+        # An implementation that ignored the flag would emit exactly this.
+        # Naming the message a regression produces keeps the assertion from
+        # passing vacuously against a string no code path can print.
+        message = f'Auto-replied ACK to station={station} for function_code=0x10, seq=7'
+        with self.assertRaises(AssertionError, msg=f'bridge wrongly logged: {message}'):
+            proc_output.assertWaitFor(
+                expected_output=message, process=bridge_process, timeout=0.5)
+
+    def test_undecodable_frame_requesting_ack_is_not_answered(self, proc_output,
+                                                              bridge_process):
+        """An unknown function code draws no ACK: its flags byte is a guess."""
+        received, pub = self._wire_up_ack()
+
+        sent = Frame()
+        sent.station_id = 33
+        sent.function_code = 0xFF
+        sent.data = [0x01, 0xDE, 0xAD]  # byte 0 would be flags.bit0=1 if parsed
+
+        self._send_sequence(pub, [sent])
+
+        self._collect(received, 1, timeout=1.0)
+        self.assertEqual(len(received), 0, f'ACK sent for an undecoded frame: {received}')
+
+        proc_output.assertWaitFor(
+            expected_output='Unknown or unimplemented function_code=0xFF from station=33',
+            process=bridge_process, timeout=LOG_TIMEOUT)
+
+    def test_ack_does_not_consume_the_frame(self):
+        """Replying is additive: the acknowledged frame still reaches the app."""
+        forwarded, pub = self._wire_up()
+        acks = []
+        self.node.create_subscription(
+            Frame, DRIVER_TX, lambda m: acks.append(m), 10)
+        self._await_publisher(DRIVER_TX)
+
+        station = 34
+        sent = self._control_frame(station, flags=0x01)
+        self._send_sequence(pub, [sent])
+
+        got = self._collect(forwarded, 1)
+        self.assertEqual(len(got), 1, 'acknowledged frame was not forwarded')
+        self._assert_same_frame(got[0], sent)
+        self.assertEqual(len(self._collect(acks, 1)), 1, 'no ACK alongside the forward')
+
+    def test_duplicate_frame_is_still_acknowledged(self, proc_output, bridge_process):
+        """A repeat is withheld from the app but still answered on the wire."""
+        received, pub = self._wire_up_ack()
+
+        station = 35
+        frame = self._sensor_frame(station, seq=1, flags=0x01)
+        self._send_sequence(pub, [frame, frame])
+
+        # The likeliest reason a peer repeats itself is that our previous ACK
+        # was lost. Staying silent because we recognise the duplicate would
+        # leave it retransmitting forever, so the reply precedes the drop.
+        proc_output.assertWaitFor(
+            expected_output=f'Duplicate seq=1 (station={station})',
+            process=bridge_process, timeout=LOG_TIMEOUT)
+
+        got = self._collect(received, 2)
+        self.assertEqual(len(got), 2, f'expected an ACK for each copy, got {len(got)}')
 
     def test_control_commands_bypass_sequence_tracking(self, proc_output, bridge_process):
         """0x12 carries no seq, so repeats are not duplicates."""

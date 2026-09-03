@@ -150,21 +150,8 @@ class TestProtocolBridge(unittest.TestCase):
         return msg
 
     def _wire_up_ack(self):
-        """
-        Set up an ACK test: watch the driver tx topic, feed the driver rx topic.
-
-        Both directions are awaited. The reply is emitted during the very
-        callback our publish triggers, so a subscription that has not matched
-        the bridge's publisher yet would miss it -- and the test would read as
-        "no ACK sent" rather than "not connected".
-        """
-        received = []
-        self.node.create_subscription(
-            Frame, DRIVER_TX, lambda m: received.append(m), 10)
-        self._await_publisher(DRIVER_TX)
-        pub = self.node.create_publisher(Frame, DRIVER_RX, 10)
-        self._await_subscriber(pub)
-        return received, pub
+        """Watch the driver tx topic for ACKs while feeding the driver rx topic."""
+        return self._wire_up(sub_topic=DRIVER_TX, await_publisher=True)
 
     def _send_sequence(self, pub, frames, settle=0.15):
         """
@@ -181,16 +168,33 @@ class TestProtocolBridge(unittest.TestCase):
             while time.time() < end:
                 rclpy.spin_once(self.node, timeout_sec=0.02)
 
-    def _wire_up(self, sub_topic=PROTOCOL_RX, pub_topic=DRIVER_RX):
+    def _watch(self, topic, await_publisher=False):
         """
-        Subscribe, publish and wait for the bridge to match.
+        Collect everything the bridge publishes on `topic`.
 
-        Returns (received_list, publisher). The list is appended to by the
-        subscription callback, so callers spin and then assert on its length.
+        Returns the list the subscription callback appends to.
+
+        `await_publisher` also waits for the bridge to be publishing there.
+        Needed whenever the message is emitted during the very callback our
+        publish triggers -- a subscription that has not matched yet would miss
+        it, and the test would read as "nothing was sent" rather than "not
+        connected".
         """
         received = []
         self.node.create_subscription(
-            Frame, sub_topic, lambda m: received.append(m), 10)
+            Frame, topic, lambda m: received.append(m), 10)
+        if await_publisher:
+            self._await_publisher(topic)
+        return received
+
+    def _wire_up(self, sub_topic=PROTOCOL_RX, pub_topic=DRIVER_RX, await_publisher=False):
+        """
+        Subscribe, publish and wait for both ends to match.
+
+        Returns (received_list, publisher). Callers spin and then assert on
+        the list's length.
+        """
+        received = self._watch(sub_topic, await_publisher)
         pub = self.node.create_publisher(Frame, pub_topic, 10)
         self._await_subscriber(pub)
         return received, pub
@@ -207,23 +211,27 @@ class TestProtocolBridge(unittest.TestCase):
             rclpy.spin_once(self.node, timeout_sec=0.05)
         return received
 
-    def _assert_no_gap_reported(self, proc_output, bridge_process, expected, got, station):
+    def _assert_not_logged(self, proc_output, bridge_process, message):
         """
-        Fail if the bridge reported this specific gap.
+        Fail if the bridge logged exactly `message`.
 
         `proc_output[process]` only exposes part of the stream, so scanning it
-        for "any gap mentioning this station" silently matches nothing. Wait
-        for the exact message a regression would emit instead: the caller
-        names the seq pair that the buggy path would produce, so the assertion
-        fails loudly if that path is ever taken.
+        for "any line resembling this" silently matches nothing. Callers pass
+        the exact string a regression would emit -- established by mutating
+        the code and reading what it prints -- so the assertion fails loudly
+        if that path is ever taken, and cannot pass vacuously against a string
+        no code path can produce.
         """
-        message = (
-            f'Gap detected: expected seq={expected}, got seq={got} '
-            f'(station={station}, function_code=0x10)'
-        )
-        with self.assertRaises(AssertionError, msg=f'bridge wrongly reported: {message}'):
+        with self.assertRaises(AssertionError, msg=f'bridge wrongly logged: {message}'):
             proc_output.assertWaitFor(
                 expected_output=message, process=bridge_process, timeout=0.5)
+
+    def _assert_no_gap_reported(self, proc_output, bridge_process, expected, got, station):
+        """Fail if the bridge reported this specific gap."""
+        self._assert_not_logged(
+            proc_output, bridge_process,
+            f'Gap detected: expected seq={expected}, got seq={got} '
+            f'(station={station}, function_code=0x10)')
 
     @staticmethod
     def _sample_frame():
@@ -434,7 +442,7 @@ class TestProtocolBridge(unittest.TestCase):
         got = self._collect(received, 4)
         self.assertEqual(len(got), 4, f'expected 4 frames through, got {len(got)}')
 
-    def test_control_command_requesting_ack_is_answered(self):
+    def test_control_command_requesting_ack_is_answered(self, proc_output, bridge_process):
         """A 0x12 frame with flags.bit0=1 draws a 0x00 reply to its sender."""
         received, pub = self._wire_up_ack()
 
@@ -447,6 +455,14 @@ class TestProtocolBridge(unittest.TestCase):
         self.assertEqual(got[0].function_code, 0x00)
         # 0x12 carries no sequence number, so acked_seq is 0 by convention.
         self.assertEqual(bytes(got[0].data), struct.pack('<HB', 0, 0x12))
+
+        # Assert the log positively as well as negatively (the no-ACK test
+        # only proves the line is absent when it should be). Without this a
+        # typo in the format string would pass every other test.
+        proc_output.assertWaitFor(
+            expected_output=(
+                f'Auto-replied ACK to station={station} for function_code=0x12, seq=0'),
+            process=bridge_process, timeout=LOG_TIMEOUT)
 
     def test_sensor_data_ack_carries_the_frame_sequence(self):
         """A 0x10 ACK names the seq it acknowledges, not a placeholder."""
@@ -471,12 +487,9 @@ class TestProtocolBridge(unittest.TestCase):
         self.assertEqual(len(received), 0, f'unrequested ACK sent: {received}')
 
         # An implementation that ignored the flag would emit exactly this.
-        # Naming the message a regression produces keeps the assertion from
-        # passing vacuously against a string no code path can print.
-        message = f'Auto-replied ACK to station={station} for function_code=0x10, seq=7'
-        with self.assertRaises(AssertionError, msg=f'bridge wrongly logged: {message}'):
-            proc_output.assertWaitFor(
-                expected_output=message, process=bridge_process, timeout=0.5)
+        self._assert_not_logged(
+            proc_output, bridge_process,
+            f'Auto-replied ACK to station={station} for function_code=0x10, seq=7')
 
     def test_undecodable_frame_requesting_ack_is_not_answered(self, proc_output,
                                                               bridge_process):
@@ -500,10 +513,7 @@ class TestProtocolBridge(unittest.TestCase):
     def test_ack_does_not_consume_the_frame(self):
         """Replying is additive: the acknowledged frame still reaches the app."""
         forwarded, pub = self._wire_up()
-        acks = []
-        self.node.create_subscription(
-            Frame, DRIVER_TX, lambda m: acks.append(m), 10)
-        self._await_publisher(DRIVER_TX)
+        acks = self._watch(DRIVER_TX, await_publisher=True)
 
         station = 34
         sent = self._control_frame(station, flags=0x01)

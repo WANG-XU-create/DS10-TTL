@@ -15,6 +15,7 @@
 #ifndef DS10_PROTOCOL__PROTOCOL_BRIDGE_NODE_HPP_
 #define DS10_PROTOCOL__PROTOCOL_BRIDGE_NODE_HPP_
 
+#include <cstdint>
 #include <optional>
 #include <string>
 #include <variant>
@@ -33,6 +34,30 @@ namespace ds10_protocol
 /// the alternative rather than re-reading `function_code`, so a decoded frame
 /// cannot be misinterpreted as the wrong type.
 using DecodedPayload = std::variant<ControlCommand, SensorData>;
+
+/// The flags byte, whichever alternative the payload holds.
+///
+/// Every message type carries flags at the same offset, so reading it needs
+/// no knowledge of which one this is.
+inline uint8_t flags_of(const DecodedPayload & payload)
+{
+  return std::visit([](const auto & p) {return p.flags;}, payload);
+}
+
+/// The sequence number, or nullopt for message types that carry none.
+///
+/// This is the single place that answers "does this payload have a seq?".
+/// Callers that need one either propagate the nullopt or supply their own
+/// default, so adding a numbered message type (0x11 log) is one edit here
+/// rather than one per caller.
+inline std::optional<uint16_t> seq_of(const DecodedPayload & payload)
+{
+  if (const auto * sensor = std::get_if<SensorData>(&payload)) {
+    return sensor->seq;
+  }
+  return std::nullopt;
+}
+
 
 /// Application-protocol bridge sitting between ds10_driver and business nodes.
 ///
@@ -79,7 +104,6 @@ private:
   /// request the peer never made.
   void maybe_reply_ack(
     const ds10_interfaces::msg::Frame & msg, const DecodedPayload & payload);
-
 
   // Topic names (resolved in the constructor, immutable afterwards).
   std::string driver_rx_topic_;

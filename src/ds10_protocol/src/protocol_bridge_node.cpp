@@ -93,19 +93,21 @@ void ProtocolBridgeNode::on_driver_rx(const ds10_interfaces::msg::Frame::SharedP
 void ProtocolBridgeNode::maybe_reply_ack(
   const ds10_interfaces::msg::Frame & msg, const DecodedPayload & payload)
 {
-  // 0x12 carries no sequence number, so its ACK names seq 0 by convention
-  // (application_protocol_v1.md §功能码 0x00).
-  const uint8_t flags = std::visit([](const auto & p) {return p.flags;}, payload);
-  const auto * sensor = std::get_if<SensorData>(&payload);
-  const uint16_t seq = sensor != nullptr ? sensor->seq : 0;
-
-  if ((flags & FLAGS_REQUEST_ACK) == 0) {
+  if ((flags_of(payload) & FLAGS_REQUEST_ACK) == 0) {
     return;
   }
 
+  // 0x12 carries no sequence number, so its ACK names seq 0 by convention
+  // (application_protocol_v1.md §功能码 0x00).
+  const uint16_t seq = seq_of(payload).value_or(0);
+
   ds10_interfaces::msg::Frame ack;
-  // Back to whoever sent it. On a slave the driver overwrites station_id with
-  // its own configured address, which is the same value either way.
+  // Address the reply to whoever sent it. This is what makes the ACK routable
+  // on a master, where the driver honours the station we ask for. On a slave
+  // the driver overwrites it with the node's own configured address -- a
+  // different value from the 0 that arrived on rx, so the reply reaches the
+  // master because the driver discards this field, not because it agrees
+  // with it.
   ack.station_id = msg.station_id;
   ack.function_code = FUNC_ACK;
   ack.data = encode_ack(AckMessage{seq, msg.function_code});
@@ -116,19 +118,19 @@ void ProtocolBridgeNode::maybe_reply_ack(
     msg.station_id, msg.function_code, seq);
 }
 
-
 bool ProtocolBridgeNode::track_sequence(
   const ds10_interfaces::msg::Frame & msg, const DecodedPayload & payload)
 {
-  // Only sensor data carries a sequence number; control commands are
-  // infrequent and deliberately unnumbered, so there is nothing to track.
-  const auto * sensor = std::get_if<SensorData>(&payload);
-  if (sensor == nullptr) {
+  // Only some message types are numbered; seq_of knows which. Control
+  // commands are infrequent and deliberately unnumbered, so there is nothing
+  // to track for them.
+  const auto seq_or_none = seq_of(payload);
+  if (!seq_or_none) {
     return true;
   }
 
   const StreamId stream{msg.station_id, msg.function_code};
-  const uint16_t seq = sensor->seq;
+  const uint16_t seq = *seq_or_none;
   const auto classification = seq_trackers_.classify(stream, seq);
 
   switch (classification.verdict) {

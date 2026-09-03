@@ -15,9 +15,9 @@ find_package(ament_cmake REQUIRED)
 find_package(rclcpp REQUIRED)
 find_package(ds10_interfaces REQUIRED)
 
-# Header-only library placeholder (will hold codec functions later)
-add_library(${PROJECT_NAME}_lib INTERFACE)
-target_include_directories(${PROJECT_NAME}_lib INTERFACE
+# Codec library
+add_library(${PROJECT_NAME}_lib src/codec.cpp)
+target_include_directories(${PROJECT_NAME}_lib PUBLIC
   $<BUILD_INTERFACE:${CMAKE_CURRENT_SOURCE_DIR}/include>
   $<INSTALL_INTERFACE:include>
 )
@@ -35,6 +35,14 @@ if(BUILD_TESTING)
     $<INSTALL_INTERFACE:include>
   )
   target_link_libraries(test_protocol_constants ${PROJECT_NAME}_lib)
+
+  # Unit test for control command codec (0x12)
+  ament_add_gtest(test_codec_control_command test/test_codec_control_command.cpp)
+  target_include_directories(test_codec_control_command PUBLIC
+    $<BUILD_INTERFACE:${CMAKE_CURRENT_SOURCE_DIR}/include>
+    $<INSTALL_INTERFACE:include>
+  )
+  target_link_libraries(test_codec_control_command ${PROJECT_NAME}_lib)
 endif()
 
 install(DIRECTORY include/

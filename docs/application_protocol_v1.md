@@ -66,14 +66,14 @@ DS10 驱动 (`ds10_driver`) 已经实现并验证通过,为上层提供了基于
 
 ### 可靠性与错误处理
 11. As a 发送方, I want to 在 flags 字段设置"请求 ACK"标志(bit0=1), so that 接收方知道需要确认
-12. As a 接收方, I want to 收到格式非法的帧(未知功能码/data 长度不足)时日志警告并丢弃, so that 不会因畸形帧崩溃
-13. As a 接收方, I want to 检测到重复帧(相同序号)时丢弃不重复发布, so that 避免应用层重复处理
+12. As a 接收方, I want to 收到格式非法的帧(未知功能码/data 长度不足)时日志警告但仍转发, so that 调试时不会出现"帧去哪了"的黑洞,且自行解析 data 的应用不被协议层截胡
+13. As a 接收方, I want to 检测到重复帧(相同序号)时丢弃不重复发布, so that 避免应用层把同一读数处理两次(第一版唯一的丢弃情形,见 §帧去留清单)
 14. As a 运维人员, I want to 协议节点发布诊断话题(`/protocol/diagnostics`), so that 能监控未知功能码计数、丢帧计数、重复帧计数
 
 ### 扩展性
 15. As a 协议设计者, I want to 功能码 0x80-0xFF 段预留给未来扩展, so that 后续加分片/时间同步等特性有命名空间
 16. As a 协议设计者, I want to 定义分片帧格式(功能码 0x80, data=`[分片ID][总片数][当前片号][payload]`), so that 第二版可实现大文件传输
-17. As a 协议实现者, I want to 第一版收到功能码 0x80 时日志警告"分片未实现"并丢弃, so that 为第二版铺路且不破坏当前系统
+17. As a 协议实现者, I want to 第一版收到功能码 0x80 时日志警告"分片未实现"但仍转发, so that 为第二版铺路且不破坏当前系统
 
 ### 部署与兼容
 18. As a 运维人员, I want to 协议升级时新功能占用新功能码, so that 旧节点忽略未知功能码、新旧混跑不中断基础功能
@@ -183,7 +183,7 @@ data = [分片ID: u32][总片数: u16][当前片号: u16, 从0开始][payload: b
 - `当前片号`: 0-based 索引
 - `payload`: 本片数据
 
-**第一版行为**: 协议节点收到功能码 0x80 时日志 WARN"分片未实现,frame from station=X",仍转发到 `/protocol/rx`(与其它未实现功能码一致,见 §错误处理)
+**第一版行为**: 协议节点收到功能码 0x80 时日志 WARN"分片未实现,frame from station=X",仍转发到 `/protocol/rx`(见 §帧去留清单第 2 行)
 
 **第二版扩展**: 上层节点维护重组状态机(按分片 ID 缓存各片,到齐后拼接、发布完整 payload);发送侧提供自动分片接口(payload >阈值自动切片)
 
@@ -226,23 +226,42 @@ std::map<std::pair<uint8_t, uint8_t>, SeqTracker> trackers_;  // key=(station, f
    - 若 `seq != expected_seq`:
      - 若 `seq > expected_seq`: 日志 WARN"gap detected: expected={expected}, got={seq}, station={station}, function_code={func}",发布诊断事件,更新 `expected_seq = seq + 1`
      - 若 `seq < expected_seq` 且差值很大(如 expected=100, seq=5): 可能回绕,更新 expected
-     - 若 `seq < expected_seq` 且差值很小: 重复帧,日志 DEBUG"duplicate seq={seq}",**丢弃不发布**,诊断计数++
-2. **仍发布当前帧**(即使检测到丢帧):应用可能容忍丢帧(传感器数据),由应用决定是否处理
+     - 若 `seq < expected_seq` 且差值很小: 重复帧,日志 DEBUG"duplicate seq={seq}",**丢弃不转发**,诊断计数++
+2. 除重复帧外一律转发,包括检测到 gap 的帧:应用可能容忍丢帧(传感器数据),由应用决定是否处理。完整去留规则见 §帧去留清单。
 
 ### 错误处理(Error Handling)
 
+#### 帧去留清单(Frame Disposition) — 权威定义
+
+协议节点对每个从驱动收到的帧只有两种处置:**转发**到 `/protocol/rx`,或**丢弃**。本表是唯一的权威定义,本文档其它章节、ticket 和代码注释若提及去留,一律以此表为准,不得各自表述。
+
+| # | 情况 | 处置 | 日志级别 | 诊断计数 |
+|---|------|------|----------|----------|
+| 1 | 解码成功(0x10 / 0x12) | **转发** | INFO(字段) | — |
+| 2 | 未知或未实现功能码(0x00 / 0x11 / 0x80 / 其它) | **转发** | WARN | 未知功能码计数 |
+| 3 | data 长度不足,解码器拒绝 | **转发** | ERROR | 解码失败计数 |
+| 4 | 序号跳变(gap,疑似链路丢帧) | **转发** | WARN | 丢帧计数 |
+| 5 | 序号回绕(uint16 溢出后重新计数) | **转发** | DEBUG | — |
+| 6 | **重复帧**(同一 `(station, function_code)` 收到已处理过的 seq) | **丢弃** | DEBUG | 重复帧计数 |
+
+**判据:第一版只丢弃第 6 种。**
+
+第 2–5 种转发的理由一致:协议层解码只是**附加的观察**,不是准入门槛。这一版的应用可以自行解析 `data`(见 §上层节点接口形态,第一版是透明代理),协议层看不懂的帧对应用未必看不懂;而且调试期出现"帧去哪了"的黑洞,比多收几条无用帧代价更高。
+
+第 6 种丢弃的理由不同,是唯一的例外:转发重复帧会让应用**把同一读数处理两次**——这是主动造成错误,而不是仅仅没提供信息。协议层既然已经识别出它是重复的,就有责任不把它递出去。
+
+**第二版**按功能码分发到语义化话题后,解码失败的帧自然进不了对应话题,届时本表需重新审视(第 2、3 种的处置会随之改变),并同步更新此处。
+
 #### 格式非法
 
-第一版协议节点是**透明代理**:解码只用于日志和诊断,不决定帧的去留。下列情况一律记录日志后**仍转发**到 `/protocol/rx`,让自行解析 `data` 的应用不被协议层截胡,也让调试时不会出现"帧去哪了"的黑洞。
+见上表第 2、3 行。日志格式:
 
-- **未知功能码**: 日志 WARN"unknown function_code=0x?? from station=?",仍转发,诊断话题计数
-- **data 长度不足**(如 0x10 需至少 8B,但 data.size < 8): 日志 ERROR,仍转发,诊断计数
-
-第二版按功能码分发到语义化话题后,解码失败的帧自然无法进入对应话题,届时再定义丢弃语义。
+- **未知功能码**: WARN `"Unknown or unimplemented function_code=0x?? from station=?"`
+- **data 长度不足**: ERROR `"Failed to decode function_code=0x??: data size=? (expected >=?)"`
 
 #### 序号异常
-- **序号跳变**: 见上节"序号跟踪机制"
-- **重复帧**: 丢弃,日志 DEBUG,诊断计数
+
+见上表第 4、5、6 行,判定逻辑见 §序号跟踪机制。
 
 #### ACK 超时(第一版不实现)
 - 第一版:发送方发完即忘,不等 ACK
@@ -263,7 +282,7 @@ std::map<std::pair<uint8_t, uint8_t>, SeqTracker> trackers_;  // key=(station, f
    - 要改就用新功能码(如 0x20"传感器上报 v2")
 
 2. **新功能码对旧节点透明**
-   - 旧节点收到未知功能码,日志 WARN,丢弃,不 crash
+   - 旧节点收到未知功能码,日志 WARN,不 crash,帧按 §帧去留清单第 2 行仍转发
    - 第一版只定义 0x00/0x10/0x11/0x12,其余保留
 
 3. **flags 保留位必须置 0**
@@ -272,7 +291,7 @@ std::map<std::pair<uint8_t, uint8_t>, SeqTracker> trackers_;  // key=(station, f
 
 4. **升级路径示例**
    - 主机先升到协议 v2(支持 0x80 分片),从机还是 v1
-   - 主机发 0x80 给从机→从机日志警告、丢弃
+   - 主机发 0x80 给从机→从机日志警告,帧仍转发给应用(§帧去留清单第 2 行),应用自行忽略
    - 主机也支持旧的 0x10-0x12,从机正常工作
    - 等从机升级,0x80 才生效
 
@@ -332,9 +351,10 @@ std::map<std::pair<uint8_t, uint8_t>, SeqTracker> trackers_;  // key=(station, f
 **测什么**:
 - 发布 0x10 传感器帧到 `/protocol/tx` → 协议节点封装 → 驱动发出 → (loopback) → 驱动收到 → 协议节点解封 → `/protocol/rx` 收到正确 sensor_id/reading
 - 发布带 flags.bit0=1 的 0x12 帧 → 协议节点自动回 0x00 ACK → 应用收到 ACK 帧
-- 序号跳变检测:发 seq=1,3,5 → 日志警告出现 2 次 gap
-- 重复帧丢弃:发 seq=1,1,2 → `/protocol/rx` 只收到 2 条(seq=1 和 2)
-- 未知功能码:发 0xFF 帧 → 日志 WARN,不发布到 `/protocol/rx`
+- 序号跳变检测:发 seq=1,3,5 → 日志警告出现 2 次 gap,且 3 帧全部到达 `/protocol/rx`(§帧去留清单第 4 行)
+- 重复帧丢弃:发 seq=1,1,2 → `/protocol/rx` 只收到 2 条(seq=1 和 2),§帧去留清单第 6 行
+- 未知功能码:发 0xFF 帧 → 日志 WARN,帧仍到达 `/protocol/rx`(§帧去留清单第 2 行)
+- 长度不足:发 0x10 但 data 只有 3B → 日志 ERROR,帧仍到达 `/protocol/rx`(§帧去留清单第 3 行)
 
 **Setup**: 用 PTY 假串口连 `ds10_driver` master/slave,`ds10_protocol` 节点夹在中间
 

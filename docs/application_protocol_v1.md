@@ -183,7 +183,7 @@ data = [分片ID: u32][总片数: u16][当前片号: u16, 从0开始][payload: b
 - `当前片号`: 0-based 索引
 - `payload`: 本片数据
 
-**第一版行为**: 协议节点收到功能码 0x80 时日志 WARN"分片未实现,丢弃 frame from station=X",不发布到 `/protocol/rx`
+**第一版行为**: 协议节点收到功能码 0x80 时日志 WARN"分片未实现,frame from station=X",仍转发到 `/protocol/rx`(与其它未实现功能码一致,见 §错误处理)
 
 **第二版扩展**: 上层节点维护重组状态机(按分片 ID 缓存各片,到齐后拼接、发布完整 payload);发送侧提供自动分片接口(payload >阈值自动切片)
 
@@ -232,8 +232,13 @@ std::map<std::pair<uint8_t, uint8_t>, SeqTracker> trackers_;  // key=(station, f
 ### 错误处理(Error Handling)
 
 #### 格式非法
-- **未知功能码**: 日志 WARN"unknown function_code=0x?? from station=?, seq=?",丢弃,诊断话题计数
-- **data 长度不足**(如 0x10 需至少 8B,但 data.size < 8): 日志 ERROR,丢弃,诊断计数
+
+第一版协议节点是**透明代理**:解码只用于日志和诊断,不决定帧的去留。下列情况一律记录日志后**仍转发**到 `/protocol/rx`,让自行解析 `data` 的应用不被协议层截胡,也让调试时不会出现"帧去哪了"的黑洞。
+
+- **未知功能码**: 日志 WARN"unknown function_code=0x?? from station=?",仍转发,诊断话题计数
+- **data 长度不足**(如 0x10 需至少 8B,但 data.size < 8): 日志 ERROR,仍转发,诊断计数
+
+第二版按功能码分发到语义化话题后,解码失败的帧自然无法进入对应话题,届时再定义丢弃语义。
 
 #### 序号异常
 - **序号跳变**: 见上节"序号跟踪机制"

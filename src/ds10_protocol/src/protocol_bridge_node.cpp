@@ -14,7 +14,10 @@
 
 #include "ds10_protocol/protocol_bridge_node.hpp"
 
+#include <optional>
 #include <string>
+#include <utility>
+#include <variant>
 
 #include "ds10_protocol/codec.hpp"
 #include "ds10_protocol/protocol_constants.hpp"
@@ -67,44 +70,43 @@ ProtocolBridgeNode::ProtocolBridgeNode(const rclcpp::NodeOptions & options)
 
 void ProtocolBridgeNode::on_driver_rx(const ds10_interfaces::msg::Frame::SharedPtr msg)
 {
-  log_decoded_frame(*msg);
+  const auto payload = decode_frame(*msg);
+  if (payload) {
+    log_payload(*msg, *payload);
+  }
 
   // Forward regardless of what decoding found: subscribers that parse `data`
   // themselves must keep receiving every frame the driver delivered.
+  // See application_protocol_v1.md §错误处理.
   protocol_rx_pub_->publish(*msg);
 }
 
-void ProtocolBridgeNode::log_decoded_frame(const ds10_interfaces::msg::Frame & msg)
+std::optional<DecodedPayload> ProtocolBridgeNode::decode_frame(
+  const ds10_interfaces::msg::Frame & msg)
 {
   switch (msg.function_code) {
     case FUNC_CONTROL_CMD: {
-        const auto cmd = decode_control_command(msg.data);
+        auto cmd = decode_control_command(msg.data);
         if (!cmd) {
           RCLCPP_ERROR(
             get_logger(),
             "Failed to decode function_code=0x%02X: data size=%zu (expected >=%zu)",
             msg.function_code, msg.data.size(), kMinControlCommandSize);
-          return;
+          return std::nullopt;
         }
-        RCLCPP_INFO(
-          get_logger(), "Decoded 0x%02X: flags=%u, cmd_id=%u, params_len=%zu",
-          msg.function_code, cmd->flags, cmd->cmd_id, cmd->params.size());
-        return;
+        return DecodedPayload{std::move(*cmd)};
       }
 
     case FUNC_SENSOR_DATA: {
-        const auto sensor = decode_sensor_data(msg.data);
+        auto sensor = decode_sensor_data(msg.data);
         if (!sensor) {
           RCLCPP_ERROR(
             get_logger(),
             "Failed to decode function_code=0x%02X: data size=%zu (expected >=%zu)",
             msg.function_code, msg.data.size(), kMinSensorDataSize);
-          return;
+          return std::nullopt;
         }
-        RCLCPP_INFO(
-          get_logger(), "Decoded 0x%02X: flags=%u, seq=%u, sensor_id=%u, reading=%f",
-          msg.function_code, sensor->flags, sensor->seq, sensor->sensor_id, sensor->reading);
-        return;
+        return DecodedPayload{std::move(*sensor)};
       }
 
     default:
@@ -113,7 +115,21 @@ void ProtocolBridgeNode::log_decoded_frame(const ds10_interfaces::msg::Frame & m
       RCLCPP_WARN(
         get_logger(), "Unknown or unimplemented function_code=0x%02X from station=%u",
         msg.function_code, msg.station_id);
-      return;
+      return std::nullopt;
+  }
+}
+
+void ProtocolBridgeNode::log_payload(
+  const ds10_interfaces::msg::Frame & msg, const DecodedPayload & payload)
+{
+  if (const auto * cmd = std::get_if<ControlCommand>(&payload)) {
+    RCLCPP_INFO(
+      get_logger(), "Decoded 0x%02X: flags=%u, cmd_id=%u, params_len=%zu",
+      msg.function_code, cmd->flags, cmd->cmd_id, cmd->params.size());
+  } else if (const auto * sensor = std::get_if<SensorData>(&payload)) {
+    RCLCPP_INFO(
+      get_logger(), "Decoded 0x%02X: flags=%u, seq=%u, sensor_id=%u, reading=%f",
+      msg.function_code, sensor->flags, sensor->seq, sensor->sensor_id, sensor->reading);
   }
 }
 

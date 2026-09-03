@@ -15,21 +15,32 @@
 #ifndef DS10_PROTOCOL__PROTOCOL_BRIDGE_NODE_HPP_
 #define DS10_PROTOCOL__PROTOCOL_BRIDGE_NODE_HPP_
 
+#include <optional>
 #include <string>
+#include <variant>
 
 #include "ds10_interfaces/msg/frame.hpp"
+#include "ds10_protocol/codec.hpp"
 #include "rclcpp/rclcpp.hpp"
 
 namespace ds10_protocol
 {
+
+/// A `Frame.data` payload decoded according to its function code.
+///
+/// Holds whichever message type the function code selected. Callers switch on
+/// the alternative rather than re-reading `function_code`, so a decoded frame
+/// cannot be misinterpreted as the wrong type.
+using DecodedPayload = std::variant<ControlCommand, SensorData>;
 
 /// Application-protocol bridge sitting between ds10_driver and business nodes.
 ///
 /// Frames are forwarded in both directions unchanged. On the device-to-app
 /// path the node additionally decodes `Frame.data` and logs the fields, but
 /// decoding never gates forwarding: malformed and unknown frames still reach
-/// subscribers, so applications that parse `data` themselves keep working.
-/// Later tickets turn the decoded values into sequence tracking and auto-ACK.
+/// subscribers, so applications that parse `data` themselves keep working
+/// (see application_protocol_v1.md §错误处理). Later tickets consume the
+/// decoded payload for sequence tracking and auto-ACK.
 ///
 ///   driver_rx_topic  --> [bridge] --> protocol_rx_topic   (device to app)
 ///   protocol_tx_topic --> [bridge] --> driver_tx_topic    (app to device)
@@ -42,10 +53,15 @@ private:
   void on_driver_rx(const ds10_interfaces::msg::Frame::SharedPtr msg);
   void on_protocol_tx(const ds10_interfaces::msg::Frame::SharedPtr msg);
 
-  /// Decode `msg.data` according to its function code and log the result.
-  /// Logs at WARN for function codes with no decoder and at ERROR when a
-  /// known function code carries a payload that will not decode.
-  void log_decoded_frame(const ds10_interfaces::msg::Frame & msg);
+  /// Decode `msg.data` according to its function code.
+  ///
+  /// Returns nullopt both for function codes this version has no decoder for
+  /// and for payloads a decoder rejected; the two cases are distinguished in
+  /// the log, at WARN and ERROR respectively.
+  std::optional<DecodedPayload> decode_frame(const ds10_interfaces::msg::Frame & msg);
+
+  /// Log an already-decoded payload at INFO.
+  void log_payload(const ds10_interfaces::msg::Frame & msg, const DecodedPayload & payload);
 
   // Topic names (resolved in the constructor, immutable afterwards).
   std::string driver_rx_topic_;

@@ -214,7 +214,7 @@ class TestProtocolBridge(unittest.TestCase):
 
         self._publish_and_await_log(
             proc_output, bridge_process, sent,
-            'Decoded 0x10: flags=0, seq=4660, sensor_id=7')
+            'Decoded 0x10: flags=0, seq=4660, sensor_id=7, reading=23.500000')
 
     def test_unknown_function_code_warns(self, proc_output, bridge_process):
         """A function code with no decoder warns but is still forwarded."""

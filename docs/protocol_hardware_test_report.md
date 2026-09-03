@@ -89,6 +89,18 @@ acked_function_code=0x12),与规范一致。
 
 ## 已知问题
 
+### 1. 主机端无 0x00(ACK)解码器 — 已修复
+
+**修复于测试之后的提交。** 下文保留原始记录以说明问题的发现过程。
+
+主机现在解码 0x00 并打印 `Decoded 0x00: acked_seq=?, acked_function_code=0x??`,
+不再走未知功能码路径。修复时发现一个测试未覆盖的隐患:`AckMessage` 没有 flags
+字段,若沿用原先"任何 payload 都能取 flags"的假设,`acked_seq` 为奇数的 ACK 会被
+误认为请求 ACK,两端将无限互相回复。已通过让 `flags_of()` 返回 optional 解决,并有
+专门的测试和变异验证。
+
+<details><summary>原始问题记录</summary>
+
 ### 1. 主机端无 0x00(ACK)解码器
 
 协议节点从未调用 `decode_ack()`。主机收到从机回复的 ACK 帧时,打 WARN
@@ -98,7 +110,7 @@ acked_function_code=0x12),与规范一致。
 **严重度**: 低。功能不受影响(ACK 已被正确发出和转发),只有日志级别不对。
 归类为"缺少功能",不是"功能错误"。
 
-**修复**: 在 `ProtocolBridgeNode::decode_frame` 中添加:
+**修复**(已实施): 在 `ProtocolBridgeNode::decode_frame` 中添加:
 ```cpp
 case FUNC_ACK: {
     auto ack = decode_ack(msg.data);
@@ -107,6 +119,8 @@ case FUNC_ACK: {
 }
 ```
 需要将 `AckMessage` 加入 `DecodedPayload` variant。
+
+</details>
 
 ### 2. 回波放大效应
 

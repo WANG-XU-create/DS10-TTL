@@ -40,7 +40,7 @@ DRIVER_TX = '/test_driver/tx'
 PROTOCOL_RX = '/test_protocol/rx'
 PROTOCOL_TX = '/test_protocol/tx'
 
-DISCOVERY_TIMEOUT = 5.0
+DISCOVERY_TIMEOUT = 8.0
 DELIVERY_TIMEOUT = 5.0
 LOG_TIMEOUT = 5.0
 
@@ -80,7 +80,12 @@ class TestProtocolBridge(unittest.TestCase):
         rclpy.shutdown()
 
     def setUp(self):
-        self.node = rclpy.create_node('protocol_bridge_test_peer')
+        # A unique name per test. Reusing one name meant every test tore down
+        # a node and immediately stood up another with the same identity, and
+        # DDS needs time to converge on that -- discovery got slower as the
+        # suite grew until _wire_up started timing out on whichever test
+        # happened to run late. Distinct names remove the collision.
+        self.node = rclpy.create_node(f'protocol_bridge_test_peer_{self._testMethodName}')
 
     def tearDown(self):
         self.node.destroy_node()
@@ -106,7 +111,16 @@ class TestProtocolBridge(unittest.TestCase):
             f'bridge did not publish on {topic}')
 
     def _pump_until(self, received, pub, msg):
-        """Republish until a message arrives or the timeout expires."""
+        """
+        Republish until a message arrives or the timeout expires.
+
+        Only safe for frames the bridge treats statelessly. A numbered 0x10
+        payload republished here would be classified as a duplicate on every
+        retry after the first, withheld, and never satisfy the loop -- the
+        test would then burn its whole timeout and fail for a reason that has
+        nothing to do with what it set out to check. Use _send_sequence for
+        anything the sequence tracker sees.
+        """
         end = time.time() + DELIVERY_TIMEOUT
         while time.time() < end and not received:
             pub.publish(msg)
@@ -114,7 +128,12 @@ class TestProtocolBridge(unittest.TestCase):
             time.sleep(0.05)
 
     def _publish_and_await_log(self, proc_output, bridge_process, msg, expected_log):
-        """Publish to the driver rx topic until `expected_log` shows up."""
+        """
+        Publish to the driver rx topic until `expected_log` shows up.
+
+        Carries the same restriction as _pump_until: retries make a numbered
+        payload look like a duplicate.
+        """
         pub = self.node.create_publisher(Frame, DRIVER_RX, 10)
         self._await_subscriber(pub)
 
@@ -153,7 +172,7 @@ class TestProtocolBridge(unittest.TestCase):
         """Watch the driver tx topic for ACKs while feeding the driver rx topic."""
         return self._wire_up(sub_topic=DRIVER_TX, await_publisher=True)
 
-    def _send_sequence(self, pub, frames, settle=0.15):
+    def _send_sequence(self, pub, frames, settle=0.25):
         """
         Publish each frame exactly once, in order.
 
@@ -279,12 +298,97 @@ class TestProtocolBridge(unittest.TestCase):
 
         sent = Frame()
         sent.station_id = 1
+        # 0x00 with no data: too short for the ACK decoder, so this also
+        # covers a decoder rejecting a payload of its own function code.
         sent.function_code = 0x00
         sent.data = []
         self._pump_until(received, pub, sent)
 
         self.assertTrue(received, 'no Frame arrived on the protocol rx topic')
         self._assert_same_frame(received[0], sent)
+
+    def test_ack_is_decoded_and_logged(self, proc_output, bridge_process):
+        """A 0x00 frame reports what it acknowledges, rather than warning."""
+        received = []
+        self.node.create_subscription(
+            Frame, PROTOCOL_RX, lambda m: received.append(m), 10)
+
+        sent = Frame()
+        sent.station_id = 2
+        sent.function_code = 0x00
+        sent.data = list(struct.pack('<HB', 4660, 0x12))
+
+        self._publish_and_await_log(
+            proc_output, bridge_process, sent,
+            'Decoded 0x00: acked_seq=4660, acked_function_code=0x12')
+
+        end = time.time() + DELIVERY_TIMEOUT
+        while time.time() < end and not received:
+            rclpy.spin_once(self.node, timeout_sec=0.1)
+        self.assertTrue(received, 'ACK frame was not forwarded')
+        self._assert_same_frame(received[0], sent)
+
+    def test_ack_is_not_reported_as_unknown(self, proc_output, bridge_process):
+        """The 0x00 branch replaces the unknown-code path, not adds to it."""
+        received, pub = self._wire_up()
+
+        sent = Frame()
+        sent.station_id = 2
+        sent.function_code = 0x00
+        sent.data = list(struct.pack('<HB', 7, 0x10))
+        self._pump_until(received, pub, sent)
+        self.assertTrue(received, 'ACK frame was not forwarded')
+
+        # Before the 0x00 decoder existed this was the message the bridge
+        # emitted -- the whole defect this test guards against.
+        self._assert_not_logged(
+            proc_output, bridge_process,
+            'Unknown or unimplemented function_code=0x00 from station=2')
+
+    def test_undersized_ack_errors_but_still_forwards(self, proc_output, bridge_process):
+        """A 0x00 frame too short to decode reports the size it needed."""
+        received = []
+        self.node.create_subscription(
+            Frame, PROTOCOL_RX, lambda m: received.append(m), 10)
+
+        sent = Frame()
+        sent.station_id = 5
+        sent.function_code = 0x00
+        sent.data = [0x01, 0x02]  # 2 bytes; 0x00 needs 3
+
+        self._publish_and_await_log(
+            proc_output, bridge_process, sent,
+            'Failed to decode function_code=0x00: data size=2 (expected >=3)')
+
+        end = time.time() + DELIVERY_TIMEOUT
+        while time.time() < end and not received:
+            rclpy.spin_once(self.node, timeout_sec=0.1)
+        self.assertTrue(received, 'undecodable ACK was not forwarded')
+
+    def test_ack_never_draws_an_ack(self, proc_output, bridge_process):
+        """
+        An ACK cannot request an ACK, so none is sent for one.
+
+        The 0x00 payload has no flags byte at all -- byte 0 is the low half of
+        acked_seq. An implementation that read a flags byte anyway would treat
+        any odd acked_seq as a request and answer it, and since that answer is
+        itself a 0x00 frame, two bridges would ACK each other forever.
+        """
+        received, pub = self._wire_up_ack()
+
+        # acked_seq=1: bit0 of the first byte is set, which is exactly what a
+        # flags byte with FLAGS_REQUEST_ACK would look like.
+        sent = Frame()
+        sent.station_id = 6
+        sent.function_code = 0x00
+        sent.data = list(struct.pack('<HB', 1, 0x10))
+        self._send_sequence(pub, [sent])
+
+        self._collect(received, 1, timeout=1.0)
+        self.assertEqual(len(received), 0, f'an ACK was answered: {received}')
+        self._assert_not_logged(
+            proc_output, bridge_process,
+            'Auto-replied ACK to station=6 for function_code=0x00, seq=0')
 
     def test_control_command_is_decoded_and_logged(self, proc_output, bridge_process):
         """A 0x12 frame has its fields logged, and is still forwarded."""
@@ -310,15 +414,24 @@ class TestProtocolBridge(unittest.TestCase):
 
     def test_sensor_data_is_decoded_and_logged(self, proc_output, bridge_process):
         """A 0x10 frame has its fields logged."""
+        # Published exactly once, unlike the other log assertions here. This
+        # payload is numbered, so the retry loop in _publish_and_await_log
+        # would have every attempt after the first classified as a duplicate
+        # and withheld -- the log line would never reappear and the test would
+        # fail on timeout. This was the long-standing source of flakiness in
+        # this suite.
+        _, pub = self._wire_up()
+
         sent = Frame()
         sent.station_id = 2
         sent.function_code = 0x10
         # [flags 1B][seq u16 LE][sensor_id 1B][reading f32 LE]
         sent.data = list(struct.pack('<BHBf', 0x00, 4660, 7, 23.5))
+        self._send_sequence(pub, [sent])
 
-        self._publish_and_await_log(
-            proc_output, bridge_process, sent,
-            'Decoded 0x10: flags=0, seq=4660, sensor_id=7, reading=23.500000')
+        proc_output.assertWaitFor(
+            expected_output='Decoded 0x10: flags=0, seq=4660, sensor_id=7, reading=23.500000',
+            process=bridge_process, timeout=LOG_TIMEOUT)
 
     def test_unknown_function_code_warns(self, proc_output, bridge_process):
         """A function code with no decoder warns but is still forwarded."""
@@ -519,10 +632,17 @@ class TestProtocolBridge(unittest.TestCase):
         sent = self._control_frame(station, flags=0x01)
         self._send_sequence(pub, [sent])
 
+        # "At least one", not "exactly one". This test is about the ACK not
+        # swallowing the frame; pinning the count would additionally assert
+        # that no frame from an earlier test is still in flight on a topic
+        # this subscription just joined, which is a different claim and one
+        # DDS does not offer to guarantee.
         got = self._collect(forwarded, 1)
-        self.assertEqual(len(got), 1, 'acknowledged frame was not forwarded')
-        self._assert_same_frame(got[0], sent)
-        self.assertEqual(len(self._collect(acks, 1)), 1, 'no ACK alongside the forward')
+        self.assertGreaterEqual(len(got), 1, 'acknowledged frame was not forwarded')
+        self.assertIn(bytes(sent.data), [bytes(f.data) for f in got],
+                      'the acknowledged frame itself was not among those forwarded')
+        self.assertGreaterEqual(
+            len(self._collect(acks, 1)), 1, 'no ACK alongside the forward')
 
     def test_duplicate_frame_is_still_acknowledged(self, proc_output, bridge_process):
         """A repeat is withheld from the app but still answered on the wire."""

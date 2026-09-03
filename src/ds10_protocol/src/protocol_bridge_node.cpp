@@ -34,6 +34,7 @@ constexpr int kQueueDepth = 10;
 constexpr size_t kMinControlCommandSize = SIZEOF_FLAGS + SIZEOF_CMD_ID;
 constexpr size_t kMinSensorDataSize =
   SIZEOF_FLAGS + SIZEOF_SEQ + SIZEOF_SENSOR_ID + SIZEOF_READING;
+constexpr size_t kMinAckSize = SIZEOF_SEQ + 1;  // acked_seq(2) + acked_function_code(1)
 }  // namespace
 
 ProtocolBridgeNode::ProtocolBridgeNode(const rclcpp::NodeOptions & options)
@@ -93,7 +94,11 @@ void ProtocolBridgeNode::on_driver_rx(const ds10_interfaces::msg::Frame::SharedP
 void ProtocolBridgeNode::maybe_reply_ack(
   const ds10_interfaces::msg::Frame & msg, const DecodedPayload & payload)
 {
-  if ((flags_of(payload) & FLAGS_REQUEST_ACK) == 0) {
+  const auto flags = flags_of(payload);
+  // ACK has no flags byte, so it cannot request an ACK (and if one tried,
+  // byte 0 would be the low half of acked_seq, not a meaningful flags
+  // field -- reading it would be a real bug).
+  if (!flags || (*flags & FLAGS_REQUEST_ACK) == 0) {
     return;
   }
 
@@ -190,9 +195,21 @@ std::optional<DecodedPayload> ProtocolBridgeNode::decode_frame(
         return DecodedPayload{std::move(*sensor)};
       }
 
+    case FUNC_ACK: {
+        auto ack = decode_ack(msg.data);
+        if (!ack) {
+          RCLCPP_ERROR(
+            get_logger(),
+            "Failed to decode function_code=0x%02X: data size=%zu (expected >=%zu)",
+            msg.function_code, msg.data.size(), kMinAckSize);
+          return std::nullopt;
+        }
+        return DecodedPayload{std::move(*ack)};
+      }
+
     default:
-      // Includes codes this version has no decoder for (0x00 ACK, 0x11 log,
-      // 0x80 fragment) as well as genuinely unknown ones.
+      // Includes codes this version has no decoder for (0x11 log, 0x80
+      // fragment) as well as genuinely unknown ones.
       RCLCPP_WARN(
         get_logger(), "Unknown or unimplemented function_code=0x%02X from station=%u",
         msg.function_code, msg.station_id);
@@ -211,6 +228,10 @@ void ProtocolBridgeNode::log_payload(
     RCLCPP_INFO(
       get_logger(), "Decoded 0x%02X: flags=%u, seq=%u, sensor_id=%u, reading=%f",
       msg.function_code, sensor->flags, sensor->seq, sensor->sensor_id, sensor->reading);
+  } else if (const auto * ack = std::get_if<AckMessage>(&payload)) {
+    RCLCPP_INFO(
+      get_logger(), "Decoded 0x%02X: acked_seq=%u, acked_function_code=0x%02X",
+      msg.function_code, ack->acked_seq, ack->acked_function_code);
   }
 }
 

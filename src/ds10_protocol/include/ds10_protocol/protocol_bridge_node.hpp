@@ -18,6 +18,7 @@
 #include <cstdint>
 #include <optional>
 #include <string>
+#include <type_traits>
 #include <variant>
 
 #include "ds10_interfaces/msg/frame.hpp"
@@ -33,15 +34,26 @@ namespace ds10_protocol
 /// Holds whichever message type the function code selected. Callers switch on
 /// the alternative rather than re-reading `function_code`, so a decoded frame
 /// cannot be misinterpreted as the wrong type.
-using DecodedPayload = std::variant<ControlCommand, SensorData>;
+using DecodedPayload = std::variant<ControlCommand, SensorData, AckMessage>;
 
-/// The flags byte, whichever alternative the payload holds.
+/// The flags byte, or nullopt for message types that carry none.
 ///
-/// Every message type carries flags at the same offset, so reading it needs
-/// no knowledge of which one this is.
-inline uint8_t flags_of(const DecodedPayload & payload)
+/// 0x00 is the one such type: its payload is [acked_seq u16][function_code]
+/// with no flags prefix, an asymmetry the spec makes deliberately (see
+/// codec.hpp). Returning optional rather than a zero default keeps "has no
+/// flags" distinct from "flags are clear" -- byte 0 of an ACK is the low half
+/// of acked_seq, so reading it as flags would make every odd acked_seq look
+/// like a request for acknowledgement.
+inline std::optional<uint8_t> flags_of(const DecodedPayload & payload)
 {
-  return std::visit([](const auto & p) {return p.flags;}, payload);
+  return std::visit(
+    [](const auto & p) -> std::optional<uint8_t> {
+      if constexpr (std::is_same_v<std::decay_t<decltype(p)>, AckMessage>) {
+        return std::nullopt;
+      } else {
+        return p.flags;
+      }
+    }, payload);
 }
 
 /// The sequence number, or nullopt for message types that carry none.
@@ -50,6 +62,10 @@ inline uint8_t flags_of(const DecodedPayload & payload)
 /// Callers that need one either propagate the nullopt or supply their own
 /// default, so adding a numbered message type (0x11 log) is one edit here
 /// rather than one per caller.
+///
+/// An ACK's `acked_seq` is deliberately not reported here: it names another
+/// frame's position in a stream, not this frame's, and feeding it to the
+/// sequence tracker would corrupt the very stream it refers to.
 inline std::optional<uint16_t> seq_of(const DecodedPayload & payload)
 {
   if (const auto * sensor = std::get_if<SensorData>(&payload)) {

@@ -32,12 +32,37 @@ except ModuleNotFoundError as e:
 
 FUNC_TEXT = 0x10
 
+MARKER = b"\xF1\xF1"        # 请求魔数
+REPLY_MARKER = b"\xF1\xF2"  # 回复魔数, 头里多一个 dst 字节
+HDR_LEN = 4                 # 请求头: 魔数(2) + txn(2)
+REPLY_HDR_LEN = 5           # 回复头: 魔数(2) + txn(2) + dst(1)
+
 
 def decode(data):
+    """把 data 还原成人读得懂的形式。
+
+    数据区可能带事务头 (中继/压测脚本都会加), 两种格式:
+      请求 F1 F1 txn(2B)          -> 标 txn=N
+      回复 F1 F2 txn(2B) dst(1B)  -> 标 txn=N dst=M
+    \\xF1 不是合法 UTF-8, 若整段直接解码必然失败、退化成一屏 hex, 看不出文本
+    内容。故先识别并剥离事务头, 只对真正的载荷解码。
+    """
+    raw = bytes(data)
+    prefix = ""
+    if raw[:2] == REPLY_MARKER and len(raw) >= REPLY_HDR_LEN:
+        txn = (raw[2] << 8) | raw[3]
+        dst = raw[4]
+        prefix = f"txn={txn} dst={dst} "
+        raw = raw[REPLY_HDR_LEN:]
+    elif raw[:2] == MARKER and len(raw) >= HDR_LEN:
+        txn = (raw[2] << 8) | raw[3]
+        prefix = f"txn={txn} "
+        raw = raw[HDR_LEN:]
+
     try:
-        return repr(bytes(data).decode("utf-8"))
+        return prefix + repr(raw.decode("utf-8"))
     except UnicodeDecodeError:
-        return "hex:" + bytes(data).hex(" ")
+        return prefix + "hex:" + raw.hex(" ")
 
 
 class Monitor(Node):

@@ -1,0 +1,18 @@
+# ds10_relay — relay role example parameters (master side).
+# Load with:  ros2 run ds10_relay relay_node --ros-args --params-file <this>
+#
+# 转发目标不在这里配置: 它由从机在回复的 dst 字节里指定 (见 README 的
+# 「路由权在从机」一节)。主机只知道该问谁, 不知道答案该去哪。
+/**:
+  ros__parameters:
+    role: relay
+    slave1_id: 1              # 被请求的从机站号 (1..247)
+    function_code: 0x10       # Modbus function code used for requests
+    timeout_ms: 1500          # 实测标定: 1004B 载荷最坏 RTT 764ms, 留 ~2x 余量
+    max_retries: 2            # retries after a timeout (0 disables)
+    auto_interval_ms: 0       # >0 self-triggers every N ms (soak runs)
+    auto_payload: "ds10_relay auto probe"
+    stats_interval_ms: 5000   # ~/stats publish period; 0 disables
+    tx_topic: "/master/tx"
+    rx_topic: "/master/rx"
+    trigger_topic: "~/trigger"

@@ -30,6 +30,10 @@ done
 
 # 只杀驱动进程, [d] 写法避免匹配到本脚本自身的命令行
 pkill -f "[d]s10_node" 2>/dev/null
+# 应用层脚本 (中继/回声/监控) 若有残留, 会与新一轮并存造成重复应答:
+# 一个请求收到多份回复, 表现为主机侧刷屏丢帧、甚至无限转发环。一并清掉。
+pkill -f "[d]s10_relay_master.py" 2>/dev/null
+pkill -f "[d]s10_relay_responder.py" 2>/dev/null
 sleep 1
 
 if [ ! -f install/setup.bash ]; then

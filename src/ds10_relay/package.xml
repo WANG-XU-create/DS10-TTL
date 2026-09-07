@@ -1,0 +1,30 @@
+<?xml version="1.0"?>
+<?xml-model href="http://download.ros.org/schema/package_format3.xsd" schematypens="http://www.w3.org/2001/XMLSchema"?>
+<package format="3">
+  <name>ds10_relay</name>
+  <version>0.1.0</version>
+  <description>
+    Three-hop request/reply relay over the DS10 transparent link. The relay role
+    sends a request to slave 1, matches the reply by an in-payload transaction
+    header, then forwards that reply verbatim to slave 2; the responder role
+    echoes whatever it receives back to the master. Sits on top of ds10_driver
+    topics and adds no framing of its own beyond the transaction header.
+  </description>
+
+  <maintainer email="2322958796@qq.com">wangxu</maintainer>
+  <license>Apache-2.0</license>
+
+  <buildtool_depend>ament_cmake</buildtool_depend>
+
+  <depend>rclcpp</depend>
+  <depend>std_msgs</depend>
+  <depend>ds10_interfaces</depend>
+
+  <test_depend>ament_cmake_gtest</test_depend>
+  <test_depend>ament_lint_auto</test_depend>
+  <test_depend>ament_lint_common</test_depend>
+
+  <export>
+    <build_type>ament_cmake</build_type>
+  </export>
+</package>

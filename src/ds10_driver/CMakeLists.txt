@@ -37,13 +37,17 @@ if(BUILD_TESTING)
   find_package(ament_lint_auto REQUIRED)
   ament_lint_auto_find_test_dependencies()
 
-  find_package(ament_cmake_gtest REQUIRED)
-  ament_add_gtest(test_modbus_frame_codec test/test_modbus_frame_codec.cpp)
-  target_link_libraries(test_modbus_frame_codec ${PROJECT_NAME}_lib)
+  # test_modbus_frame_codec.cpp 与 test_ds10.launch.py 在 commit 7734f22
+  # ("Remove scope creep") 中被移除, 待各自对应的 ticket 重新加入。CMake 仍
+  # 引用已删除的文件会让 BUILD_TESTING(默认 ON) 下连 colcon build 都失败,
+  # 故先注掉。重加测试文件时同步恢复这几行。
+  # find_package(ament_cmake_gtest REQUIRED)
+  # ament_add_gtest(test_modbus_frame_codec test/test_modbus_frame_codec.cpp)
+  # target_link_libraries(test_modbus_frame_codec ${PROJECT_NAME}_lib)
 
   # PTY-backed node-level integration test driven from a Python launch file.
-  find_package(launch_testing_ament_cmake REQUIRED)
-  add_launch_test(test/test_ds10.launch.py)
+  # find_package(launch_testing_ament_cmake REQUIRED)
+  # add_launch_test(test/test_ds10.launch.py)
 endif()
 
 install(TARGETS ${PROJECT_NAME}_lib ds10_node

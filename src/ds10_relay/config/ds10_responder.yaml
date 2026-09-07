@@ -1,0 +1,17 @@
+# ds10_relay — responder role example parameters (slave side).
+# Load with:  ros2 run ds10_relay relay_node --ros-args --params-file <this>
+#
+# 这里是转发路由的**唯一**配置点: 从机按载荷内容选目标站号, 主机不参与决策。
+# 新增一个目标只需在 route_map 里加一项, 主机无需改配置或重启。
+/**:
+  ros__parameters:
+    role: responder
+    # "keyword:station,..." 按载荷内容匹配, 首个命中的关键字胜 (故顺序有意义:
+    # 把更具体的关键字放在前面, 否则 "temp" 会先吃掉 "temperature")。
+    # 关键字按 UTF-8 字节匹配, 中文可直接用, 如 "温度:2,湿度:3"。
+    route_map: "temp:2,humid:3"
+    # 无关键字命中时的目标; 0 = 回复但不转发 (安全默认值)。
+    default_dst: 0
+    stats_interval_ms: 5000   # ~/stats publish period; 0 disables
+    tx_topic: "/slave1/tx"
+    rx_topic: "/slave1/rx"
